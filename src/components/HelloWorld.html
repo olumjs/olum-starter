@@ -5,7 +5,7 @@
     <button type="button">Click to count: 0</button>
     <span>
       Edit
-      <i>src/helloworld.html to test hot reload!</i>
+      <i>src/components/helloworld.html to test hot reload!</i>
     </span>
     <a href="https://olumjs.github.io/docs" target="_blank">See Documentation</a>
   </div>
@@ -17,7 +17,7 @@
     render() {
       let num = 0;
       const btn = document.querySelector("button");
-      btn.addEventListener("click", () => (btn.textContent = "Click to count: " + ++num));
+      btn.addEventListener("click", e => (btn.textContent = "Click to count: " + ++num));
     }
   }
 </script>

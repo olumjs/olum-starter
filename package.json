@@ -10,7 +10,8 @@
   },
   "author": "Olumjs",
   "dependencies": {
-    "olum": "latest"
+    "olum": "latest",
+    "olum-router": "latest"
   },
   "devDependencies": {
     "olum-compiler": "latest"

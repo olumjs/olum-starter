@@ -1,7 +1,7 @@
 import Olum from "olum";
-import App from "./App.js";
+import router from "./router/index.js";
 
-new Olum().$("#root").use(App); 
+new Olum().$("#app").use(router);
 
 // if ("serviceWorker" in navigator) { // uncomment to enable service worker when deploying
 //   window.on("load", () => navigator.serviceWorker.register("/service-worker.js").catch(console.error));
