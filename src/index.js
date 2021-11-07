@@ -1,5 +1,5 @@
 import Olum from "olum";
-import App from "./App.js";
+import App from "./App";
 
 new Olum().$("#root").use(App); 
 
