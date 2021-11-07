@@ -1,5 +1,5 @@
 import Olum from "olum";
-import router from "./router/index.js";
+import router from "./router";
 
 new Olum().$("#app").use(router);
 
