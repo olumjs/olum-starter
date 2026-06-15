@@ -7,10 +7,15 @@
     "dev": "olum-compiler dev",
     "build": "olum-compiler build"
   },
-  "keywords": ["olum"],
+  "keywords": [
+    "olum"
+  ],
   "author": "Eissa Saber",
   "license": "ISC",
   "dependencies": {
-    "olum-compiler": "^0.5.0"
+    "olum": "^0.5.0"
+  },
+  "devDependencies": {
+    "olum-compiler": "^0.5.1"
   }
 }
