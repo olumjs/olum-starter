@@ -1,0 +1,25 @@
+<script>
+  const add = () => {
+    const t = props.input.trim();
+    if (!t) return;
+    const newTodos = Array.from(props.todos);
+    newTodos.push({
+      id: props.nextId++,
+      text: t,
+      done: false,
+    });
+    props.todos = newTodos;
+    props.input = "";
+  };
+</script>
+
+<div class="p-3 flex gap-2" style="border-bottom: 1px solid var(--border-subtle)">
+  <input
+    type="text"
+    placeholder="Add a task…"
+    class="task-input flex-1 px-3 py-2 text-sm rounded-lg"
+    value="{props.input}"
+    oninput="(e)=> props.input = e.target.value"
+  />
+  <button type="button" onclick="add()" class="add-btn px-4 py-2 text-sm font-semibold text-white rounded-lg">Add</button>
+</div>

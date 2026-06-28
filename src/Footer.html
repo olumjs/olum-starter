@@ -1,0 +1,26 @@
+<script>
+  const clearDone = () =>
+    (props.todos = props.todos.map((t) => {
+      return {
+        id: t.id,
+        text: t.text,
+        done: false,
+      };
+    }));
+  const filter = (status) => (props.status = status);
+</script>
+<div class="px-4 py-2 flex items-center justify-between" style="border-top: 1px solid var(--border-subtle)">
+  <span class="text-xs" style="color: var(--fg-muted)">{props.todos.filter(todo => !todo.done).length} left</span>
+  <div class="flex gap-0.5">
+    <button class="filter-btn px-2 py-1 text-xs rounded capitalize {props.status == 'all' ? 'filter-btn-active' : ''}" onclick="filter('all')">
+      all
+    </button>
+    <button class="filter-btn px-2 py-1 text-xs rounded capitalize {props.status == 'active' ? 'filter-btn-active' : ''}" onclick="filter('active')">
+      active
+    </button>
+    <button class="filter-btn px-2 py-1 text-xs rounded capitalize {props.status == 'done' ? 'filter-btn-active' : ''}" onclick="filter('done')">
+      done
+    </button>
+  </div>
+  <button class="clear-btn text-xs" onclick="clearDone()">Clear done</button>
+</div>

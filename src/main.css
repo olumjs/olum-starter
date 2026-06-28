@@ -1,0 +1,150 @@
+:root {
+  --bg: #09090b;
+  --bg-alt: #0d0d0f;
+  --card: #111113;
+  --surface: #18181b;
+  --surface-2: #1e1e20;
+  --surface-hover: #1f1f22;
+  --hover-overlay: rgba(255, 255, 255, 0.05);
+
+  --fg: #fafafa;
+  --fg-secondary: #d4d4d8;
+  --fg-2: #a1a1aa;
+  --fg-muted: #71717a;
+  --fg-subtle: #52525b;
+
+  --border: #27272a;
+  --border-subtle: #1e1e20;
+  --border-hover: #3f3f46;
+
+  --glow: rgba(37, 201, 126, 0.12);
+  --glow-sm: rgba(37, 201, 126, 0.18);
+  --card-hover-bd: rgba(37, 201, 126, 0.38);
+  --shadow-card: rgba(0, 0, 0, 0.5);
+
+  --dot-color: rgba(113, 113, 122, 0.18);
+
+  --accent: #25c97e;
+  --accent-end: #25c97e;
+}
+
+/* ─── Light mode ───────────────────────────────────────── */
+[data-theme="light"] {
+  --bg: #ffffff;
+  --bg-alt: #f9fafb;
+  --card: #ffffff;
+  --surface: #f4f4f5;
+  --surface-2: #e4e4e7;
+  --surface-hover: #ececed;
+  --hover-overlay: rgba(0, 0, 0, 0.04);
+
+  --fg: #0a0a0a;
+  --fg-secondary: #27272a;
+  --fg-2: #52525b;
+  --fg-muted: #71717a;
+  --fg-subtle: #a1a1aa;
+
+  --border: #e4e4e7;
+  --border-subtle: #f0f0f0;
+  --border-hover: #d4d4d8;
+
+  --glow: rgba(37, 201, 126, 0.08);
+  --glow-sm: rgba(37, 201, 126, 0.12);
+  --card-hover-bd: rgba(37, 201, 126, 0.4);
+  --shadow-card: rgba(0, 0, 0, 0.08);
+
+  --dot-color: rgba(0, 0, 0, 0.07);
+}
+
+/* Checkbox */
+.checkbox {
+  width: 16px;
+  height: 16px;
+  border-radius: 4px;
+  flex-shrink: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.checkbox-empty {
+  border: 1.5px solid var(--border-hover);
+  background: transparent;
+}
+.checkbox-done {
+  border: 1.5px solid #25c97e;
+  background: #25c97e;
+}
+
+/* Task text */
+.task-text {
+  color: var(--fg-2);
+}
+.task-text-done {
+  color: var(--fg-subtle);
+  text-decoration: line-through;
+}
+
+/* Delete button — visible on row hover */
+.delete-btn {
+  width: 24px;
+  height: 24px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 4px;
+  color: var(--fg-2);
+  opacity: 0;
+  font-size: 18px;
+  line-height: 1;
+  transition: opacity 0.15s, color 0.15s, background 0.15s;
+}
+.task-row:hover .delete-btn {
+  opacity: 1;
+}
+.delete-btn:hover {
+  color: #ef4444;
+  background: rgba(239, 68, 68, 0.1);
+}
+
+/* Filter buttons */
+.filter-btn {
+  color: var(--fg-muted);
+}
+.filter-btn-active {
+  background: rgba(37, 201, 126, 0.1);
+  color: #25c97e;
+  font-weight: 500;
+}
+
+/* Clear done */
+.clear-btn {
+  color: var(--fg-muted);
+  transition: color 0.15s;
+}
+.clear-btn:hover {
+  color: #ef4444;
+}
+
+/* Add button */
+.add-btn {
+  background: #25c97e;
+  transition: filter 0.15s;
+}
+.add-btn:hover {
+  filter: brightness(1.05);
+}
+.add-btn:active {
+  transform: scale(0.95);
+}
+
+/* Input focus */
+.task-input {
+  border: 1px solid var(--border);
+  background: var(--surface);
+  color: var(--fg-2);
+  outline: none;
+  transition: border-color 0.15s;
+}
+.task-input:focus {
+  border-color: #25c97e;
+}
