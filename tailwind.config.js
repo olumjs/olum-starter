@@ -2,7 +2,9 @@
 module.exports = {
   content: ["./*.html"],
   theme: {
-    extend: {},
+    extend: {
+      fontFamily: { mono: ["Fira Code", "Cascadia Code", "Courier New", "monospace"] },
+    },
   },
   plugins: [],
-}
+};

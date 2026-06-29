@@ -2,6 +2,7 @@
   import Todos from "./Todos";
   import Footer from "./Footer";
   import AddTodo from "./AddTodo";
+import Card from "./Card";
   const state = {
     todos: [
       { id: 1, text: "Try the Olum framework", done: false },
@@ -11,18 +12,47 @@
     input: "",
     nextId: 4,
     status: "all", // all | active | done
+    isDark: false,
   };
+
+  function toggleTheme() {
+    state.isDark = !state.isDark;
+    const root = $0.querySelector("main");
+    const label = $0.querySelector("#theme-label");
+    root.setAttribute("data-theme", state.isDark ? "dark" : "light");
+    label.textContent = state.isDark ? "light" : "dark";
+  }
 </script>
 
-<div data-theme="light" class="flex flex-col items-center py-10 px-4" style="min-height: 440px">
-  <div class="w-full" style="max-width: 320px">
-    <div
-      class="rounded-2xl overflow-hidden"
-      style="background: var(--card); border: 1px solid var(--border); box-shadow: 0 1px 4px var(--shadow-card)"
-    >
-      <AddTodo nextId="{state.nextId}" todos="{state.todos}" input="{state.input}" />
-      <Todos todos="{state.todos}" status="{state.status}" />
-      <Footer todos="{state.todos}" status="{state.status}" />
+<main
+  data-theme="{state.isDark?'dark':'light'}"
+  class="min-h-dvh flex flex-col items-center justify-center px-5 py-10 transition-colors duration-200"
+>
+  <!-- Theme toggle -->
+  <button
+    onclick="toggleTheme()"
+    class="fixed top-4 right-4 text-xs font-mono px-3 py-1.5 rounded-lg border transition-colors duration-150 cursor-pointer"
+    style="background: var(--surface); border-color: var(--border); color: var(--fg-muted)"
+  >
+    <span id="theme-label">light</span>
+  </button>
+
+  <!-- Tagline -->
+  <p class="font-mono text-xs uppercase tracking-[0.06em] xmb-10" style="color: var(--fg-muted)">// a minimal js frontend framework</p>
+
+  <!-- todo app -->
+  <div class="flex flex-col items-center py-10 px-4">
+    <div class="w-full" style="max-width: 320px">
+      <div
+        class="rounded-2xl overflow-hidden"
+        style="background: var(--card); border: 1px solid var(--border); box-shadow: 0 1px 4px var(--shadow-card)"
+      >
+        <AddTodo nextId="{state.nextId}" todos="{state.todos}" input="{state.input}" />
+        <Todos todos="{state.todos}" status="{state.status}" />
+        <Footer todos="{state.todos}" status="{state.status}" />
+      </div>
     </div>
   </div>
-</div>
+
+  <Card/>
+</main>
