@@ -1,0 +1,14 @@
+<script>
+  import Todo from "./Todo";
+  import { props } from "olum";
+</script>
+<ul>
+  <for each="todo of props().todos" key="todo.id">
+    <if when="props().status=='all' || props().status=='active' && !todo.done || props().status=='done' && todo.done">
+      <Todo todo="{todo}" todos="{props().todos}" />
+    </if>
+  </for>
+  <if when="!props().todos.length">
+    <li class="py-4 text-center text-xs" style="color: var(--fg-subtle)">No tasks yet</li>
+  </if>
+</ul>

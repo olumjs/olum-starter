@@ -2,7 +2,7 @@
   import Todos from "./Todos";
   import Footer from "./Footer";
   import AddTodo from "./AddTodo";
-import Card from "./Card";
+  import Card from "./Card";
   const state = {
     todos: [
       { id: 1, text: "Try the Olum framework", done: false },
@@ -17,8 +17,8 @@ import Card from "./Card";
 
   function toggleTheme() {
     state.isDark = !state.isDark;
-    const root = $0.querySelector("main");
-    const label = $0.querySelector("#theme-label");
+    const root = host.querySelector("main");
+    const label = host.querySelector("#theme-label");
     root.setAttribute("data-theme", state.isDark ? "dark" : "light");
     label.textContent = state.isDark ? "light" : "dark";
   }
@@ -54,5 +54,5 @@ import Card from "./Card";
     </div>
   </div>
 
-  <Card/>
+  <!-- <Card /> -->
 </main>

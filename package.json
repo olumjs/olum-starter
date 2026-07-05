@@ -13,7 +13,8 @@
   "author": "Eissa Saber",
   "license": "ISC",
   "dependencies": {
-    "olum": "latest"
+    "olum": "latest",
+    "olum-router": "latest"
   },
   "devDependencies": {
     "olum-compiler": "latest"
