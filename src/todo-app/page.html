@@ -1,33 +1,39 @@
 <script>
   const state = {
     todos: [
-      { id: 1, text: "Try the Olum framework", done: false },
-      { id: 2, text: "Build a todo app", done: true },
-      { id: 3, text: "Ship something great", done: false },
+      { id: 1, text: "try the olum framework", done: false },
+      { id: 2, text: "build a todo app", done: true },
+      { id: 3, text: "ship something great", done: false },
     ],
     input: "",
   };
   const add = () => {
-    const t = state.input.trim();
-    if (!t) return;
-    state.todos = [...state.todos, { id: state.todos.length + 1, text: t, done: false }];
+    const text = state.input.trim();
+    if (!text) return;
+    state.todos = [...state.todos, { id: state.todos.length + 1, text, done: false }];
     state.input = "";
   };
-  const toggle = (id) => (state.todos = state.todos.map((t) => (t.id === id ? { ...t, done: !t.done } : t)));
-  const remove = (id) => (state.todos = state.todos.filter((t) => t.id !== id));
+  const toggle = (id) => {
+    state.todos = state.todos.map((t) => {
+      return t.id == id ? { ...t, done: !t.done } : t;
+    });
+  };
+  const remove = (id) => {
+    state.todos = state.todos.filter((t) => t.id !== id);
+  };
 </script>
 
 <main class="todo-page">
   <section>
     <header>
-      <input placeholder="Add a task…" value="{state.input}" oninput="(e)=> state.input = e.target.value" />
+      <input type="text" value="{state.input}" oninput="(e) => state.input = e.target.value" placeholder="Add todo.." />
       <button onclick="add()">Add</button>
     </header>
     <ul>
       <for each="todo of state.todos">
         <li data-done="{todo.done}" onclick="toggle(todo.id)">
           <p>{todo.text}</p>
-          <button onclick="remove(todo.id)">×</button>
+          <button onclick="remove(todo.id)">x</button>
         </li>
       </for>
       <if when="!state.todos.length">
