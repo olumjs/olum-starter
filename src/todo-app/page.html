@@ -1,0 +1,100 @@
+<script>
+  const state = {
+    todos: [
+      { id: 1, text: "Try the Olum framework", done: false },
+      { id: 2, text: "Build a todo app", done: true },
+      { id: 3, text: "Ship something great", done: false },
+    ],
+    input: "",
+    nextId: 4,
+    status: "all", // all | active | done
+    isDark: false
+  };
+  const add = () => {
+    const t = state.input.trim();
+    if (!t) return;
+    const newTodos = Array.from(state.todos);
+    newTodos.push({ id: state.nextId++, text: t, done: false });
+    state.todos = newTodos;
+    state.input = "";
+  };
+  const clearDone = () => (state.todos = state.todos.map((t) => ({ id: t.id, text: t.text, done: false })));
+  const filter = (status) => (state.status = status);
+  const toggle = (id) => (state.todos = state.todos.map((t) => (t.id === id ? { id: t.id, text: t.text, done: !t.done } : t)));
+  const remove = (id) => (state.todos = state.todos.filter((t) => t.id !== id));
+</script>
+
+<main
+  data-theme="{state.isDark?'dark':'light'}"
+  class="min-h-dvh flex flex-col items-center justify-center px-5 py-10 transition-colors duration-200"
+>
+  <div class="flex flex-col items-center py-10 px-4">
+    <div class="w-full" style="max-width: 320px">
+      <div
+        class="rounded-2xl overflow-hidden"
+        style="background: var(--card); border: 1px solid var(--border); box-shadow: 0 1px 4px var(--shadow-card)"
+      >
+        <!-- AddTodo -->
+        <div class="p-3 flex gap-2" style="border-bottom: 1px solid var(--border-subtle)">
+          <input
+            type="text"
+            placeholder="Add a task…"
+            class="task-input flex-1 px-3 py-2 text-sm rounded-lg"
+            value="{state.input}"
+            oninput="(e)=> state.input = e.target.value"
+          />
+          <button type="button" onclick="add()" class="add-btn px-4 py-2 text-sm font-semibold text-white rounded-lg">Add</button>
+        </div>
+
+        <!-- Todos -->
+        <ul>
+          <for each="todo of state.todos">
+            <if when="state.status=='all' || state.status=='active' && !todo.done || state.status=='done' && todo.done">
+              <!-- Todo -->
+              <li class="task-row flex items-center gap-3 px-4 py-3" style="border-bottom: 1px solid var(--border-subtle)">
+                <span class="checkbox {todo.done?'checkbox-done':'checkbox-empty'}" onclick="toggle(todo.id)">
+                  <svg width="9" height="7" viewBox="0 0 9 7" fill="none" class="check-symbol">
+                    <path d="M1 3.5l2.5 2.5 4.5-5" stroke="white" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"></path>
+                  </svg>
+                </span>
+                <span class="task-text flex-1 text-sm select-none {todo.done?'task-text-done':''}" onclick="toggle(todo.id)">{todo.text}</span>
+                <button class="delete-btn" onclick="remove(todo.id)">×</button>
+              </li>
+            </if>
+          </for>
+          <if when="!state.todos.length">
+            <li class="py-4 text-center text-xs" style="color: var(--fg-subtle)">No tasks yet</li>
+          </if>
+        </ul>
+
+        <!-- Footer -->
+        <if when="!state.isDark">
+          <div class="px-4 py-2 flex items-center justify-between" style="border-top: 1px solid var(--border-subtle)">
+            <span class="text-xs" style="color: var(--fg-muted)">{state.todos.filter(todo => !todo.done).length} left</span>
+            <div class="flex gap-0.5">
+              <button
+                class="filter-btn px-2 py-1 text-xs rounded capitalize {state.status == 'all' ? 'filter-btn-active' : ''}"
+                onclick="filter('all')"
+              >
+                all
+              </button>
+              <button
+                class="filter-btn px-2 py-1 text-xs rounded capitalize {state.status == 'active' ? 'filter-btn-active' : ''}"
+                onclick="filter('active')"
+              >
+                active
+              </button>
+              <button
+                class="filter-btn px-2 py-1 text-xs rounded capitalize {state.status == 'done' ? 'filter-btn-active' : ''}"
+                onclick="filter('done')"
+              >
+                done
+              </button>
+            </div>
+            <button class="clear-btn text-xs" onclick="clearDone()">Clear done</button>
+          </div>
+        </if>
+      </div>
+    </div>
+  </div>
+</main>
