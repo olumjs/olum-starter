@@ -1,33 +1,4 @@
 :root {
-  --bg: #09090b;
-  --bg-alt: #0d0d0f;
-  --card: #111113;
-  --surface: #18181b;
-  --surface-2: #1e1e20;
-  --surface-hover: #1f1f22;
-  --hover-overlay: rgba(255, 255, 255, 0.05);
-
-  --fg: #fafafa;
-  --fg-secondary: #d4d4d8;
-  --fg-2: #a1a1aa;
-  --fg-muted: #71717a;
-  --fg-subtle: #52525b;
-
-  --border: #27272a;
-  --border-subtle: #1e1e20;
-  --border-hover: #3f3f46;
-
-  --glow: rgba(37, 201, 126, 0.12);
-  --glow-sm: rgba(37, 201, 126, 0.18);
-  --card-hover-bd: rgba(37, 201, 126, 0.38);
-  --shadow-card: rgba(0, 0, 0, 0.5);
-  --dot-color: rgba(113, 113, 122, 0.18);
-
-  --accent: #25c97e;
-  --accent-end: #25c97e;
-}
-
-[data-theme="light"] {
   --bg: #ffffff;
   --bg-alt: #f9fafb;
   --card: #ffffff;
@@ -51,6 +22,9 @@
   --card-hover-bd: rgba(37, 201, 126, 0.4);
   --shadow-card: rgba(0, 0, 0, 0.08);
   --dot-color: rgba(0, 0, 0, 0.07);
+
+  --accent: #25c97e;
+  --accent-end: #25c97e;
 }
 
 /* Checkbox */
@@ -181,12 +155,4 @@ main {
 .nav-card:hover .card-arrow {
   color: var(--accent);
   transform: translateX(4px);
-}
-
-[data-theme="light"] .check-symbol path{
-  stroke: white;
-}
-
-[data-theme="dark"] .check-symbol path{
-  stroke: black;
 }
