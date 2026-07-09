@@ -1,25 +1,13 @@
 <script>
   import { props } from "olum";
-  const toggle = (id) => {
-    props().todos = props().todos.map((t) =>
-      t.id === id
-        ? {
-            id: t.id,
-            text: t.text,
-            done: !t.done,
-          }
-        : t
-    );
-  };
-  const remove = (id) => (props().todos = props().todos.filter((t) => t.id !== id));
 </script>
 
 <li class="task-row flex items-center gap-3 px-4 py-3" style="border-bottom: 1px solid var(--border-subtle)">
-  <span class="checkbox {props().todo.done?'checkbox-done':'checkbox-empty'}" onclick="toggle(props().todo.id)">
+  <span class="checkbox {props().todo.done?'checkbox-done':'checkbox-empty'}" onclick="props().toggle(props().todo.id)">
     <svg width="9" height="7" viewBox="0 0 9 7" fill="none" class="check-symbol">
       <path d="M1 3.5l2.5 2.5 4.5-5" stroke="white" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"></path>
     </svg>
   </span>
-  <span class="task-text flex-1 text-sm select-none {props().todo.done?'task-text-done':''}" onclick="toggle(props().todo.id)">{props().todo.text}</span>
-  <button class="delete-btn" onclick="remove(props().todo.id)">×</button>
+  <span class="task-text flex-1 text-sm select-none {props().todo.done?'task-text-done':''}" onclick="props().toggle(props().todo.id)">{props().todo.text}</span>
+  <button class="delete-btn" onclick="props().remove(props().todo.id)">×</button>
 </li>
