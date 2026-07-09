@@ -5,6 +5,8 @@
   };
 </script>
 
-<h1>Hello {state.name}!</h1>
-<input value="{state.name}" oninput="e => state.name = e.target.value" />
-<button onclick="() => state.count+=1">clicks: {state.count}</button>
+<h1 class="text-2xl font-bold mb-4">Hello {state.name}!</h1>
+
+<input class="border px-2 py-1 rounded" value="{state.name}" oninput="e => state.name = e.target.value" />
+
+<button class="ml-2 border px-3 py-1 rounded" onclick="() => state.count += 1">Clicks: {state.count}</button>
