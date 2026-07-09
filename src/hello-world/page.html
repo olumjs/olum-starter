@@ -1,0 +1,10 @@
+<script>
+  const state = {
+    name: "world",
+    count: 0,
+  };
+</script>
+
+<h1>Hello {state.name}!</h1>
+<input value="{state.name}" oninput="e => state.name = e.target.value" />
+<button onclick="() => state.count+=1">clicks: {state.count}</button>
