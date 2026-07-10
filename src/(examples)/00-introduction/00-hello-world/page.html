@@ -1,0 +1,10 @@
+<script>
+  const state = { name: "world", count: 0 };
+
+  const inc = () => state.count++;
+</script>
+
+<h1>Hello {state.name}!</h1>
+
+<input value="{state.name}" oninput="(e) => state.name = e.target.value" />
+<button onclick="inc()">clicks: {state.count}</button>

@@ -1,0 +1,6 @@
+<script>
+  const state = { name: "" };
+</script>
+
+<input value="{state.name}" oninput="(e) => state.name = e.target.value" placeholder="enter your name" />
+<p>Hello {state.name || "stranger"}!</p>

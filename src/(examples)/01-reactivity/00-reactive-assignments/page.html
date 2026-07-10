@@ -1,0 +1,10 @@
+<script>
+  const state = { count: 0 };
+
+  const handleClick = () => state.count++;
+</script>
+
+<button onclick="handleClick()">
+  Clicked {state.count}
+  {state.count === 1 ? 'time' : 'times'}
+</button>

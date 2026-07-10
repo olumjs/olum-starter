@@ -1,0 +1,123 @@
+<!--
+https://eugenkiss.github.io/7guis/tasks#circle
+
+Click on the canvas to draw a circle. Click on a circle
+to select it. Right-click on the canvas to adjust the
+radius of the selected circle.
+-->
+<script>
+  const clone = (circles) => circles.map(({ cx, cy, r }) => ({ cx, cy, r }));
+
+  const state = {
+    i: 0,
+    undoStack: [[]],
+    circles: [],
+    selected: undefined,
+    adjusting: false,
+  };
+  let adjusted = false;
+
+  const push = () => {
+    const newUndoStack = state.undoStack.slice(0, ++state.i);
+    newUndoStack.push(clone(state.circles));
+    state.undoStack = newUndoStack;
+  };
+
+  const handleClick = (event) => {
+    if (state.adjusting) {
+      state.adjusting = false;
+      if (adjusted) push();
+      return;
+    }
+
+    const circle = { cx: event.clientX, cy: event.clientY, r: 50 };
+    state.circles = state.circles.concat(circle);
+    state.selected = circle;
+    push();
+  };
+
+  const select = (circle, event) => {
+    if (!state.adjusting) {
+      event.stopPropagation();
+      state.selected = circle;
+    }
+  };
+
+  const contextMenu = (circle, event) => {
+    event.stopPropagation();
+    event.preventDefault();
+    state.adjusting = !state.adjusting;
+    if (state.adjusting) state.selected = circle;
+  };
+
+  const adjust = (event) => {
+    state.selected.r = +event.target.value;
+    state.circles = state.circles;
+    adjusted = true;
+  };
+
+  const travel = (d) => {
+    state.i += d;
+    state.circles = clone(state.undoStack[state.i]);
+    state.adjusting = false;
+  };
+</script>
+
+<style>
+  .controls {
+    position: absolute;
+    width: 100%;
+    text-align: center;
+  }
+
+  svg {
+    background-color: #eee;
+    width: 100%;
+    height: 100%;
+  }
+
+  circle {
+    stroke: black;
+  }
+
+  .adjuster {
+    position: absolute;
+    width: 80%;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    padding: 1em;
+    text-align: center;
+    background-color: rgba(255, 255, 255, 0.7);
+    border-radius: 4px;
+  }
+
+  input[type='range'] {
+    width: 100%;
+  }
+</style>
+
+<div class="controls">
+  <button onclick="travel(-1)" disabled="{state.i === 0}">undo</button>
+  <button onclick="travel(1)" disabled="{state.i === state.undoStack.length - 1}">redo</button>
+</div>
+
+<svg onclick="handleClick($event)">
+  <for each="circle of state.circles">
+    <circle
+      cx="{circle.cx}"
+      cy="{circle.cy}"
+      r="{circle.r}"
+      onclick="select(circle, $event)"
+      oncontextmenu="contextMenu(circle, $event)"
+      fill="{circle === state.selected ? '#ccc' : 'white'}"
+    />
+  </for>
+</svg>
+
+<if when="state.adjusting">
+  <div class="adjuster">
+    <p>adjust diameter of circle at {state.selected.cx}, {state.selected.cy}</p>
+    <input type="range" value="{state.selected.r}" oninput="adjust($event)" />
+  </div>
+</if>

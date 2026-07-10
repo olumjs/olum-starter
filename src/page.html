@@ -1,1 +1,72 @@
-<h1>Home page</h1>
+<script>
+  const routes = [
+    { path: "/introduction/hello-world", name: "IntroductionHelloWorld" },
+    { path: "/introduction/dynamic-attributes", name: "IntroductionDynamicAttributes" },
+    { path: "/introduction/styling", name: "IntroductionStyling" },
+    { path: "/introduction/html-tags", name: "IntroductionHtmlTags" },
+    { path: "/reactivity/reactive-assignments", name: "ReactivityReactiveAssignments" },
+    { path: "/reactivity/reactive-declarations", name: "ReactivityReactiveDeclarations" },
+    { path: "/reactivity/reactive-statements", name: "ReactivityReactiveStatements" },
+    { path: "/props/declaring-props", name: "PropsDeclaringProps" },
+    { path: "/props/default-values", name: "PropsDefaultValues" },
+    { path: "/props/spread-props", name: "PropsSpreadProps" },
+    { path: "/logic/if-blocks", name: "LogicIfBlocks" },
+    { path: "/logic/else-blocks", name: "LogicElseBlocks" },
+    { path: "/logic/else-if-blocks", name: "LogicElseIfBlocks" },
+    { path: "/logic/each-blocks", name: "LogicEachBlocks" },
+    { path: "/logic/keyed-each-blocks", name: "LogicKeyedEachBlocks" },
+    { path: "/logic/await-blocks", name: "LogicAwaitBlocks" },
+    { path: "/events/dom-events", name: "EventsDomEvents" },
+    { path: "/events/inline-handlers", name: "EventsInlineHandlers" },
+    { path: "/events/component-events", name: "EventsComponentEvents" },
+    { path: "/events/event-forwarding", name: "EventsEventForwarding" },
+    { path: "/events/dom-event-forwarding", name: "EventsDomEventForwarding" },
+    { path: "/bindings/text-inputs", name: "BindingsTextInputs" },
+    { path: "/bindings/numeric-inputs", name: "BindingsNumericInputs" },
+    { path: "/bindings/checkbox-inputs", name: "BindingsCheckboxInputs" },
+    { path: "/bindings/group-inputs", name: "BindingsGroupInputs" },
+    { path: "/bindings/textarea-inputs", name: "BindingsTextareaInputs" },
+    { path: "/bindings/file-inputs", name: "BindingsFileInputs" },
+    { path: "/bindings/select-bindings", name: "BindingsSelectBindings" },
+    { path: "/bindings/multiple-select-bindings", name: "BindingsMultipleSelectBindings" },
+    { path: "/bindings/each-block-bindings", name: "BindingsEachBlockBindings" },
+    { path: "/bindings/bind-this", name: "BindingsBindThis" },
+    { path: "/bindings/component-bindings", name: "BindingsComponentBindings" },
+    { path: "/lifecycle/onmount", name: "LifecycleOnmount" },
+    { path: "/lifecycle/ondestroy", name: "LifecycleOndestroy" },
+    { path: "/svg/clock", name: "SvgClock" },
+    { path: "/svg/bar-chart", name: "SvgBarChart" },
+    { path: "/svg/area-chart", name: "SvgAreaChart" },
+    { path: "/svg/scatterplot", name: "SvgScatterplot" },
+    { path: "/actions/actions", name: "ActionsActions" },
+    { path: "/actions/adding-parameters-to-actions", name: "ActionsAddingParametersToActions" },
+    { path: "/classes/classes", name: "ClassesClasses" },
+    { path: "/classes/class-shorthand", name: "ClassesClassShorthand" },
+    { path: "/composition/render-props", name: "CompositionRenderProps" },
+    { path: "/composition/render-prop-fallbacks", name: "CompositionRenderPropFallbacks" },
+    { path: "/special-elements/window", name: "SpecialElementsWindow" },
+    { path: "/special-elements/document", name: "SpecialElementsDocument" },
+    { path: "/special-elements/body", name: "SpecialElementsBody" },
+    { path: "/guis/guis-counter", name: "guisguisCounter" },
+    { path: "/guis/guis-temperature", name: "guisguisTemperature" },
+    { path: "/guis/guis-flight-booker", name: "guisguisFlightBooker" },
+    { path: "/guis/guis-timer", name: "guisguisTimer" },
+    { path: "/guis/guis-crud", name: "guisguisCrud" },
+    { path: "/guis/guis-circles", name: "guisguisCircles" },
+    { path: "/embeds/blog-write-less-code", name: "EmbedsBlogWriteLessCode" },
+  ];
+</script>
+
+<ul>
+  <for each="route of routes">
+    <li>
+      <a href="{route.path}">{route.name}</a>
+    </li>
+  </for>
+</ul>
+
+<style>
+  ul {
+    list-style-type: none;
+  }
+</style>

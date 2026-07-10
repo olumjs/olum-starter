@@ -1,0 +1,13 @@
+<script>
+  const state = { user: { loggedIn: false } };
+
+  const toggle = () => (state.user.loggedIn = !state.user.loggedIn);
+</script>
+
+<if when="state.user.loggedIn">
+  <button onclick="toggle()">Log out</button>
+</if>
+
+<if when="!state.user.loggedIn">
+  <button onclick="toggle()">Log in</button>
+</if>

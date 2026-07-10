@@ -1,0 +1,47 @@
+<script>
+  const state = {
+    questions: [
+      { id: 1, text: `Where did you go to school?` },
+      { id: 2, text: `What is your mother's name?` },
+      { id: 3, text: `What is another personal fact that an attacker could easily find with Google?` },
+    ],
+    selected: null,
+    answer: "",
+  };
+
+  const selectQuestion = (e) => {
+    state.selected = state.questions[e.target.selectedIndex];
+    state.answer = "";
+  };
+
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    alert(`answered question ${state.selected.id} (${state.selected.text}) with "${state.answer}"`);
+  };
+</script>
+
+<style>
+  input {
+    display: block;
+    width: 500px;
+    max-width: 100%;
+  }
+</style>
+
+<h2>Insecurity questions</h2>
+
+<form onsubmit="handleSubmit($event)">
+  <select onchange="selectQuestion($event)">
+    <for each="question of state.questions">
+      <option value="{question.id}">
+        {question.text}
+      </option>
+    </for>
+  </select>
+
+  <input value="{state.answer}" oninput="(e) => state.answer = e.target.value" />
+
+  <button disabled="{!state.answer}" type="submit"> Submit </button>
+</form>
+
+<p>selected question {state.selected ? state.selected.id : "[waiting...]"}</p>

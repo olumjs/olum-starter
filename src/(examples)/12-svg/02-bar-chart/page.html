@@ -1,0 +1,111 @@
+<!-- <script>
+  import { scaleLinear } from "d3-scale";
+
+  const points = [
+    { year: 1990, birthrate: 16.7 },
+    { year: 1995, birthrate: 14.6 },
+    { year: 2000, birthrate: 14.4 },
+    { year: 2005, birthrate: 14 },
+    { year: 2010, birthrate: 13 },
+    { year: 2015, birthrate: 12.4 }
+  ];
+
+  const xTicks = [1990, 1995, 2000, 2005, 2010, 2015];
+  const yTicks = [0, 5, 10, 15, 20];
+  const padding = { top: 20, right: 15, bottom: 20, left: 25 };
+
+  // No dimension-binding support yet (see docs/limitations.md), so width/height
+  // are fixed at the olum example's initial values instead of tracking clientWidth/clientHeight.
+  const width = 500;
+  const height = 200;
+
+  const xScale = scaleLinear().domain([0, xTicks.length]).range([padding.left, width - padding.right]);
+  const yScale = scaleLinear().domain([0, Math.max.apply(null, yTicks)]).range([height - padding.bottom, padding.top]);
+
+  const innerWidth = width - (padding.left + padding.right);
+  const barWidth = innerWidth / xTicks.length;
+
+  const formatMobile = (tick) => "'" + tick.toString().slice(-2);
+</script>
+
+<h2>US birthrate by year</h2>
+
+<div class="chart">
+  <svg>
+    <g class="axis y-axis">
+      <for each="tick of yTicks">
+        <g class="tick tick-{tick}" transform="translate(0, {yScale(tick)})">
+          <line x2="100%" />
+          <text y="-4">{tick} {tick === 20 ? ' per 1,000 population' : ''}</text>
+        </g>
+      </for>
+    </g>
+
+    <g class="axis x-axis">
+      <for each="point of points">
+        <g class="tick" transform="translate({xScale(points.indexOf(point))},{height})">
+          <text x="{barWidth / 2}" y="-4">{width > 380 ? point.year : formatMobile(point.year)}</text>
+        </g>
+      </for>
+    </g>
+
+    <g class="bars">
+      <for each="point of points">
+        <rect
+          x="{xScale(points.indexOf(point)) + 2}"
+          y="{yScale(point.birthrate)}"
+          width="{barWidth - 4}"
+          height="{yScale(0) - yScale(point.birthrate)}"
+        />
+      </for>
+    </g>
+  </svg>
+</div>
+
+<style>
+  h2 {
+    text-align: center;
+  }
+
+  .chart {
+    width: 100%;
+    max-width: 500px;
+    margin: 0 auto;
+  }
+
+  svg {
+    position: relative;
+    width: 100%;
+    height: 200px;
+  }
+
+  .tick {
+    font-family: Helvetica, Arial;
+    font-size: 0.725em;
+    font-weight: 200;
+  }
+
+  .tick line {
+    stroke: #e2e2e2;
+    stroke-dasharray: 2;
+  }
+
+  .tick text {
+    fill: #ccc;
+    text-anchor: start;
+  }
+
+  .tick.tick-0 line {
+    stroke-dasharray: 0;
+  }
+
+  .x-axis .tick text {
+    text-anchor: middle;
+  }
+
+  .bars rect {
+    fill: #a11;
+    stroke: none;
+    opacity: 0.65;
+  }
+</style> -->

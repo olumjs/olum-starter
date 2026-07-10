@@ -1,0 +1,22 @@
+<script>
+  import Keypad from "./Keypad";
+
+  const state = { pin: "" };
+
+  const view = () => (state.pin ? state.pin.replace(/\d(?!$)/g, "•") : "enter your pin");
+
+  const handleSubmit = () => alert(`submitted ${state.pin}`);
+</script>
+
+<style>
+  h1 {
+    color: #ccc;
+  }
+  h1.pin {
+    color: #333;
+  }
+</style>
+
+<h1 class="{state.pin ? 'pin' : ''}">{view()}</h1>
+
+<Keypad value="{state.pin}" onSubmit="{handleSubmit}" />

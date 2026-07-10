@@ -1,0 +1,36 @@
+<script>
+  const state = { status: "pending", value: null, error: null };
+
+  const getRandomNumber = async () => {
+    state.status = "pending";
+    try {
+      const res = await fetch(`/tutorial/random-number?min=0&max=100`);
+      const text = await res.text();
+      if (res.ok) {
+        state.value = text;
+        state.status = "ok";
+      } else {
+        throw new Error(text);
+      }
+    } catch (err) {
+      state.error = err;
+      state.status = "error";
+    }
+  };
+
+  const handleClick = () => getRandomNumber();
+
+  getRandomNumber();
+</script>
+
+<button onclick="handleClick()">generate random number</button>
+
+<if when="state.status === 'pending'">
+  <p>...waiting</p>
+</if>
+<else-if when="state.status === 'ok'">
+  <p>The number is {state.value}</p>
+</else-if>
+<else-if when="state.status === 'error'">
+  <p style="color:red;">{state.error.message}</p>
+</else-if>

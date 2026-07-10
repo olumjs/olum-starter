@@ -1,0 +1,42 @@
+<script>
+  import { onMount } from "olum";
+
+  const state = { photos: [] };
+
+  onMount(async () => {
+    const res = await fetch(`/tutorial/api/album`);
+    state.photos = await res.json();
+  });
+</script>
+
+<style>
+  .photos {
+    width: 100%;
+    display: grid;
+    grid-template-columns: repeat(5, 1fr);
+    grid-gap: 8px;
+  }
+
+  figure,
+  img {
+    width: 100%;
+    margin: 0;
+  }
+</style>
+
+<h1>Photo album</h1>
+
+<div class="photos">
+  <if when="state.photos.length > 0">
+    <for each="photo of state.photos">
+      <figure>
+        <img src="{photo.thumbnailUrl}" alt="{photo.title}" />
+        <figcaption>{photo.title}</figcaption>
+      </figure>
+    </for>
+  </if>
+  <else>
+    <!-- this block renders when photos.length === 0 -->
+    <p>loading...</p>
+  </else>
+</div>

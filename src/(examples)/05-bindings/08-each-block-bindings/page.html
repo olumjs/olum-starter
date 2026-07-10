@@ -1,0 +1,32 @@
+<script>
+  const state = {
+    todos: [
+      { done: false, text: "finish olum tutorial" },
+      { done: false, text: "build an app" },
+      { done: false, text: "world domination" },
+    ],
+  };
+
+  const add = () => (state.todos = state.todos.concat({ done: false, text: "" }));
+  const clear = () => (state.todos = state.todos.filter((t) => !t.done));
+  const remaining = () => state.todos.filter((t) => !t.done).length;
+
+  const toggleDone = (todo) => (e) => (state.todos[state.todos.indexOf(todo)].done = e.target.checked);
+  const setText = (todo) => (e) => (state.todos[state.todos.indexOf(todo)].text = e.target.value);
+</script>
+
+<h1>Todos</h1>
+
+<for each="todo of state.todos">
+  <div>
+    <input type="checkbox" checked="{todo.done}" onchange="toggleDone(todo)($event)" />
+
+    <input placeholder="What needs to be done?" value="{todo.text}" oninput="setText(todo)($event)" disabled="{todo.done}" />
+  </div>
+</for>
+
+<p>{remaining()} remaining</p>
+
+<button onclick="add()"> Add new </button>
+
+<button onclick="clear()"> Clear completed </button>

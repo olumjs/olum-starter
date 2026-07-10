@@ -1,0 +1,57 @@
+<!-- note: the original wraps the <ul> in transition:slide; OlumJS has no
+     transition system yet (see docs/limitations + UNCONVERTED backlog),
+     so it's a plain add/remove here. -->
+<script>
+  import { props } from "olum";
+  import File from "./File";
+  import Folder from "./Folder";
+
+  const { name, files } = props();
+  const state = { expanded: props().expanded ?? false };
+
+  const toggle = () => (state.expanded = !state.expanded);
+</script>
+
+<style>
+  button {
+    padding: 0 0 0 1.5em;
+    background: url(/tutorial/icons/folder.svg) 0 0.1em no-repeat;
+    background-size: 1em 1em;
+    font-weight: bold;
+    cursor: pointer;
+    border: none;
+    font-size: 14px;
+  }
+
+  .expanded {
+    background-image: url(/tutorial/icons/folder-open.svg);
+  }
+
+  ul {
+    padding: 0.2em 0 0 0.5em;
+    margin: 0 0 0 0.5em;
+    list-style: none;
+    border-left: 1px solid #eee;
+  }
+
+  li {
+    padding: 0.2em 0;
+  }
+</style>
+
+<button class="{state.expanded ? 'expanded' : ''}" onclick="toggle()">{name}</button>
+
+<if when="state.expanded">
+  <ul>
+    <for each="file of files">
+      <li>
+        <if when="file.type === 'folder'">
+          <Folder name="{file.name}" files="{file.files}" />
+        </if>
+        <else>
+          <File name="{file.name}" />
+        </else>
+      </li>
+    </for>
+  </ul>
+</if>

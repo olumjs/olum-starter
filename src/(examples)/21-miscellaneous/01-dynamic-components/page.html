@@ -1,0 +1,26 @@
+<!-- Olum has no <olum:component this={...}/> equivalent (see UNCONVERTED
+     backlog); this is the documented workaround: an if/else-if chain over
+     the known component set, driven by a plain string in state. -->
+<script>
+  import RedThing from "./RedThing";
+  import GreenThing from "./GreenThing";
+  import BlueThing from "./BlueThing";
+
+  const state = { color: "red" };
+</script>
+
+<select value="{state.color}" onchange="(e) => state.color = e.target.value">
+  <option value="red">red</option>
+  <option value="green">green</option>
+  <option value="blue">blue</option>
+</select>
+
+<if when="state.color === 'red'">
+  <RedThing />
+</if>
+<else-if when="state.color === 'green'">
+  <GreenThing />
+</else-if>
+<else>
+  <BlueThing />
+</else>

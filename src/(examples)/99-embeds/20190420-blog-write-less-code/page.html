@@ -1,0 +1,8 @@
+<script>
+  const state = { a: 1, b: 2 };
+</script>
+
+<input type="number" value="{state.a}" oninput="(e) => state.a = +e.target.value" />
+<input type="number" value="{state.b}" oninput="(e) => state.b = +e.target.value" />
+
+<p>{state.a} + {state.b} = {state.a + state.b}</p>

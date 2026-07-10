@@ -1,0 +1,23 @@
+<script>
+  const state = { c: 0, f: 32 };
+
+  const setBothFromC = (value) => {
+    state.c = +value;
+    state.f = +(32 + (9 / 5) * state.c).toFixed(1);
+  };
+
+  const setBothFromF = (value) => {
+    state.f = +value;
+    state.c = +((5 / 9) * (state.f - 32)).toFixed(1);
+  };
+</script>
+
+<style>
+  input {
+    width: 5em;
+  }
+</style>
+
+<!-- https://eugenkiss.github.io/7guis/tasks/#temp -->
+<input value="{state.c}" oninput="(e) => setBothFromC(e.target.value)" type="number" /> °C =
+<input value="{state.f}" oninput="(e) => setBothFromF(e.target.value)" type="number" /> °F

@@ -1,0 +1,7 @@
+<script>
+  import Inner from "./Inner";
+
+  const handleMessage = (payload) => alert(payload.text);
+</script>
+
+<Inner onMessage="{handleMessage}" />

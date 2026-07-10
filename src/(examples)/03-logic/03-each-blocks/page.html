@@ -1,0 +1,19 @@
+<script>
+  const cats = [
+    { id: "J---aiyznGQ", name: "Keyboard Cat" },
+    { id: "z_AbfPXTKms", name: "Maru" },
+    { id: "OUtn3pvWmpg", name: "Henri The Existential Cat" },
+  ];
+</script>
+
+<h1>The Famous Cats of YouTube</h1>
+
+<ul>
+  <for each="cat of cats">
+    <li>
+      <a target="_blank" rel="noreferrer" href="https://www.youtube.com/watch?v={cat.id}">
+        {cats.indexOf(cat) + 1}: {cat.name}
+      </a>
+    </li>
+  </for>
+</ul>

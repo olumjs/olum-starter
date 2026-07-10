@@ -1,0 +1,11 @@
+<script>
+  import OutsideBox from "./OutsideBox";
+  const state = { showModal: true };
+  const show = () => (state.showModal = true);
+  const hide = () => (state.showModal = false);
+</script>
+
+<button onclick="show()">Show Modal</button>
+<if when="state.showModal">
+  <OutsideBox onOutsideClick="{hide}" />
+</if>

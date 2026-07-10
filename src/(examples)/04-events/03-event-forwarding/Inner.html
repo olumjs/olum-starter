@@ -1,0 +1,9 @@
+<script>
+  import { props } from "olum";
+
+  const sayHello = () => {
+    props().onMessage({ text: "Hello!" });
+  };
+</script>
+
+<button onclick="sayHello()"> Click to say hello </button>

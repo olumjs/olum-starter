@@ -1,0 +1,7 @@
+<script>
+  import Outer from "./Outer";
+
+  const handleMessage = (payload) => alert(payload.text);
+</script>
+
+<Outer onMessage="{handleMessage}" />

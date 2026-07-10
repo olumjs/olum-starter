@@ -1,0 +1,57 @@
+<script>
+  const state = { scoops: 1, flavours: ["Mint choc chip"] };
+
+  const menu = ["Cookies and cream", "Mint choc chip", "Raspberry ripple"];
+
+  const setScoops = (n) => (state.scoops = n);
+
+  const onSelectFlavours = (e) => {
+    state.flavours = Array.from(e.target.options)
+      .filter((o) => o.selected)
+      .map((o) => o.value);
+  };
+
+  const join = (flavours) => {
+    if (flavours.length === 1) return flavours[0];
+    return `${flavours.slice(0, -1).join(", ")} and ${flavours[flavours.length - 1]}`;
+  };
+</script>
+
+<h2>Size</h2>
+
+<label>
+  <input type="radio" name="scoops" checked="{state.scoops === 1}" onchange="setScoops(1)" />
+  One scoop
+</label>
+
+<label>
+  <input type="radio" name="scoops" checked="{state.scoops === 2}" onchange="setScoops(2)" />
+  Two scoops
+</label>
+
+<label>
+  <input type="radio" name="scoops" checked="{state.scoops === 3}" onchange="setScoops(3)" />
+  Three scoops
+</label>
+
+<h2>Flavours</h2>
+
+<select multiple onchange="onSelectFlavours($event)">
+  <for each="flavour of menu">
+    <option value="{flavour}" selected="{state.flavours.includes(flavour)}">{flavour}</option>
+  </for>
+</select>
+
+<if when="state.flavours.length === 0">
+  <p>Please select at least one flavour</p>
+</if>
+<else-if when="state.flavours.length > state.scoops">
+  <p>Can't order more flavours than scoops!</p>
+</else-if>
+<else>
+  <p>
+    You ordered {state.scoops}
+    {state.scoops === 1 ? 'scoop' : 'scoops'}
+    of {join(state.flavours)}
+  </p>
+</else>

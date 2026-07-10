@@ -1,0 +1,7 @@
+<!-- https://eugenkiss.github.io/7guis/tasks#counter -->
+<script>
+  const state = { count: 0 };
+</script>
+
+<input type="number" value="{state.count}" oninput="(e) => state.count = +e.target.value" />
+<button onclick="() => state.count++">count</button>
