@@ -1,16 +1,22 @@
-<!-- <script>
+<script>
+  import { onMount } from "olum";
   import { marked } from "marked";
 
   const state = { text: `Some words are *italic*, some are **bold**` };
+  onMount(() => {
+   console.log("onMount", onMount);
+   console.log("marked", marked);
+  })
 </script>
 
 <style>
-  textarea {
+  input,textarea {
     width: 100%;
     height: 200px;
   }
 </style>
 
-<textarea value="{state.text}" oninput="(e) => state.text = e.target.value"></textarea>
+<!-- <textarea value="{state.text}" oninput="(e) => state.text = e.target.value"></textarea> -->
+<input value="{state.text}" oninput="(e) => state.text = e.target.value"/>
 
-<div html="marked(state.text)"></div> -->
+<div html="marked(state.text)"></div>

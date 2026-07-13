@@ -1,8 +1,9 @@
 <script>
   import { props } from "olum";
 
+  const { onMessage } = props();
   const sayHello = () => {
-    props().onMessage({ text: "Hello!" });
+    onMessage({ text: "Hello!" });
   };
 </script>
 
