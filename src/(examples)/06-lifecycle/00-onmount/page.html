@@ -4,7 +4,7 @@
   const state = { photos: [] };
 
   onMount(async () => {
-    const res = await fetch(`https://svelte.dev/tutorial/api/album`);
+    const res = await fetch("https://picsum.photos/v2/list?page=1&limit=10");
     state.photos = await res.json();
   });
 </script>
@@ -30,8 +30,8 @@
   <if when="state.photos.length > 0">
     <for each="photo of state.photos">
       <figure>
-        <img src="{photo.thumbnailUrl}" alt="{photo.title}" />
-        <figcaption>{photo.title}</figcaption>
+        <img src="https://picsum.photos/id/{photo.id}/150" alt="Photo by {photo.author}" />
+        <figcaption>{photo.author}</figcaption>
       </figure>
     </for>
   </if>

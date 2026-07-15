@@ -19,9 +19,8 @@
   });
 </script>
 
-<!-- note: this mutates state.elapsed every animation frame, so per OlumJS
-     limitation #1 the whole component (including these inputs) re-renders
-     on every frame — faithful to the original, but heavier than Olum here. -->
+<!-- state.elapsed changes every animation frame, so the component re-renders
+     every frame too. -->
 <label>
   elapsed time:
   <progress value="{state.elapsed / state.duration}"></progress>

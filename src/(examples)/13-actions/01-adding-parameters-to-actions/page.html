@@ -1,10 +1,7 @@
 <!--
-  Olum has no `use:action` directive: the longpress action is wired up by
-  hand in onMount against the button, found via host.querySelector. Its
-  `update(newDuration)` hook isn't needed here — any state change (e.g. moving
-  the range slider) rebuilds this whole component (see docs/limitations.md),
-  which naturally re-runs onMount and re-attaches the action with the current
-  state.duration, so the action always sees the latest value on next mount.
+  The longpress action is attached by hand in onMount. Its update() hook isn't
+  needed: a state change rebuilds the component, so onMount re-runs and
+  re-attaches the action with the current duration.
 -->
 <script>
   import { onMount } from "olum";

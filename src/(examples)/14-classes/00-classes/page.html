@@ -1,12 +1,14 @@
 <script>
-  const state = { current: "foo" };
+  const tabs = ["core", "router", "compiler"];
+
+  const state = { current: "core" };
+
+  const select = (tab) => (state.current = tab);
 </script>
 
-<button class="{state.current === 'foo' ? 'active' : ''}" onclick="state.current = 'foo'">foo</button>
-
-<button class="{state.current === 'bar' ? 'active' : ''}" onclick="state.current = 'bar'">bar</button>
-
-<button class="{state.current === 'baz' ? 'active' : ''}" onclick="state.current = 'baz'">baz</button>
+<for each="tab of tabs">
+  <button class="{state.current === tab ? 'active' : ''}" onclick="select(tab)">{tab}</button>
+</for>
 
 <style>
   button {
@@ -14,7 +16,7 @@
   }
 
   .active {
-    background-color: #ff3e00;
+    background-color: #25c97e;
     color: white;
   }
 </style>

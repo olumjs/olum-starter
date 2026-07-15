@@ -1,22 +1,22 @@
 <script>
   const state = {
-    questions: [
-      { id: 1, text: `Where did you go to school?` },
-      { id: 2, text: `What is your mother's name?` },
-      { id: 3, text: `What is another personal fact that an attacker could easily find with Google?` },
+    topics: [
+      { id: 1, text: "The compiler" },
+      { id: 2, text: "The router" },
+      { id: 3, text: "The docs" },
     ],
     selected: null,
-    answer: "",
+    note: "",
   };
 
-  const selectQuestion = (e) => {
-    state.selected = state.questions[e.target.selectedIndex];
-    state.answer = "";
+  const selectTopic = (e) => {
+    state.selected = state.topics[e.target.selectedIndex];
+    state.note = "";
   };
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    alert(`answered question ${state.selected.id} (${state.selected.text}) with "${state.answer}"`);
+    alert(`Feedback on ${state.selected.text} (#${state.selected.id}): "${state.note}"`);
   };
 </script>
 
@@ -28,20 +28,20 @@
   }
 </style>
 
-<h2>Insecurity questions</h2>
+<h2>Tell us what to improve</h2>
 
 <form onsubmit="handleSubmit()">
-  <select onchange="selectQuestion()">
-    <for each="question of state.questions">
-      <option value="{question.id}" selected="{state.selected && state.selected.id === question.id}">
-        {question.text}
+  <select onchange="selectTopic()">
+    <for each="topic of state.topics">
+      <option value="{topic.id}" selected="{state.selected && state.selected.id === topic.id}">
+        {topic.text}
       </option>
     </for>
   </select>
 
-  <input value="{state.answer}" oninput="(e) => state.answer = e.target.value" />
+  <input value="{state.note}" oninput="(e) => state.note = e.target.value" placeholder="what would you change?" />
 
-  <button disabled="{!state.answer}" type="submit"> Submit </button>
+  <button disabled="{!state.note}" type="submit"> Submit </button>
 </form>
 
-<p>selected question {state.selected ? state.selected.id : "[waiting...]"}</p>
+<p>selected topic {state.selected ? state.selected.id : "[waiting...]"}</p>

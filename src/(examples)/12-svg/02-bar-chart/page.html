@@ -1,34 +1,30 @@
 <script>
   import { scaleLinear } from "d3-scale";
 
-  const points = [
-    { year: 1990, birthrate: 16.7 },
-    { year: 1995, birthrate: 14.6 },
-    { year: 2000, birthrate: 14.4 },
-    { year: 2005, birthrate: 14 },
-    { year: 2010, birthrate: 13 },
-    { year: 2015, birthrate: 12.4 }
+  // Measured from the installed packages: dist build, minified, then gzipped.
+  const bars = [
+    { label: "olum", kb: 26.2 },
+    { label: "olum min", kb: 8.7 },
+    { label: "olum gz", kb: 3.2 },
+    { label: "router", kb: 9.6 },
+    { label: "router min", kb: 3.9 },
+    { label: "router gz", kb: 1.9 },
   ];
 
-  const xTicks = [1990, 1995, 2000, 2005, 2010, 2015];
-  const yTicks = [0, 5, 10, 15, 20];
+  const yTicks = [0, 10, 20, 30];
   const padding = { top: 20, right: 15, bottom: 20, left: 25 };
 
-  // No dimension-binding support yet (see docs/limitations.md), so width/height
-  // are fixed at the Olum example's initial values instead of tracking clientWidth/clientHeight.
+  // Fixed size — no dimension bindings yet.
   const width = 500;
   const height = 200;
 
-  const xScale = scaleLinear().domain([0, xTicks.length]).range([padding.left, width - padding.right]);
-  const yScale = scaleLinear().domain([0, Math.max.apply(null, yTicks)]).range([height - padding.bottom, padding.top]);
+  const xScale = scaleLinear().domain([0, bars.length]).range([padding.left, width - padding.right]);
+  const yScale = scaleLinear().domain([0, Math.max(...yTicks)]).range([height - padding.bottom, padding.top]);
 
-  const innerWidth = width - (padding.left + padding.right);
-  const barWidth = innerWidth / xTicks.length;
-
-  const formatMobile = (tick) => "'" + tick.toString().slice(-2);
+  const barWidth = (width - padding.left - padding.right) / bars.length;
 </script>
 
-<h2>US birthrate by year</h2>
+<h2>Olum bundle size</h2>
 
 <div class="chart">
   <svg>
@@ -36,27 +32,22 @@
       <for each="tick of yTicks">
         <g class="tick tick-{tick}" transform="translate(0, {yScale(tick)})">
           <line x2="100%" />
-          <text y="-4">{tick} {tick === 20 ? ' per 1,000 population' : ''}</text>
+          <text y="-4">{tick} {tick === 30 ? 'kB' : ''}</text>
         </g>
       </for>
     </g>
 
     <g class="axis x-axis">
-      <for each="point of points">
-        <g class="tick" transform="translate({xScale(points.indexOf(point))},{height})">
-          <text x="{barWidth / 2}" y="-4">{width > 380 ? point.year : formatMobile(point.year)}</text>
+      <for each="(bar, i) of bars">
+        <g class="tick" transform="translate({xScale(i)},{height})">
+          <text x="{barWidth / 2}" y="-4">{bar.label}</text>
         </g>
       </for>
     </g>
 
     <g class="bars">
-      <for each="point of points">
-        <rect
-          x="{xScale(points.indexOf(point)) + 2}"
-          y="{yScale(point.birthrate)}"
-          width="{barWidth - 4}"
-          height="{yScale(0) - yScale(point.birthrate)}"
-        />
+      <for each="(bar, i) of bars">
+        <rect x="{xScale(i) + 2}" y="{yScale(bar.kb)}" width="{barWidth - 4}" height="{yScale(0) - yScale(bar.kb)}" />
       </for>
     </g>
   </svg>
@@ -80,7 +71,6 @@
   }
 
   .tick {
-    font-family: Helvetica, Arial;
     font-size: 0.725em;
     font-weight: 200;
   }
@@ -91,7 +81,7 @@
   }
 
   .tick text {
-    fill: #ccc;
+    fill: #888;
     text-anchor: start;
   }
 
@@ -104,8 +94,8 @@
   }
 
   .bars rect {
-    fill: #a11;
+    fill: #25c97e;
     stroke: none;
-    opacity: 0.65;
+    opacity: 0.8;
   }
 </style>

@@ -4,36 +4,32 @@
   const root = [
     {
       type: "folder",
-      name: "Important work stuff",
-      files: [{ type: "file", name: "quarterly-results.xlsx" }],
-    },
-    {
-      type: "folder",
-      name: "Animal GIFs",
+      name: "src",
       files: [
         {
           type: "folder",
-          name: "Dogs",
-          files: [
-            { type: "file", name: "treadmill.gif" },
-            { type: "file", name: "rope-jumping.gif" },
-          ],
+          name: "todo-app",
+          files: [{ type: "file", name: "page.html" }],
         },
-        {
-          type: "folder",
-          name: "Goats",
-          files: [
-            { type: "file", name: "parkour.gif" },
-            { type: "file", name: "rampage.gif" },
-          ],
-        },
-        { type: "file", name: "cat-roomba.gif" },
-        { type: "file", name: "duck-shuffle.gif" },
-        { type: "file", name: "monkey-on-a-pig.gif" },
+        { type: "file", name: "page.html" },
       ],
     },
-    { type: "file", name: "TODO.md" },
+    {
+      type: "folder",
+      name: "public",
+      files: [
+        {
+          type: "folder",
+          name: "assets",
+          files: [{ type: "file", name: "olum-logo.svg" }],
+        },
+        { type: "file", name: "index.html" },
+        { type: "file", name: "main.css" },
+      ],
+    },
+    { type: "file", name: "package.json" },
+    { type: "file", name: "README.md" },
   ];
 </script>
 
-<Folder name="Home" files="{root}" expanded="{true}" />
+<Folder name="olum-starter" files="{root}" expanded="{true}" />

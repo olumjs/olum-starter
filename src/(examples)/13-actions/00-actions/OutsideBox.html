@@ -1,9 +1,7 @@
 <!--
-  Olum has no `use:action` directive and onMount is component-scoped (not
-  per-element), so the clickOutside action is wired up on this small wrapper
-  component's own root element instead of directly on a <div> in App.html.
-  This component mounts/unmounts exactly when the <if> in App.html toggles,
-  which lines up with the action's own mount/destroy timing.
+  onMount is component-scoped rather than per-element, so clickOutside is wired
+  up on this wrapper's own root. It mounts and unmounts with the <if> in
+  page.html, which is exactly the action's lifetime.
 -->
 <script>
   import { props, onMount } from "olum";
@@ -36,7 +34,7 @@
     align-items: center;
     padding: 8px;
     border-radius: 4px;
-    background-color: #ff3e00;
+    background-color: #25c97e;
     color: #fff;
     text-align: center;
     font-weight: bold;

@@ -1,25 +1,20 @@
 <script>
   const state = {
     todos: [
-      { done: false, text: "finish Olum tutorial" },
+      { done: false, text: "try Olum" },
       { done: false, text: "build an app" },
-      { done: false, text: "world domination" },
+      { done: false, text: "ship it" },
     ],
   };
 
   const add = () => (state.todos = state.todos.concat({ done: false, text: "" }));
   const clear = () => (state.todos = state.todos.filter((t) => !t.done));
   const remaining = () => state.todos.filter((t) => !t.done).length;
-  const toggleDone = (index, e) => {
-    const newTodos = Array.from(state.todos);
-    newTodos[index].done = e.target.checked;
-    state.todos = newTodos;
-  };
 
-  const setText = (index, e) => {
-    const newTodos = Array.from(state.todos);
-    newTodos[index].text = e.target.value;
-    state.todos = newTodos;
+  // One handler for both inputs: the checkbox edits `done`, the text field edits `text`.
+  const edit = (index, e) => {
+    const patch = e.target.type === "checkbox" ? { done: e.target.checked } : { text: e.target.value };
+    state.todos = state.todos.map((todo, i) => (i === index ? { ...todo, ...patch } : todo));
   };
 </script>
 
@@ -27,9 +22,9 @@
 
 <for each="(todo, index) of state.todos">
   <div>
-    <input type="checkbox" checked="{todo.done}" onchange="toggleDone(index, $event)" />
+    <input type="checkbox" checked="{todo.done}" onchange="edit(index, $event)" />
 
-    <input placeholder="What needs to be done?" value="{todo.text}" oninput="setText(index,$event)" disabled="{todo.done}" />
+    <input placeholder="What needs to be done?" value="{todo.text}" oninput="edit(index, $event)" disabled="{todo.done}" />
   </div>
 </for>
 

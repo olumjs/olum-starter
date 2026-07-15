@@ -1,59 +1,54 @@
 <script>
-  const state = {
-    scoops: 1,
-    flavours: ["Mint choc chip"],
-    menu: ["Cookies and cream", "Mint choc chip", "Raspberry ripple"],
+  const state = { tier: 1, packages: ["olum"] };
+
+  const tiers = { 1: "Minimal", 2: "Standard", 3: "Full" };
+  const registry = ["olum", "olum-router", "olum-compiler"];
+
+  const setTier = (tier) => (state.tier = tier);
+
+  const toggle = (pkg, e) => {
+    if (e.target.checked) state.packages = state.packages.concat(pkg);
+    else state.packages = state.packages.filter((p) => p !== pkg);
   };
 
-  const setScoops = (n) => () => (state.scoops = n);
+  const plural = (n) => (n === 1 ? "package" : "packages");
 
-  const toggleFlavour = (flavour) => (e) => {
-    if (e.target.checked) state.flavours = state.flavours.concat(flavour);
-    else state.flavours = state.flavours.filter((f) => f !== flavour);
-  };
-
-  const join = (flavours) => {
-    if (flavours.length === 1) return flavours[0];
-    return `${flavours.slice(0, -1).join(", ")} and ${flavours[flavours.length - 1]}`;
+  const join = (list) => {
+    if (list.length === 1) return list[0];
+    return `${list.slice(0, -1).join(", ")} and ${list[list.length - 1]}`;
   };
 </script>
 
-<h2>Size</h2>
+<style>
+  label {
+    display: block;
+  }
+</style>
 
-<label>
-  <input type="radio" checked="{state.scoops === 1}" onchange="setScoops(1)()" />
-  One scoop
-</label>
+<h2>Template</h2>
 
-<label>
-  <input type="radio" checked="{state.scoops === 2}" onchange="setScoops(2)()" />
-  Two scoops
-</label>
-
-<label>
-  <input type="radio" checked="{state.scoops === 3}" onchange="setScoops(3)()" />
-  Three scoops
-</label>
-
-<h2>Flavours</h2>
-
-<for each="flavour of state.menu">
+<for each="tier of [1, 2, 3]">
   <label>
-    <input type="checkbox" checked="{state.flavours.includes(flavour)}" onchange="toggleFlavour(flavour)($event)" />
-    {flavour}
+    <input type="radio" checked="{state.tier === tier}" onchange="setTier(tier)" />
+    {tiers[tier]} — up to {tier} {plural(tier)}
   </label>
 </for>
 
-<if when="state.flavours.length === 0">
-  <p>Please select at least one flavour</p>
+<h2>Packages</h2>
+
+<for each="pkg of registry">
+  <label>
+    <input type="checkbox" checked="{state.packages.includes(pkg)}" onchange="toggle(pkg, $event)" />
+    {pkg}
+  </label>
+</for>
+
+<if when="state.packages.length === 0">
+  <p>Please select at least one package</p>
 </if>
-<else-if when="state.flavours.length > state.scoops">
-  <p>Can't order more flavours than scoops!</p>
+<else-if when="state.packages.length > state.tier">
+  <p>The {tiers[state.tier]} template holds only {state.tier} {plural(state.tier)}</p>
 </else-if>
 <else>
-  <p>
-    You ordered {state.scoops}
-    {state.scoops === 1 ? "scoop" : "scoops"}
-    of {join(state.flavours)}
-  </p>
+  <p>Scaffolding {tiers[state.tier]} with {join(state.packages)}</p>
 </else>

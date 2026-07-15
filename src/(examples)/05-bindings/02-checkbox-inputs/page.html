@@ -4,14 +4,14 @@
 
 <label>
   <input type="checkbox" checked="{state.yes}" onchange="(e) => state.yes = e.target.checked" />
-  Yes! Send me regular email spam
+  Email me when a new Olum version ships
 </label>
 
 <if when="state.yes">
-  <p>Thank you. We will bombard your inbox and sell your personal details.</p>
+  <p>You're subscribed — expect a note on each release, nothing else.</p>
 </if>
 <else>
-  <p>You must opt-in to continue. If you're not paying, you're the product.</p>
+  <p>Tick the box to opt in.</p>
 </else>
 
 <button disabled="{!state.yes}"> Subscribe </button>

@@ -1,7 +1,7 @@
 <script>
   import { props } from "olum";
 
-  const select = (num) => () => (props().value = (props().value || "") + num);
+  const select = (num) => (props().value = (props().value || "") + num);
   const clear = () => (props().value = "");
 </script>
 
@@ -19,17 +19,11 @@
 </style>
 
 <div class="keypad">
-  <button onclick="select(1)()">1</button>
-  <button onclick="select(2)()">2</button>
-  <button onclick="select(3)()">3</button>
-  <button onclick="select(4)()">4</button>
-  <button onclick="select(5)()">5</button>
-  <button onclick="select(6)()">6</button>
-  <button onclick="select(7)()">7</button>
-  <button onclick="select(8)()">8</button>
-  <button onclick="select(9)()">9</button>
+  <for each="num of [1, 2, 3, 4, 5, 6, 7, 8, 9]">
+    <button onclick="select(num)">{num}</button>
+  </for>
 
   <button disabled="{!props().value}" onclick="clear()">clear</button>
-  <button onclick="select(0)()">0</button>
+  <button onclick="select(0)">0</button>
   <button disabled="{!props().value}" onclick="props().onSubmit()">submit</button>
 </div>

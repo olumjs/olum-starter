@@ -1,26 +1,25 @@
-<!-- Olum has no <Olum:component this={...}/> equivalent (see UNCONVERTED
-     backlog); this is the documented workaround: an if/else-if chain over
-     the known component set, driven by a plain string in state. -->
+<!-- No dynamic <component this={...}/> equivalent yet: switch over the known
+     component set with if/else-if, driven by a plain string in state. -->
 <script>
-  import RedThing from "./RedThing";
-  import GreenThing from "./GreenThing";
-  import BlueThing from "./BlueThing";
+  import CorePanel from "./CorePanel";
+  import RouterPanel from "./RouterPanel";
+  import CompilerPanel from "./CompilerPanel";
 
-  const state = { color: "red" };
+  const state = { pkg: "core" };
 </script>
 
-<select onchange="(e) => state.color = e.target.value">
-  <option value="red" selected="{state.color === 'red'}">red</option>
-  <option value="green" selected="{state.color === 'green'}">green</option>
-  <option value="blue" selected="{state.color === 'blue'}">blue</option>
+<select onchange="(e) => state.pkg = e.target.value">
+  <option value="core" selected="{state.pkg === 'core'}">olum</option>
+  <option value="router" selected="{state.pkg === 'router'}">olum-router</option>
+  <option value="compiler" selected="{state.pkg === 'compiler'}">olum-compiler</option>
 </select>
 
-<if when="state.color === 'red'">
-  <RedThing />
+<if when="state.pkg === 'core'">
+  <CorePanel />
 </if>
-<else-if when="state.color === 'green'">
-  <GreenThing />
+<else-if when="state.pkg === 'router'">
+  <RouterPanel />
 </else-if>
 <else>
-  <BlueThing />
+  <CompilerPanel />
 </else>
