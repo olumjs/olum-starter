@@ -5,7 +5,7 @@
 
   onMount(() => {
     const interval = setInterval(() => state.seconds++, 1000);
-    return () => clearInterval(interval);
+    return () => clearInterval(interval); // onDestroy
   });
 </script>
 

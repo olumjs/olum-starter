@@ -30,10 +30,10 @@
 
 <h2>Insecurity questions</h2>
 
-<form onsubmit="handleSubmit($event)">
-  <select onchange="selectQuestion($event)">
+<form onsubmit="handleSubmit()">
+  <select onchange="selectQuestion()">
     <for each="question of state.questions">
-      <option value="{question.id}">
+      <option value="{question.id}" selected="{state.selected && state.selected.id === question.id}">
         {question.text}
       </option>
     </for>

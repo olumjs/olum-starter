@@ -55,7 +55,7 @@
     const index = state.people.indexOf(person);
     state.people = [...state.people.slice(0, index), ...state.people.slice(index + 1)];
     state.first = state.last = "";
-    state.i = Math.min(state.i, filteredPeople().length - 2);
+    state.i = Math.min(state.i, filteredPeople().length - 1);
   };
 </script>
 
@@ -83,9 +83,9 @@
 
 <input placeholder="filter prefix" value="{state.prefix}" oninput="(e) => state.prefix = e.target.value" />
 
-<select value="{state.i}" size="5" onchange="(e) => state.i = +e.target.value">
-  <for each="person of filteredPeople()">
-    <option value="{filteredPeople().indexOf(person)}">{person.last}, {person.first}</option>
+<select size="5" onchange="(e) => state.i = +e.target.value">
+  <for each="(person, index) of filteredPeople()">
+    <option value="{index}" selected="{index === state.i}">{person.last}, {person.first}</option>
   </for>
 </select>
 

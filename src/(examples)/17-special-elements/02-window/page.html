@@ -1,17 +1,21 @@
 <script>
   import { onMount } from "olum";
 
-  const state = { key: undefined, keyCode: undefined };
+  const state = { keys: [] };
+  let timer;
 
   const handleKeydown = (event) => {
-    state.key = event.key;
-    state.keyCode = event.keyCode;
+    const key = event.key === " " ? "Space" : event.key;
+    state.keys = [...state.keys, key].slice(-8);
+    clearTimeout(timer);
+    timer = setTimeout(() => (state.keys = []), 2000);
   };
 
   onMount(() => {
     window.addEventListener("keydown", handleKeydown);
     return () => {
       window.removeEventListener("keydown", handleKeydown);
+      clearTimeout(timer);
     };
   });
 </script>
@@ -22,13 +26,14 @@
     height: 100%;
     align-items: center;
     justify-content: center;
-    flex-direction: column;
+    flex-wrap: wrap;
+    gap: 0.5em;
   }
 
   kbd {
     background-color: #eee;
     border-radius: 4px;
-    font-size: 6em;
+    font-size: 2em;
     padding: 0.2em 0.5em;
     border-top: 5px solid rgba(255, 255, 255, 0.5);
     border-left: 5px solid rgba(255, 255, 255, 0.5);
@@ -36,12 +41,17 @@
     border-bottom: 5px solid rgba(0, 0, 0, 0.2);
     color: #555;
   }
+
+  p {
+    color: #888;
+  }
 </style>
 
-<div style="text-align:center;">
-  <if when="state.key">
-    <kbd>{state.key === ' ' ? 'Space' : state.key}</kbd>
-    <p>{state.keyCode}</p>
+<div>
+  <if when="state.keys.length">
+    <for each="(key, i) of state.keys">
+      <kbd>{key}</kbd>
+    </for>
   </if>
   <else>
     <p>Focus this window and press any key</p>
