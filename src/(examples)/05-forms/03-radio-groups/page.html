@@ -1,0 +1,59 @@
+<script>
+  const state = {
+    slices: 1,
+    toppings: ["Roasted garlic"],
+    menu: ["Mushrooms", "Roasted garlic", "Hot peppers"],
+  };
+
+  const setSlices = (n) => () => (state.slices = n);
+
+  const toggleTopping = (topping) => (e) => {
+    if (e.target.checked) state.toppings = state.toppings.concat(topping);
+    else state.toppings = state.toppings.filter((t) => t !== topping);
+  };
+
+  const join = (toppings) => {
+    if (toppings.length === 1) return toppings[0];
+    return `${toppings.slice(0, -1).join(", ")} and ${toppings[toppings.length - 1]}`;
+  };
+</script>
+
+<h2>Slices</h2>
+
+<label>
+  <input type="radio" checked="{state.slices === 1}" onchange="setSlices(1)()" />
+  One slice
+</label>
+
+<label>
+  <input type="radio" checked="{state.slices === 2}" onchange="setSlices(2)()" />
+  Two slices
+</label>
+
+<label>
+  <input type="radio" checked="{state.slices === 3}" onchange="setSlices(3)()" />
+  Three slices
+</label>
+
+<h2>Toppings</h2>
+
+<for each="topping of state.menu">
+  <label>
+    <input type="checkbox" checked="{state.toppings.includes(topping)}" onchange="toggleTopping(topping)($event)" />
+    {topping}
+  </label>
+</for>
+
+<if when="state.toppings.length === 0">
+  <p>Pick at least one topping</p>
+</if>
+<else-if when="state.toppings.length > state.slices">
+  <p>That's more toppings than slices!</p>
+</else-if>
+<else>
+  <p>
+    You ordered {state.slices}
+    {state.slices === 1 ? "slice" : "slices"}
+    with {join(state.toppings)}
+  </p>
+</else>

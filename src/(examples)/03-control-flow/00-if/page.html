@@ -1,0 +1,13 @@
+<script>
+  const state = { conn: { online: false } };
+
+  const toggle = () => (state.conn = { online: !state.conn.online });
+</script>
+
+<if when="state.conn.online">
+  <button onclick="toggle()">Disconnect</button>
+</if>
+
+<if when="!state.conn.online">
+  <button onclick="toggle()">Connect</button>
+</if>

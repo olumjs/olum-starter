@@ -25,6 +25,143 @@
 
   --accent: #25c97e;
   --accent-end: #25c97e;
+  --accent-ink: #16a06b; /* darker green for text/links on white */
+}
+
+/* ── Examples identity ─────────────────────────────────────────
+   Minimal global layer. Everything interactive uses :where() so a
+   component's own <style> always wins over these defaults. */
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+html,
+body {
+  height: 100%;
+}
+
+body {
+  margin: 0;
+  font-family: ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+  font-size: 15px;
+  line-height: 1.6;
+  color: var(--fg-secondary);
+  background: var(--bg);
+  -webkit-font-smoothing: antialiased;
+  overflow-x: hidden;
+}
+
+/* The router mounts each page component into #app as a div[data-olum].
+   This height chain is what lets examples use height:100% (analog clock,
+   canvas, key viewer, pointer trackers). */
+#app {
+  height: 90dvh;
+  /* overflow-y: auto; */
+}
+#app > [data-olum] {
+  display: block;
+  height: 100%;
+  padding: 1rem;
+  margin: 0 auto;
+}
+
+::selection {
+  background: var(--accent);
+  color: #fff;
+}
+
+h1,
+h2 {
+  line-height: 1.25;
+  color: var(--fg);
+}
+h1 {
+  font-size: 1.6rem;
+  margin: 0 0 1rem;
+}
+h2 {
+  font-size: 1.15rem;
+  margin: 1.2rem 0 0.6rem;
+}
+
+a:where(:any-link) {
+  color: var(--accent-ink);
+  text-decoration: none;
+}
+a:where(:any-link:hover) {
+  text-decoration: underline;
+}
+
+img {
+  max-width: 100%;
+}
+
+code {
+  font-family: ui-monospace, "Cascadia Code", Menlo, Consolas, monospace;
+  font-size: 0.9em;
+  background: var(--surface);
+  border: 1px solid var(--border-subtle);
+  border-radius: 6px;
+  padding: 0.1em 0.4em;
+}
+
+/* Form controls — quiet neutrals with the Olum-green focus ring */
+button:where(:not([class])) {
+  font: inherit;
+  padding: 0.4rem 0.9rem;
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  background: var(--surface);
+  color: var(--fg-secondary);
+  cursor: pointer;
+  transition: border-color 0.15s, background 0.15s;
+}
+button:where(:not([class]):hover:not(:disabled)) {
+  border-color: var(--card-hover-bd);
+  background: var(--surface-hover);
+}
+button:where(:not([class]):active:not(:disabled)) {
+  transform: translateY(1px);
+}
+button:where(:disabled) {
+  opacity: 0.45;
+  cursor: not-allowed;
+}
+
+input:where(:not([type="checkbox"], [type="radio"], [type="range"], [type="file"])),
+:where(select, textarea) {
+  font: inherit;
+  padding: 0.4rem 0.7rem;
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  background: var(--bg);
+  color: var(--fg-secondary);
+  outline: none;
+  transition: border-color 0.15s, box-shadow 0.15s;
+}
+input:where(:not([type="checkbox"], [type="radio"], [type="range"], [type="file"]):focus),
+:where(select, textarea):where(:focus) {
+  border-color: var(--accent);
+  box-shadow: 0 0 0 3px var(--glow-sm);
+}
+
+:where(input[type="checkbox"], input[type="radio"], input[type="range"], progress) {
+  accent-color: var(--accent);
+}
+
+label:where(:not([class])) {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4rem;
+  margin: 0.15rem 0;
+}
+
+figcaption {
+  font-size: 0.75rem;
+  color: var(--fg-muted);
 }
 
 /* ── Todo ── */
@@ -159,4 +296,11 @@
 .todo-page ul {
   padding: 0;
   margin: 0;
+}
+
+/* Inside the #app height chain the todo page fills its wrapper,
+   not the viewport — avoids a double scrollbar from #app's padding. */
+#app .todo-page {
+  min-height: 100%;
+  padding: 0;
 }

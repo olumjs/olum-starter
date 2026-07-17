@@ -1,0 +1,19 @@
+<script>
+  import { props } from "olum";
+</script>
+
+<div class="card">
+  <if when="props().children">{props().children}</if>
+  <else><em>nothing to show — the parent sent no children</em></else>
+</div>
+
+<style>
+  .card {
+    width: 300px;
+    border: 1px solid #d1d5db;
+    border-left: 4px solid #25c97e;
+    border-radius: 6px;
+    padding: 1em;
+    margin: 0 0 1em 0;
+  }
+</style>

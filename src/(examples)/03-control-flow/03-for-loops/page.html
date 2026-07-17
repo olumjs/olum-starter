@@ -1,0 +1,19 @@
+<script>
+  const wonders = [
+    { slug: "Great_Pyramid_of_Giza", name: "The Great Pyramid of Giza" },
+    { slug: "Karnak", name: "Karnak Temple" },
+    { slug: "Abu_Simbel", name: "Abu Simbel" },
+  ];
+</script>
+
+<h1>Wonders of Ancient Egypt</h1>
+
+<ul>
+  <for each="(wonder, index) of wonders">
+    <li>
+      <a target="_blank" rel="noreferrer" href="https://en.wikipedia.org/wiki/{wonder.slug}">
+        {index + 1}: {wonder.name}
+      </a>
+    </li>
+  </for>
+</ul>

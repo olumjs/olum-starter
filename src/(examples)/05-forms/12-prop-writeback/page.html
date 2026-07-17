@@ -1,0 +1,22 @@
+<script>
+  import Keypad from "./Keypad";
+
+  const state = { code: "" };
+
+  const view = () => (state.code ? state.code.replace(/\d(?!$)/g, "•") : "enter your passcode");
+
+  const handleSubmit = () => alert(`unlocking with ${state.code}`);
+</script>
+
+<style>
+  h1 {
+    color: #ccc;
+  }
+  h1.code {
+    color: #333;
+  }
+</style>
+
+<h1 class="{state.code ? 'code' : ''}">{view()}</h1>
+
+<Keypad value="{state.code}" onSubmit="{handleSubmit}" />

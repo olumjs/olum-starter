@@ -1,0 +1,10 @@
+<script>
+  const state = { name: "Olum", taps: 0 };
+
+  const tap = () => state.taps++;
+</script>
+
+<h1>Welcome to {state.name}!</h1>
+
+<input value="{state.name}" oninput="(e) => state.name = e.target.value" />
+<button onclick="tap()">taps: {state.taps}</button>

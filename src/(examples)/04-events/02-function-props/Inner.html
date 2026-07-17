@@ -1,0 +1,9 @@
+<script>
+  import { props } from "olum";
+
+  const ping = () => {
+    props().onPing({ text: "pong! 🏓" });
+  };
+</script>
+
+<button onclick="ping()"> Ping the parent </button>

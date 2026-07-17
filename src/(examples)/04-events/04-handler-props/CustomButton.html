@@ -1,0 +1,26 @@
+<script>
+  import { props } from "olum";
+
+  const { onclick } = props();
+</script>
+
+<style>
+  button {
+    height: 4rem;
+    width: 8rem;
+    background-color: #0f172a;
+    border: 2px solid #25c97e;
+    color: #25c97e;
+    font-size: 1.25rem;
+    background-image: linear-gradient(135deg, #25c97e 50%, transparent 50%);
+    background-position: 100%;
+    background-size: 400%;
+    transition: background 300ms ease-in-out;
+  }
+  button:hover {
+    background-position: 0;
+    color: #0f172a;
+  }
+</style>
+
+<button onclick="onclick()"> Press me </button>

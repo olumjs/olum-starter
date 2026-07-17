@@ -1,0 +1,34 @@
+<script>
+  import { props } from "olum";
+
+  // snapshot taken when this instance is created — it never changes
+  const { current: initial } = props();
+</script>
+
+<style>
+  span {
+    display: inline-block;
+    padding: 0.2em 0.5em;
+    margin: 0 0.2em 0.2em 0;
+    width: 6em;
+    text-align: center;
+    border-radius: 0.2em;
+    background: #f4f4f5;
+    border: 1px solid #e4e4e7;
+  }
+
+  .ok {
+    background: rgba(37, 201, 126, 0.15);
+    border-color: #25c97e;
+  }
+
+  .stale {
+    background: rgba(239, 68, 68, 0.12);
+    border-color: #ef4444;
+  }
+</style>
+
+<p>
+  <span>started {initial}</span>
+  <span class="{props().current === initial ? 'ok' : 'stale'}">now {props().current}</span>
+</p>

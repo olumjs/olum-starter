@@ -1,0 +1,10 @@
+<script>
+  import { props } from "olum";
+
+  const { onPing } = props();
+  const ping = () => {
+    onPing({ text: "pong! 🏓 (relayed through Outer)" });
+  };
+</script>
+
+<button onclick="ping()"> Ping the grandparent </button>

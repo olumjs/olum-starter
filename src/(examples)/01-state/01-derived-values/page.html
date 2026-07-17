@@ -1,0 +1,13 @@
+<script>
+  const state = { n: 2 };
+
+  const squared = () => state.n * state.n;
+  const cubed = () => squared() * state.n;
+
+  const bump = () => state.n++;
+</script>
+
+<button onclick="bump()">n = {state.n}</button>
+
+<p>{state.n}² = {squared()}</p>
+<p>{state.n}³ = {cubed()}</p>

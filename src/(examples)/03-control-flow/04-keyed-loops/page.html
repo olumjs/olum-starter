@@ -1,0 +1,25 @@
+<script>
+  import Digit from "./Digit";
+
+  const state = { numbers: [1, 2, 3, 4, 5] };
+
+  const dropFirst = () => (state.numbers = state.numbers.slice(1));
+</script>
+
+<button onclick="dropFirst()">Remove first number</button>
+
+<div style="display:grid; grid-template-columns:1fr 1fr; grid-gap:1em;">
+  <div>
+    <h2>Keyed</h2>
+    <for each="n of state.numbers" key="n">
+      <Digit current="{n}" />
+    </for>
+  </div>
+
+  <div>
+    <h2>Unkeyed</h2>
+    <for each="n of state.numbers">
+      <Digit current="{n}" />
+    </for>
+  </div>
+</div>

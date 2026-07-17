@@ -1,0 +1,44 @@
+<!--
+  Olum has no `use:action` directive and onMount is component-scoped (not
+  per-element), so the clickOutside behavior is wired up on this small wrapper
+  component's own root element instead of directly on a <div> in page.html.
+  This component mounts/unmounts exactly when the <if> in page.html toggles,
+  which lines up with the behavior's own mount/destroy timing.
+-->
+<script>
+  import { props, onMount } from "olum";
+  import { clickOutside } from "./click_outside.js";
+
+  onMount(() => {
+    const action = clickOutside(host);
+    const onOutClick = () => props().onOutsideClick();
+    host.addEventListener("outclick", onOutClick);
+
+    return () => {
+      host.removeEventListener("outclick", onOutClick);
+      action.destroy();
+    };
+  });
+</script>
+
+<div class="box">Click anywhere outside this box</div>
+
+<style>
+  .box {
+    --width: 100px;
+    --height: 100px;
+    position: absolute;
+    width: var(--width);
+    height: var(--height);
+    left: calc(50% - var(--width) / 2);
+    top: calc(50% - var(--height) / 2);
+    display: flex;
+    align-items: center;
+    padding: 8px;
+    border-radius: 4px;
+    background-color: #25c97e;
+    color: #0f172a;
+    text-align: center;
+    font-weight: bold;
+  }
+</style>

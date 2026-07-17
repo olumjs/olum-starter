@@ -1,0 +1,13 @@
+<script>
+  const state = { temp: 68 };
+</script>
+
+<if when="state.temp > 80">
+  <p>{state.temp}°F — too hot to code</p>
+</if>
+<else-if when="60 > state.temp">
+  <p>{state.temp}°F — grab a sweater</p>
+</else-if>
+<else>
+  <p>{state.temp}°F — just right</p>
+</else>

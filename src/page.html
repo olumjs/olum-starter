@@ -1,73 +1,135 @@
 <script>
   const routes = [
-    { path: "/introduction/hello-world", name: "IntroductionHelloWorld" },
-    { path: "/introduction/dynamic-attributes", name: "IntroductionDynamicAttributes" },
-    { path: "/introduction/styling", name: "IntroductionStyling" },
-    { path: "/introduction/nested-components", name: "IntroductionNestedComponents" },
-    { path: "/introduction/html-tags", name: "IntroductionHtmlTags" },
-    { path: "/reactivity/reactive-assignments", name: "ReactivityReactiveAssignments" },
-    { path: "/reactivity/reactive-declarations", name: "ReactivityReactiveDeclarations" },
-    { path: "/reactivity/reactive-statements", name: "ReactivityReactiveStatements" },
-    { path: "/props/declaring-props", name: "PropsDeclaringProps" },
-    { path: "/props/default-values", name: "PropsDefaultValues" },
-    { path: "/props/spread-props", name: "PropsSpreadProps" },
-    { path: "/logic/if-blocks", name: "LogicIfBlocks" },
-    { path: "/logic/else-blocks", name: "LogicElseBlocks" },
-    { path: "/logic/else-if-blocks", name: "LogicElseIfBlocks" },
-    { path: "/logic/each-blocks", name: "LogicEachBlocks" },
-    { path: "/logic/keyed-each-blocks", name: "LogicKeyedEachBlocks" },
-    { path: "/events/dom-events", name: "EventsDomEvents" },
-    { path: "/events/inline-handlers", name: "EventsInlineHandlers" },
-    { path: "/events/component-events", name: "EventsComponentEvents" },
-    { path: "/events/event-forwarding", name: "EventsEventForwarding" },
-    { path: "/events/dom-event-forwarding", name: "EventsDomEventForwarding" },
-    { path: "/bindings/text-inputs", name: "BindingsTextInputs" },
-    { path: "/bindings/numeric-inputs", name: "BindingsNumericInputs" },
-    { path: "/bindings/checkbox-inputs", name: "BindingsCheckboxInputs" },
-    { path: "/bindings/group-inputs", name: "BindingsGroupInputs" },
-    { path: "/bindings/textarea-inputs", name: "BindingsTextareaInputs" },
-    { path: "/bindings/file-inputs", name: "BindingsFileInputs" },
-    { path: "/bindings/select-bindings", name: "BindingsSelectBindings" },
-    { path: "/bindings/multiple-select-bindings", name: "BindingsMultipleSelectBindings" },
-    { path: "/bindings/each-block-bindings", name: "BindingsEachBlockBindings" },
-    { path: "/bindings/bind-this", name: "BindingsBindThis" },
-    { path: "/bindings/component-bindings", name: "BindingsComponentBindings" },
-    { path: "/lifecycle/onmount", name: "LifecycleOnmount" },
-    { path: "/lifecycle/ondestroy", name: "LifecycleOndestroy" },
-    { path: "/svg/clock", name: "SvgClock" },
-    { path: "/svg/bar-chart", name: "SvgBarChart" },
-    { path: "/svg/area-chart", name: "SvgAreaChart" },
-    { path: "/svg/scatterplot", name: "SvgScatterplot" },
-    { path: "/actions/actions", name: "ActionsActions" },
-    { path: "/actions/adding-parameters-to-actions", name: "ActionsAddingParametersToActions" },
-    { path: "/classes/classes", name: "ClassesClasses" },
-    { path: "/classes/class-shorthand", name: "ClassesClassShorthand" },
-    { path: "/composition/render-props", name: "CompositionRenderProps" },
-    { path: "/composition/render-prop-fallbacks", name: "CompositionRenderPropFallbacks" },
-    { path: "/special-elements/window", name: "SpecialElementsWindow" },
-    { path: "/special-elements/document", name: "SpecialElementsDocument" },
-    { path: "/7guis/7guis-counter", name: "guisguisCounter" },
-    { path: "/7guis/7guis-temperature", name: "guisguisTemperature" },
-    { path: "/7guis/7guis-flight-booker", name: "guisguisFlightBooker" },
-    { path: "/7guis/7guis-timer", name: "guisguisTimer" },
-    { path: "/7guis/7guis-crud", name: "guisguisCrud" },
-    { path: "/7guis/7guis-circles", name: "guisguisCircles" },
-    { path: "/miscellaneous/recursive-components", name: "MiscellaneousRecursiveComponents" },
-    { path: "/miscellaneous/dynamic-components", name: "MiscellaneousDynamicComponents" },
+    { path: "/basics/first-component", name: "BasicsFirstComponent" },
+    { path: "/basics/attribute-values", name: "BasicsAttributeValues" },
+    { path: "/basics/component-styles", name: "BasicsComponentStyles" },
+    { path: "/basics/child-components", name: "BasicsChildComponents" },
+    { path: "/basics/raw-html", name: "BasicsRawHtml" },
+    { path: "/state/updates", name: "StateUpdates" },
+    { path: "/state/derived-values", name: "StateDerivedValues" },
+    { path: "/state/watchers", name: "StateWatchers" },
+    { path: "/props/reading-props", name: "PropsReadingProps" },
+    { path: "/props/defaults", name: "PropsDefaults" },
+    { path: "/props/passing-objects", name: "PropsPassingObjects" },
+    { path: "/control-flow/if", name: "ControlFlowIf" },
+    { path: "/control-flow/if-else", name: "ControlFlowIfElse" },
+    { path: "/control-flow/else-if-chains", name: "ControlFlowElseIfChains" },
+    { path: "/control-flow/for-loops", name: "ControlFlowForLoops" },
+    { path: "/control-flow/keyed-loops", name: "ControlFlowKeyedLoops" },
+    { path: "/events/method-listeners", name: "EventsMethodListeners" },
+    { path: "/events/arrow-listeners", name: "EventsArrowListeners" },
+    { path: "/events/function-props", name: "EventsFunctionProps" },
+    { path: "/events/callback-forwarding", name: "EventsCallbackForwarding" },
+    { path: "/events/handler-props", name: "EventsHandlerProps" },
+    { path: "/forms/text", name: "FormsText" },
+    { path: "/forms/numbers", name: "FormsNumbers" },
+    { path: "/forms/checkboxes", name: "FormsCheckboxes" },
+    { path: "/forms/radio-groups", name: "FormsRadioGroups" },
+    { path: "/forms/textarea", name: "FormsTextarea" },
+    { path: "/forms/files", name: "FormsFiles" },
+    { path: "/forms/select", name: "FormsSelect" },
+    { path: "/forms/multi-select", name: "FormsMultiSelect" },
+    { path: "/forms/loop-inputs", name: "FormsLoopInputs" },
+    { path: "/forms/host-element", name: "FormsHostElement" },
+    { path: "/forms/prop-writeback", name: "FormsPropWriteback" },
+    { path: "/lifecycle/mount-hook", name: "LifecycleMountHook" },
+    { path: "/lifecycle/cleanup", name: "LifecycleCleanup" },
+    { path: "/graphics/analog-clock", name: "GraphicsAnalogClock" },
+    { path: "/graphics/bar-chart", name: "GraphicsBarChart" },
+    { path: "/graphics/area-chart", name: "GraphicsAreaChart" },
+    { path: "/graphics/scatterplot", name: "GraphicsScatterplot" },
+    { path: "/behaviors/click-outside", name: "BehaviorsClickOutside" },
+    { path: "/behaviors/long-press", name: "BehaviorsLongPress" },
+    { path: "/classes/toggling", name: "ClassesToggling" },
+    { path: "/classes/ternary", name: "ClassesTernary" },
+    { path: "/composition/children", name: "CompositionChildren" },
+    { path: "/composition/fallback-content", name: "CompositionFallbackContent" },
+    { path: "/globals/window-events", name: "GlobalsWindowEvents" },
+    { path: "/globals/document-events", name: "GlobalsDocumentEvents" },
+    { path: "/7guis/counter", name: "SevenGuisCounter" },
+    { path: "/7guis/temperature", name: "SevenGuisTemperature" },
+    { path: "/7guis/flight-booker", name: "SevenGuisFlightBooker" },
+    { path: "/7guis/timer", name: "SevenGuisTimer" },
+    { path: "/7guis/crud", name: "SevenGuisCrud" },
+    { path: "/7guis/circles", name: "SevenGuisCircles" },
+    { path: "/extras/tree-view", name: "ExtrasTreeView" },
+    { path: "/extras/component-switching", name: "ExtrasComponentSwitching" },
     { path: "/todo-app", name: "TodoApp" },
   ];
+
+  // group by the first path segment: "/basics/first-component" → "basics"
+  const grouped = routes.reduce((map, route) => {
+    const section = route.path.split("/")[1];
+    if (!map[section]) map[section] = [];
+    map[section].push(route);
+    return map;
+  }, {});
+
+  const sectionTitle = (section) =>
+    section === "7guis" ? "7GUIs" : section.charAt(0).toUpperCase() + section.slice(1).replace(/-/g, " ");
+
+  const linkLabel = (path) => path.split("/").pop().replace(/-/g, " ");
+
+  // tree state: every folder is collapsed by default; toggling flips one section
+  const state = { expanded: {} };
+  const isOpen = (section) => !!state.expanded[section];
+  const toggle = (section) => (state.expanded = { ...state.expanded, [section]: !state.expanded[section] });
 </script>
 
-<ul>
-  <for each="route of routes">
-    <li>
-      <a href="{route.path}">{route.name}</a>
-    </li>
+<h1>Olum by example</h1>
+
+<div class="tree">
+  <for each="(section, i, links) in grouped">
+    <div>
+      <button class="{isOpen(section) ? 'expanded' : ''}" onclick="toggle(section)">{sectionTitle(section)}</button>
+      <if when="isOpen(section)">
+        <ul>
+          <for each="route of links">
+            <li>
+              <a href="{route.path}">{linkLabel(route.path)}</a>
+            </li>
+          </for>
+        </ul>
+      </if>
+    </div>
   </for>
-</ul>
+</div>
 
 <style>
+  .tree {
+    max-width: 480px;
+  }
+
+  button {
+    padding: 0 0 0 1.5em;
+    background: url(/assets/folder.svg) 0 50% no-repeat;
+    background-size: 1em 1em;
+    font-weight: bold;
+    cursor: pointer;
+    border: none;
+    font-size: 15px;
+    color: inherit;
+  }
+
+  .expanded {
+    background-image: url(/assets/folder-open.svg);
+  }
+
   ul {
     list-style-type: none;
+    padding: 0.2em 0 0.4em 0.6em;
+    margin: 0 0 0 0.55em;
+    border-left: 1px solid #e4e4e7;
+  }
+
+  li {
+    padding: 0.15em 0;
+    text-transform: capitalize;
+  }
+
+  a {
+    padding: 0 0 0 1.7em;
+    background: url(/assets/html.svg) 0.1em 50% no-repeat;
+    background-size: 1.2em 1.2em;
   }
 </style>

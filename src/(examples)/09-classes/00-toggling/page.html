@@ -1,0 +1,20 @@
+<script>
+  const state = { tab: "home" };
+</script>
+
+<button class="{state.tab === 'home' ? 'active' : ''}" onclick="state.tab = 'home'">home</button>
+
+<button class="{state.tab === 'docs' ? 'active' : ''}" onclick="state.tab = 'docs'">docs</button>
+
+<button class="{state.tab === 'blog' ? 'active' : ''}" onclick="state.tab = 'blog'">blog</button>
+
+<style>
+  button {
+    display: block;
+  }
+
+  .active {
+    background-color: #25c97e;
+    color: #0f172a;
+  }
+</style>

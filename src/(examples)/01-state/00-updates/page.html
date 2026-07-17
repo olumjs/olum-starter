@@ -1,0 +1,10 @@
+<script>
+  const state = { stars: 0 };
+
+  const addStar = () => state.stars++;
+</script>
+
+<button onclick="addStar()">
+  ★ {state.stars}
+  {state.stars === 1 ? 'star' : 'stars'} so far
+</button>

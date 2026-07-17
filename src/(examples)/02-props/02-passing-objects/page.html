@@ -1,0 +1,13 @@
+<!-- Olum has no prop-spread shorthand (see docs/common-mistakes.md) — each field is passed explicitly. -->
+<script>
+  import Info from "./Info";
+
+  const pkg = {
+    name: "olum",
+    version: 0.7,
+    license: "MIT",
+    website: "https://olumjs.top",
+  };
+</script>
+
+<Info name="{pkg.name}" version="{pkg.version}" license="{pkg.license}" website="{pkg.website}" />

@@ -1,0 +1,7 @@
+<script>
+  import Inner from "./Inner";
+
+  const handlePing = (payload) => alert(payload.text);
+</script>
+
+<Inner onPing="{handlePing}" />

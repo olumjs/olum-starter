@@ -1,0 +1,106 @@
+<script>
+  import { scaleLinear } from "d3-scale";
+  import points from "./data.js";
+
+  const yTicks = [0, 2, 4, 6, 8];
+  const xTicks = [5, 10, 15, 20, 25, 30];
+  const padding = { top: 20, right: 15, bottom: 20, left: 25 };
+
+  // No dimension-binding support yet (see docs/limitations.md), so width/height
+  // are fixed values instead of tracking clientWidth/clientHeight.
+  const width = 500;
+  const height = 200;
+
+  const minX = points[0].x;
+  const maxX = points[points.length - 1].x;
+  const xScale = scaleLinear().domain([minX, maxX]).range([padding.left, width - padding.right]);
+  const yScale = scaleLinear()
+    .domain([Math.min.apply(null, yTicks), Math.max.apply(null, yTicks)])
+    .range([height - padding.bottom, padding.top]);
+  const path = `M${points.map((p) => `${xScale(p.x)},${yScale(p.y)}`).join('L')}`;
+  const area = `${path}L${xScale(maxX)},${yScale(0)}L${xScale(minX)},${yScale(0)}Z`;
+</script>
+
+<h2>Visitors to olumjs.top — last 30 days</h2>
+
+<div class="chart">
+  <svg>
+    <g class="axis y-axis" transform="translate(0, {padding.top})">
+      <for each="tick of yTicks">
+        <g class="tick tick-{tick}" transform="translate(0, {yScale(tick) - padding.bottom})">
+          <line x2="100%" />
+          <text y="-4">{tick} {tick === 8 ? ' thousand visitors' : ''}</text>
+        </g>
+      </for>
+    </g>
+
+    <g class="axis x-axis">
+      <for each="tick of xTicks">
+        <g class="tick tick-{tick}" transform="translate({xScale(tick)},{height})">
+          <line y1="-{height}" y2="-{padding.bottom}" x1="0" x2="0" />
+          <text y="-2">day {tick}</text>
+        </g>
+      </for>
+    </g>
+
+    <path class="path-area" d="{area}" />
+    <path class="path-line" d="{path}" />
+  </svg>
+</div>
+
+<p>
+  Daily unique visitors, in thousands (sample data).
+</p>
+
+<style>
+  .chart,
+  h2,
+  p {
+    width: 100%;
+    max-width: 500px;
+    margin-left: auto;
+    margin-right: auto;
+  }
+
+  svg {
+    position: relative;
+    width: 100%;
+    height: 200px;
+    overflow: visible;
+  }
+
+  .tick {
+    font-size: 0.725em;
+    font-weight: 200;
+  }
+
+  .tick line {
+    stroke: #888;
+    stroke-dasharray: 2;
+  }
+
+  .tick text {
+    fill: #888;
+    text-anchor: start;
+  }
+
+  .tick.tick-0 line {
+    stroke-dasharray: 0;
+  }
+
+  .x-axis .tick text {
+    text-anchor: middle;
+  }
+
+  .path-line {
+    fill: none;
+    stroke: #25c97e;
+    stroke-linejoin: round;
+    stroke-linecap: round;
+    stroke-width: 2;
+  }
+
+  .path-area {
+    fill: rgba(37, 201, 126, 0.2);
+  }
+</style>

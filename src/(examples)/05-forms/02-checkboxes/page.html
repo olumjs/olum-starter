@@ -1,0 +1,17 @@
+<script>
+  const state = { optIn: false };
+</script>
+
+<label>
+  <input type="checkbox" checked="{state.optIn}" onchange="(e) => state.optIn = e.target.checked" />
+  Email me when a new Olum version ships
+</label>
+
+<if when="state.optIn">
+  <p>You're on the list — see you at the next release.</p>
+</if>
+<else>
+  <p>No emails then. The changelog will miss you.</p>
+</else>
+
+<button disabled="{!state.optIn}"> Subscribe </button>

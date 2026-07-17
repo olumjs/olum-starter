@@ -1,0 +1,29 @@
+<script>
+  import { props, onMount } from "olum";
+
+  const state = { seconds: 0 };
+
+  onMount(() => {
+    console.log("stopwatch mounted — interval started");
+    const interval = setInterval(() => state.seconds++, 1000);
+
+    // the returned cleanup runs when the <if> in page.html removes this component
+    return () => {
+      clearInterval(interval);
+      props().onLog("🧹 cleanup ran — interval cleared, stopwatch unmounted");
+      console.log("stopwatch unmounted — interval cleared");
+    };
+  });
+</script>
+
+<style>
+  p {
+    display: inline-block;
+    padding: 0.3rem 0.8rem;
+    border: 1px solid #25c97e;
+    border-radius: 8px;
+    background: rgba(37, 201, 126, 0.1);
+  }
+</style>
+
+<p>⏱ running for {state.seconds} {state.seconds === 1 ? "second" : "seconds"}</p>

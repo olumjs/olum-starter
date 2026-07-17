@@ -1,0 +1,24 @@
+<script>
+  const state = { pointer: { x: 0, y: 0 } };
+
+  const track = (e) => {
+    state.pointer = { x: e.clientX, y: e.clientY };
+  };
+</script>
+
+<style>
+  div {
+    width: min(100%, 420px);
+    aspect-ratio: 1 / 1;
+    margin: 1rem auto;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border: 1px dashed #25c97e;
+    border-radius: 12px;
+  }
+</style>
+
+<div onmousemove="track()">
+  Pointer at {state.pointer.x} × {state.pointer.y}
+</div>

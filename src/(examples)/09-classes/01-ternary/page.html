@@ -1,0 +1,17 @@
+<script>
+  const state = { zoom: false };
+  const setZoom = (e) => (state.zoom = e.target.checked);
+</script>
+
+<label>
+  <input type="checkbox" checked="{state.zoom}" onchange="setZoom($event)" />
+  zoom
+</label>
+
+<div class="{state.zoom ? 'zoom' : ''}">read me at {state.zoom ? '4em' : 'normal size'}</div>
+
+<style>
+  .zoom {
+    font-size: 4em;
+  }
+</style>

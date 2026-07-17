@@ -1,0 +1,41 @@
+<script>
+  import Folder from "./Folder";
+
+  const root = [
+    {
+      type: "folder",
+      name: "src",
+      files: [
+        {
+          type: "folder",
+          name: "components",
+          files: [
+            { type: "file", name: "Navbar.html" },
+            { type: "file", name: "TodoRow.html" },
+          ],
+        },
+        {
+          type: "folder",
+          name: "todo-app",
+          files: [
+            { type: "file", name: "page.html" },
+            { type: "file", name: "helpers.js" },
+          ],
+        },
+        { type: "file", name: "page.html" },
+        { type: "file", name: "main.js" },
+      ],
+    },
+    {
+      type: "folder",
+      name: "docs",
+      files: [
+        { type: "file", name: "state.md" },
+        { type: "file", name: "loops.md" },
+      ],
+    },
+    { type: "file", name: "README.md" },
+  ];
+</script>
+
+<Folder name="my-olum-app" files="{root}" expanded="{true}" />

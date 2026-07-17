@@ -1,0 +1,41 @@
+<script>
+  import Stopwatch from "./Stopwatch";
+
+  const state = { show: true, log: [] };
+
+  const toggle = () => (state.show = !state.show);
+  const record = (entry) => (state.log = [...state.log, `${new Date().toLocaleTimeString()} — ${entry}`]);
+</script>
+
+<button onclick="toggle()">{state.show ? 'Unmount' : 'Mount'} the stopwatch</button>
+
+<if when="state.show">
+  <Stopwatch onLog="{record}" />
+</if>
+
+<h2>Lifecycle log</h2>
+<if when="state.log.length">
+  <ul>
+    <for each="entry of state.log">
+      <li>{entry}</li>
+    </for>
+  </ul>
+</if>
+<else>
+  <p>unmount the stopwatch and its cleanup will report here…</p>
+</else>
+
+<style>
+  ul {
+    list-style-type: none;
+    padding: 0;
+    margin: 0;
+    font-family: ui-monospace, Menlo, Consolas, monospace;
+    font-size: 0.85rem;
+  }
+
+  li {
+    padding: 0.2rem 0;
+    border-bottom: 1px dashed #e4e4e7;
+  }
+</style>

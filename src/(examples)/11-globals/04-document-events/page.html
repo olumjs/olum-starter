@@ -1,0 +1,19 @@
+<script>
+  import { onMount } from "olum";
+
+  const state = { selection: "" };
+
+  const handleSelectionChange = () => {
+    state.selection = document.getSelection().toString();
+  };
+
+  onMount(() => {
+    document.addEventListener("selectionchange", handleSelectionChange);
+    return () => {
+      document.removeEventListener("selectionchange", handleSelectionChange);
+    };
+  });
+</script>
+
+<p>Highlight any part of this sentence with your pointer</p>
+<p>You selected: {state.selection}</p>

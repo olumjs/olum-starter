@@ -1,0 +1,18 @@
+<script>
+  const state = { volume: 0 };
+
+  const watcher = {
+    volume(old, next) {
+      if (next > 11) {
+        alert(`these amps only go to 11!`);
+        state.volume = 11;
+      }
+    },
+  };
+
+  const louder = () => state.volume++;
+</script>
+
+<button onclick="louder()">
+  Volume: {state.volume}
+</button>
