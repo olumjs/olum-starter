@@ -5,6 +5,8 @@
 
   const view = () => (state.code ? state.code.replace(/\d(?!$)/g, "•") : "enter your passcode");
 
+  const setCode = (code) => (state.code = code); // callback prop — the child requests changes, this owner applies them
+
   const handleSubmit = () => alert(`unlocking with ${state.code}`);
 </script>
 
@@ -19,4 +21,4 @@
 
 <h1 class="{state.code ? 'code' : ''}">{view()}</h1>
 
-<Keypad value="{state.code}" onSubmit="{handleSubmit}" />
+<Keypad value="{state.code}" onChange="{setCode}" onSubmit="{handleSubmit}" />

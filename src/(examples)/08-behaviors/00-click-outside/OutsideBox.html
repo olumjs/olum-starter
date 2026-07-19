@@ -8,10 +8,11 @@
 <script>
   import { props, onMount } from "olum";
   import { clickOutside } from "./click_outside.js";
+  const { onOutsideClick } = props();
 
   onMount(() => {
     const action = clickOutside(host);
-    const onOutClick = () => props().onOutsideClick();
+    const onOutClick = () => onOutsideClick();
     host.addEventListener("outclick", onOutClick);
 
     return () => {

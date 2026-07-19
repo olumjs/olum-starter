@@ -1,8 +1,9 @@
 <script>
   import { props } from "olum";
+  const {onPing} = props();
 
   const ping = () => {
-    props().onPing({ text: "pong! 🏓" });
+    onPing({ text: "pong! 🏓" });
   };
 </script>
 

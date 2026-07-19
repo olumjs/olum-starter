@@ -5,9 +5,9 @@
   import File from "./File";
   import Folder from "./Folder";
 
-  const { name, files } = props();
+  const { name, files, expanded } = props();
   // expanded by default — pass expanded="{false}" to start a folder collapsed
-  const state = { expanded: props().expanded ?? true };
+  const state = { expanded: expanded ?? true };
 
   const toggle = () => (state.expanded = !state.expanded);
 </script>

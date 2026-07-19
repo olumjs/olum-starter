@@ -1,0 +1,15 @@
+<script>
+  import { cart } from "./store";
+
+  const products = ["Compass", "Canteen", "Rope"];
+</script>
+
+<for each="product of products">
+  <button onclick="cart.add(product)">Add {product}</button>
+</for>
+
+<style>
+  button {
+    margin-right: 0.4em;
+  }
+</style>

@@ -1,0 +1,18 @@
+<script>
+  import { cart } from "./store";
+</script>
+
+<p>
+  <strong>{cart.items.length}</strong>
+  {cart.items.length === 1 ? "item" : "items"} in the basket
+</p>
+
+<if when="cart.items.length">
+  <ul>
+    <for each="name of cart.items">
+      <li>{name}</li>
+    </for>
+  </ul>
+  <!-- <button onclick="cart.clear()">Empty basket</button> -->
+  <button onclick="() => cart.items = []">Empty basket</button>
+</if>

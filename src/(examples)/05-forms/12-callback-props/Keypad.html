@@ -1,8 +1,10 @@
 <script>
   import { props } from "olum";
+  const { onChange, value, onSubmit } = props();
 
-  const select = (num) => () => (props().value = (props().value || "") + num);
-  const clear = () => (props().value = "");
+  // props are read-only: request changes through the onChange callback prop
+  const select = (num) => () => onChange((value || "") + num);
+  const clear = () => onChange("");
 </script>
 
 <style>
@@ -29,7 +31,7 @@
   <button onclick="select(8)()">8</button>
   <button onclick="select(9)()">9</button>
 
-  <button disabled="{!props().value}" onclick="clear()">clear</button>
+  <button disabled="{!value}" onclick="clear()">clear</button>
   <button onclick="select(0)()">0</button>
-  <button disabled="{!props().value}" onclick="props().onSubmit()">unlock</button>
+  <button disabled="{!value}" onclick="onSubmit()">unlock</button>
 </div>

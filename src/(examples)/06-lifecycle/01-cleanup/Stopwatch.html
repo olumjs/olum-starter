@@ -1,5 +1,6 @@
 <script>
   import { props, onMount } from "olum";
+  const { onLog } = props();
 
   const state = { seconds: 0 };
 
@@ -10,7 +11,7 @@
     // the returned cleanup runs when the <if> in page.html removes this component
     return () => {
       clearInterval(interval);
-      props().onLog("🧹 cleanup ran — interval cleared, stopwatch unmounted");
+      onLog("🧹 cleanup ran — interval cleared, stopwatch unmounted");
       console.log("stopwatch unmounted — interval cleared");
     };
   });
