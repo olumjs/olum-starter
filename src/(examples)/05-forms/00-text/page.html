@@ -4,7 +4,7 @@
 
 <input
   value="{state.name}"
-  oninput="(e) => (state.name = e.target.value)"
+  oninput="(e) => state.name = e.target.value"
   placeholder="your first name"
 />
 <p>Ahlan, {state.name || "stranger"}!</p>

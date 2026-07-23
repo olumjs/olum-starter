@@ -66,10 +66,7 @@
     { path: "/classes/toggling", name: "ClassesToggling" },
     { path: "/classes/ternary", name: "ClassesTernary" },
     { path: "/composition/children", name: "CompositionChildren" },
-    {
-      path: "/composition/fallback-content",
-      name: "CompositionFallbackContent",
-    },
+    { path: "/composition/fallback-content", name: "CompositionFallbackContent" },
     { path: "/globals/window-events", name: "GlobalsWindowEvents" },
     { path: "/globals/document-events", name: "GlobalsDocumentEvents" },
     { path: "/7guis/counter", name: "SevenGuisCounter" },
@@ -101,10 +98,7 @@
   const state = { expanded: {} };
   const isOpen = (section) => !!state.expanded[section];
   const toggle = (section) =>
-    (state.expanded = {
-      ...state.expanded,
-      [section]: !state.expanded[section],
-    });
+    (state.expanded = { ...state.expanded, [section]: !state.expanded[section] });
 </script>
 
 <h1>Olum by example</h1>

@@ -5,10 +5,7 @@
 
   const toggle = () => (state.show = !state.show);
   const record = (entry) =>
-    (state.log = [
-      ...state.log,
-      `${new Date().toLocaleTimeString()} — ${entry}`,
-    ]);
+    (state.log = [...state.log, `${new Date().toLocaleTimeString()} — ${entry}`]);
 </script>
 
 <button onclick="toggle()">

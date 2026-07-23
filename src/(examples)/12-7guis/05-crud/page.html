@@ -37,10 +37,7 @@
   };
 
   const create = () => {
-    state.people = state.people.concat({
-      first: state.first,
-      last: state.last,
-    });
+    state.people = state.people.concat({ first: state.first, last: state.last });
     state.i = state.people.length - 1;
     state.first = state.last = "";
   };
@@ -89,10 +86,10 @@
 <input
   placeholder="filter prefix"
   value="{state.prefix}"
-  oninput="(e) => (state.prefix = e.target.value)"
+  oninput="(e) => state.prefix = e.target.value"
 />
 
-<select size="5" onchange="(e) => (state.i = +e.target.value)">
+<select size="5" onchange="(e) => state.i = +e.target.value">
   <for each="(person, index) of filteredPeople()">
     <option value="{index}" selected="{index === state.i}">
       {person.last}, {person.first}
@@ -104,13 +101,13 @@
   ><input
     value="{state.first}"
     placeholder="first"
-    oninput="(e) => (state.first = e.target.value)"
+    oninput="(e) => state.first = e.target.value"
 /></label>
 <label
   ><input
     value="{state.last}"
     placeholder="last"
-    oninput="(e) => (state.last = e.target.value)"
+    oninput="(e) => state.last = e.target.value"
 /></label>
 
 <div class="buttons">

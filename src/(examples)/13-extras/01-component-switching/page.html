@@ -6,7 +6,7 @@
   const state = { shape: "circle" };
 </script>
 
-<select onchange="(e) => (state.shape = e.target.value)">
+<select onchange="(e) => state.shape = e.target.value">
   <option value="circle" selected="{state.shape === 'circle'}">circle</option>
   <option value="square" selected="{state.shape === 'square'}">square</option>
   <option value="triangle" selected="{state.shape === 'triangle'}">

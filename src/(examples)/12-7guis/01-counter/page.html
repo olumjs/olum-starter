@@ -5,6 +5,6 @@
 <input
   type="number"
   value="{state.count}"
-  oninput="(e) => (state.count = +e.target.value)"
+  oninput="(e) => state.count = +e.target.value"
 />
 <button onclick="() => state.count++">count</button>

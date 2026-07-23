@@ -7,8 +7,7 @@
     ],
   };
 
-  const add = () =>
-    (state.todos = state.todos.concat({ done: false, text: "" }));
+  const add = () => (state.todos = state.todos.concat({ done: false, text: "" }));
   const clear = () => (state.todos = state.todos.filter((t) => !t.done));
   const remaining = () => state.todos.filter((t) => !t.done).length;
   const toggleDone = (index, e) => {
@@ -37,7 +36,7 @@
     <input
       placeholder="What's the next task?"
       value="{todo.text}"
-      oninput="setText(index, $event)"
+      oninput="setText(index,$event)"
       disabled="{todo.done}"
     />
   </div>

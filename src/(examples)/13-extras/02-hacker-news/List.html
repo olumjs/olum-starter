@@ -7,11 +7,7 @@
     const delta = 1;
     const nums = [];
     for (let p = 1; p <= maxPage; p++) {
-      if (
-        p === 1 ||
-        p === maxPage ||
-        (p >= page - delta && p <= page + delta)
-      ) {
+      if (p === 1 || p === maxPage || (p >= page - delta && p <= page + delta)) {
         nums.push(p);
       } else if (nums[nums.length - 1] !== "…") {
         nums.push("…");
@@ -24,7 +20,7 @@
 <if when="items">
   <div class="stories">
     <for each="(item, i, arr) of items" key="item.id">
-      <summary item="{item}" i="{i}" offset="{offset}" />
+      <Summary item="{item}" i="{i}" offset="{offset}" />
     </for>
   </div>
 

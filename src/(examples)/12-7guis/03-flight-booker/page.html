@@ -42,7 +42,7 @@
   }
 </style>
 
-<select onchange="(e) => (state.isReturn = e.target.value === 'true')">
+<select onchange="(e) => state.isReturn = e.target.value === 'true'">
   <option value="false" selected="{!state.isReturn}">one-way flight</option>
   <option value="true" selected="{state.isReturn}">return flight</option>
 </select>
@@ -50,13 +50,13 @@
 <input
   type="date"
   value="{state.start}"
-  oninput="(e) => (state.start = e.target.value)"
+  oninput="(e) => state.start = e.target.value"
 />
 <input
   type="date"
   value="{state.end}"
   disabled="{!state.isReturn}"
-  oninput="(e) => (state.end = e.target.value)"
+  oninput="(e) => state.end = e.target.value"
 />
 
 <button

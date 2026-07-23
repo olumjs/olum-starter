@@ -15,7 +15,7 @@
 
 <textarea
   value="{state.text}"
-  oninput="(e) => (state.text = e.target.value)"
+  oninput="(e) => state.text = e.target.value"
 ></textarea>
 
 <div html="marked(state.text)"></div>

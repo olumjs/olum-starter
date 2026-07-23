@@ -32,7 +32,7 @@
       <input
         type="text"
         value="{state.input}"
-        oninput="(e) => (state.input = e.target.value)"
+        oninput="(e) => state.input = e.target.value"
         placeholder="Add todo.."
       />
       <button onclick="add()">Add</button>

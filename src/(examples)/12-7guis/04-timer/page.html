@@ -8,10 +8,7 @@
 
     let frame = requestAnimationFrame(function update(time) {
       frame = requestAnimationFrame(update);
-      state.elapsed += Math.min(
-        time - lastTime,
-        state.duration - state.elapsed,
-      );
+      state.elapsed += Math.min(time - lastTime, state.duration - state.elapsed);
       lastTime = time;
     });
 
@@ -35,8 +32,8 @@
     value="{state.duration}"
     min="1"
     max="20000"
-    oninput="(e) => (state.duration = +e.target.value)"
+    oninput="(e) => state.duration = +e.target.value"
   />
 </label>
 
-<button onclick="() => (state.elapsed = 0)">reset</button>
+<button onclick="() => state.elapsed = 0">reset</button>

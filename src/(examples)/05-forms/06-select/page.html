@@ -46,7 +46,7 @@
 
   <input
     value="{state.answer}"
-    oninput="(e) => (state.answer = e.target.value)"
+    oninput="(e) => state.answer = e.target.value"
   />
 
   <button disabled="{!state.answer}" type="submit">Send</button>

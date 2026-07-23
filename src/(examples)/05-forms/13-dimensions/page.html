@@ -21,9 +21,9 @@
   min="10"
   max="150"
   value="{state.size}"
-  oninput="(e) => (state.size = +e.target.value)"
+  oninput="(e) => state.size = +e.target.value"
 />
-<input value="{state.text}" oninput="(e) => (state.text = e.target.value)" />
+<input value="{state.text}" oninput="(e) => state.text = e.target.value" />
 
 <p>measured: {state.w}px x {state.h}px</p>
 

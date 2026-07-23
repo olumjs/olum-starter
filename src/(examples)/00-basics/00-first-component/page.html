@@ -6,5 +6,5 @@
 
 <h1>Welcome to {state.name}!</h1>
 
-<input value="{state.name}" oninput="(e) => (state.name = e.target.value)" />
+<input value="{state.name}" oninput="(e) => state.name = e.target.value" />
 <button onclick="tap()">clicked {state.taps} times</button>
