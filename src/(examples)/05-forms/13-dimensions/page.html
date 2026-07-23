@@ -1,0 +1,44 @@
+<script>
+  import { onMount } from "olum";
+
+  const state = { w: 0, h: 0, size: 42, text: "resize me" };
+
+  onMount(() => {
+    const box = host.querySelector(".box");
+    const observer = new ResizeObserver((entries) => {
+      const rect = entries[0].contentRect;
+      state.w = Math.round(rect.width);
+      state.h = Math.round(rect.height);
+    });
+    observer.observe(box);
+
+    return () => observer.disconnect();
+  });
+</script>
+
+<input
+  type="range"
+  min="10"
+  max="150"
+  value="{state.size}"
+  oninput="(e) => (state.size = +e.target.value)"
+/>
+<input value="{state.text}" oninput="(e) => (state.text = e.target.value)" />
+
+<p>measured: {state.w}px x {state.h}px</p>
+
+<div class="box">
+  <span style="font-size: {state.size}px">{state.text}</span>
+</div>
+
+<style>
+  input {
+    display: block;
+    margin-bottom: 0.5em;
+  }
+
+  .box {
+    display: inline-block;
+    border: 1px solid #ccc;
+  }
+</style>

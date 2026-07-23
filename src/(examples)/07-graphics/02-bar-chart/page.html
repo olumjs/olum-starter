@@ -7,25 +7,27 @@
     { version: "0.3", cups: 14.8 },
     { version: "0.4", cups: 11.2 },
     { version: "0.5", cups: 16.3 },
-    { version: "0.6", cups: 13.7 }
+    { version: "0.6", cups: 13.7 },
   ];
 
   const yTicks = [0, 5, 10, 15, 20];
   const padding = { top: 20, right: 15, bottom: 20, left: 25 };
 
-  // No dimension-binding support yet (see docs/limitations.md), so width/height
-  // are fixed values instead of tracking clientWidth/clientHeight.
   const width = 500;
   const height = 200;
 
-  const xScale = scaleLinear().domain([0, points.length]).range([padding.left, width - padding.right]);
-  const yScale = scaleLinear().domain([0, Math.max.apply(null, yTicks)]).range([height - padding.bottom, padding.top]);
+  const xScale = scaleLinear()
+    .domain([0, points.length])
+    .range([padding.left, width - padding.right]);
+  const yScale = scaleLinear()
+    .domain([0, Math.max.apply(null, yTicks)])
+    .range([height - padding.bottom, padding.top]);
 
   const innerWidth = width - (padding.left + padding.right);
   const barWidth = innerWidth / points.length;
 </script>
 
-<h2>Coffee consumed per release (team total)</h2>
+<h2>Coffee consumed per release — team total</h2>
 
 <div class="chart">
   <svg>
@@ -33,14 +35,17 @@
       <for each="tick of yTicks">
         <g class="tick tick-{tick}" transform="translate(0, {yScale(tick)})">
           <line x2="100%" />
-          <text y="-4">{tick} {tick === 20 ? ' cups a day' : ''}</text>
+          <text y="-4">{tick} {tick === 20 ? ' cups/day' : ''}</text>
         </g>
       </for>
     </g>
 
     <g class="axis x-axis">
       <for each="point of points">
-        <g class="tick" transform="translate({xScale(points.indexOf(point))},{height})">
+        <g
+          class="tick"
+          transform="translate({xScale(points.indexOf(point))},{height})"
+        >
           <text x="{barWidth / 2}" y="-4">v{point.version}</text>
         </g>
       </for>

@@ -1,10 +1,10 @@
 <script>
   import { props } from "olum";
-  const {onPing} = props();
+  const { onPing } = props();
 
   const ping = () => {
-    onPing({ text: "pong! 🏓" });
+    onPing({ text: "hello from the child! 👋" });
   };
 </script>
 
-<button onclick="ping()"> Ping the parent </button>
+<button onclick="ping()">Send a message up</button>

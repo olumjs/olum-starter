@@ -1,0 +1,54 @@
+<script>
+  const state = { visible: true };
+  const toggle = (e) => (state.visible = e.target.checked);
+
+  const elasticOut = (t) =>
+    t === 0
+      ? 0
+      : t === 1
+        ? 1
+        : 0.2 *
+            Math.pow(2, -10 * t) *
+            Math.sin(((t - 0.075) * (2 * Math.PI)) / 0.3) +
+          1;
+
+  const spin = (node, { duration } = {}) => ({
+    duration,
+    css: (t) => {
+      const eased = elasticOut(t);
+      return `
+        transform: scale(${eased}) rotate(${eased * 1080}deg);
+        color: hsl(
+          ${Math.trunc(t * 360)},
+          ${Math.min(100, 1000 - 1000 * t)}%,
+          ${Math.min(50, 500 - 500 * t)}%
+        );`;
+    },
+  });
+</script>
+
+<label>
+  <input type="checkbox" checked="{state.visible}" onchange="toggle($event)" />
+  visible
+</label>
+
+<if when="state.visible">
+  <transition in="spin({ duration: 8000 })" out="fade">
+    <div class="centered"><span>whee!</span></div>
+  </transition>
+</if>
+
+<style>
+  .centered {
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%, -50%);
+  }
+
+  span {
+    position: absolute;
+    transform: translate(-50%, -50%);
+    font-size: 4em;
+  }
+</style>

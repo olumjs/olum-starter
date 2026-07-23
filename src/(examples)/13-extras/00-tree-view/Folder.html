@@ -1,12 +1,9 @@
-<!-- note: OlumJS has no transition system yet (see docs/limitations),
-     so expanding/collapsing is a plain add/remove with no animation. -->
 <script>
   import { props } from "olum";
   import File from "./File";
   import Folder from "./Folder";
 
   const { name, files, expanded } = props();
-  // expanded by default — pass expanded="{false}" to start a folder collapsed
   const state = { expanded: expanded ?? true };
 
   const toggle = () => (state.expanded = !state.expanded);
@@ -39,7 +36,9 @@
   }
 </style>
 
-<button class="{state.expanded ? 'expanded' : ''}" onclick="toggle()">{name}</button>
+<button class="{state.expanded ? 'expanded' : ''}" onclick="toggle()">
+  {name}
+</button>
 
 <if when="state.expanded">
   <ul>

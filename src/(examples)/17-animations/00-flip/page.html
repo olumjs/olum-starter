@@ -1,0 +1,220 @@
+<script>
+  import { crossfade, easings } from "olum";
+
+  const fallback = (node) => {
+    const style = getComputedStyle(node);
+    const transform = style.transform === "none" ? "" : style.transform;
+    return {
+      duration: 600,
+      easing: easings.quintOut,
+      css: (t) => `transform: ${transform} scale(${t}); opacity: ${t}`,
+    };
+  };
+
+  const _cf = crossfade({ fallback });
+  const send = (node, params) => _cf[0](node, params);
+  const receive = (node, params) => _cf[1](node, params);
+
+  const pending = () => state.todos.filter((t) => !t.done);
+  const finished = () => state.todos.filter((t) => t.done);
+
+  const state = {
+    todos: [
+      { id: 1, done: false, description: "water the plants" },
+      { id: 2, done: false, description: "prep slides for the meetup" },
+      { id: 3, done: true, description: "restock the pantry" },
+      { id: 4, done: false, description: "book the dentist" },
+      { id: 5, done: false, description: "walk the dog" },
+      { id: 6, done: false, description: "triage the backlog" },
+    ],
+  };
+
+  let uid = state.todos.length + 1;
+
+  const add = (input) => {
+    const todo = { id: uid++, done: false, description: input.value };
+    state.todos = [todo, ...state.todos];
+    input.value = "";
+  };
+
+  const keydown = (e) => {
+    if (e.key === "Enter") add(e.target);
+  };
+
+  const toggle = (todo) => {
+    state.todos = state.todos.map((t) =>
+      t.id === todo.id
+        ? { id: t.id, done: !t.done, description: t.description }
+        : t,
+    );
+  };
+
+  const remove = (todo) =>
+    (state.todos = state.todos.filter((t) => t.id !== todo.id));
+</script>
+
+<div class="board">
+  <input
+    class="new-todo"
+    placeholder="what needs doing?"
+    onkeydown="keydown($event)"
+  />
+
+  <div class="columns">
+    <section class="column">
+      <h2>To do <span class="count">{pending().length}</span></h2>
+      <div class="list">
+        <for each="todo of pending()" key="todo.id">
+          <transition
+            in="receive({ key: todo.id })"
+            out="send({ key: todo.id })"
+            flip
+          >
+            <label class="todo-item">
+              <input
+                type="checkbox"
+                checked="{todo.done}"
+                onchange="toggle(todo)"
+              />
+              <span class="text">{todo.description}</span>
+              <button class="remove" onclick="remove(todo)">×</button>
+            </label>
+          </transition>
+        </for>
+      </div>
+    </section>
+
+    <section class="column column-done">
+      <h2>Done <span class="count">{finished().length}</span></h2>
+      <div class="list">
+        <for each="todo of finished()" key="todo.id">
+          <transition
+            in="receive({ key: todo.id })"
+            out="send({ key: todo.id })"
+            flip
+          >
+            <label class="todo-item">
+              <input
+                type="checkbox"
+                checked="{todo.done}"
+                onchange="toggle(todo)"
+              />
+              <span class="text">{todo.description}</span>
+              <button class="remove" onclick="remove(todo)">×</button>
+            </label>
+          </transition>
+        </for>
+      </div>
+    </section>
+  </div>
+</div>
+
+<style>
+  .board {
+    max-width: 40em;
+    margin: 2em auto;
+    padding: 0 1em;
+    box-sizing: border-box;
+  }
+
+  .new-todo {
+    font-size: 1.1em;
+    width: 100%;
+    padding: 0.75em 1em;
+    margin-bottom: 1.5em;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    box-sizing: border-box;
+  }
+
+  .new-todo:focus {
+    outline: none;
+    border-color: #25c97e;
+  }
+
+  .columns {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 1.5em;
+  }
+
+  .column h2 {
+    display: flex;
+    align-items: center;
+    gap: 0.5em;
+    font-size: 1.1em;
+    font-weight: 600;
+    margin: 0 0 0.75em 0;
+    user-select: none;
+  }
+
+  .count {
+    font-size: 0.75em;
+    font-weight: 500;
+    color: #888;
+    background: #f2f2f2;
+    border-radius: 999px;
+    padding: 0.1em 0.6em;
+  }
+
+  .list {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5em;
+  }
+
+  .todo-item {
+    display: flex;
+    align-items: center;
+    gap: 0.6em;
+    padding: 0.6em 0.75em;
+    border-radius: 8px;
+    background-color: #f4f4f5;
+    user-select: none;
+  }
+
+  .column-done .todo-item {
+    background-color: rgba(37, 201, 126, 0.15);
+  }
+
+  .todo-item input[type="checkbox"] {
+    margin: 0;
+    accent-color: #25c97e;
+    flex-shrink: 0;
+  }
+
+  .todo-item .text {
+    flex: 1;
+    overflow-wrap: anywhere;
+  }
+
+  .remove {
+    flex-shrink: 0;
+    width: 1.5em;
+    height: 1.5em;
+    line-height: 1;
+    border: none;
+    border-radius: 4px;
+    background-color: transparent;
+    color: #ef4444;
+    opacity: 0;
+    cursor: pointer;
+    transition:
+      opacity 0.2s,
+      background-color 0.2s;
+  }
+
+  .todo-item:hover .remove {
+    opacity: 1;
+  }
+
+  .remove:hover {
+    background-color: rgba(239, 68, 68, 0.12);
+  }
+
+  @media (max-width: 480px) {
+    .columns {
+      grid-template-columns: 1fr;
+    }
+  }
+</style>

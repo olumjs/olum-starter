@@ -1,4 +1,3 @@
-<!-- https://eugenkiss.github.io/7guis/tasks/#flight -->
 <script>
   const pad = (x, len) => {
     x = String(x);
@@ -25,9 +24,9 @@
 
   const bookFlight = () => {
     const type = state.isReturn ? "return" : "one-way";
-    let message = `You have booked a ${type} flight, leaving ${startDate().toDateString()}`;
+    let message = `Booking confirmed: ${type} flight departing ${startDate().toDateString()}`;
     if (type === "return") {
-      message += ` and returning ${endDate().toDateString()}`;
+      message += `, returning ${endDate().toDateString()}`;
     }
     alert(message);
   };
@@ -43,12 +42,26 @@
   }
 </style>
 
-<select onchange="(e) => state.isReturn = e.target.value === 'true'">
+<select onchange="(e) => (state.isReturn = e.target.value === 'true')">
   <option value="false" selected="{!state.isReturn}">one-way flight</option>
   <option value="true" selected="{state.isReturn}">return flight</option>
 </select>
 
-<input type="date" value="{state.start}" oninput="(e) => state.start = e.target.value" />
-<input type="date" value="{state.end}" disabled="{!state.isReturn}" oninput="(e) => state.end = e.target.value" />
+<input
+  type="date"
+  value="{state.start}"
+  oninput="(e) => (state.start = e.target.value)"
+/>
+<input
+  type="date"
+  value="{state.end}"
+  disabled="{!state.isReturn}"
+  oninput="(e) => (state.end = e.target.value)"
+/>
 
-<button onclick="bookFlight()" disabled="{state.isReturn && startDate() >= endDate()}">book</button>
+<button
+  onclick="bookFlight()"
+  disabled="{state.isReturn && startDate() >= endDate()}"
+>
+  book
+</button>

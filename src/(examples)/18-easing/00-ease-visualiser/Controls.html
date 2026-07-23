@@ -1,0 +1,184 @@
+<script>
+  import { props } from "olum";
+  import { eases, types } from "./eases.js";
+
+  const {
+    current_ease,
+    current_type,
+    duration,
+    playing,
+    width,
+    setEase,
+    setType,
+    setDuration,
+    onPlay,
+  } = props();
+
+  const easeNames = () => Array.from(eases.keys());
+  const isMobile = () => width && width < 600;
+</script>
+
+<div class="easing-sidebar">
+  <div class="easing-types">
+    <h3>Ease</h3>
+    <if when="isMobile()">
+      <select onchange="(e) => setEase(e.target.value)">
+        <for each="name of easeNames()">
+          <option value="{name}" selected="{name === current_ease}">
+            {name}
+          </option>
+        </for>
+      </select>
+    </if>
+    <else>
+      <ul>
+        <for each="name of easeNames()">
+          <li class="{name === current_ease ? 'selected' : ''}">
+            <button onclick="setEase(name)">{name}</button>
+          </li>
+        </for>
+      </ul>
+    </else>
+
+    <h3>Type</h3>
+    <if when="isMobile()">
+      <select onchange="(e) => setType(e.target.value)">
+        <for each="t of types">
+          <option value="{t[1]}">{t[0]}</option>
+        </for>
+      </select>
+    </if>
+    <else>
+      <ul>
+        <for each="t of types">
+          <li class="{t[1] === current_type ? 'selected' : ''}">
+            <button onclick="setType(t[1])">{t[0]}</button>
+          </li>
+        </for>
+      </ul>
+    </else>
+  </div>
+
+  <h4>Duration</h4>
+  <div class="duration">
+    <span>
+      <input
+        type="number"
+        value="{duration}"
+        min="0"
+        step="100"
+        onchange="(e) => setDuration(+e.target.value)"
+      />
+      <button class="number" onclick="setDuration(duration - 100)">-</button>
+      <button class="number" onclick="setDuration(duration + 100)">+</button>
+    </span>
+    <button class="play" onclick="onPlay()">
+      {playing ? 'Restart' : 'Play'}
+    </button>
+  </div>
+</div>
+
+<style>
+  .easing-sidebar {
+    width: 11em;
+  }
+
+  ul {
+    list-style: none;
+    padding: 0;
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 3px;
+    font-size: 18px;
+  }
+
+  li {
+    display: grid;
+  }
+
+  li:hover {
+    background: #676778;
+    color: white;
+  }
+
+  button {
+    border: none;
+    border-radius: 2px;
+    padding: 2px;
+  }
+
+  .selected > button {
+    background: #25c97e;
+    color: white;
+    font-weight: bold;
+  }
+
+  h3 {
+    margin: 0 10px 0 0;
+  }
+
+  h4 {
+    margin-bottom: 0;
+  }
+
+  select {
+    display: inline;
+    padding: 0.2em;
+    margin: 0;
+  }
+
+  .duration {
+    width: 100%;
+    display: flex;
+    align-items: center;
+    flex-wrap: wrap;
+  }
+
+  .duration span {
+    display: flex;
+  }
+
+  .duration input {
+    width: 80px;
+    margin: 10px 10px 10px 0;
+  }
+
+  .duration button {
+    margin: 10px 5px;
+  }
+
+  .duration .number {
+    width: 30px;
+  }
+
+  .duration .play {
+    margin: 0 5px 0 auto;
+    width: 100%;
+  }
+
+  @media (max-width: 600px) {
+    .easing-types {
+      display: flex;
+      align-items: center;
+      margin-top: 10px;
+    }
+
+    .easing-sidebar {
+      width: 100%;
+    }
+
+    .duration .play {
+      margin-left: auto;
+      width: unset;
+    }
+
+    h3 {
+      font-size: 0.9em;
+      display: inline;
+    }
+
+    ul li {
+      margin-right: 10px;
+    }
+  }
+</style>

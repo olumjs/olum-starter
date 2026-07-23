@@ -1,13 +1,14 @@
 <script>
   const state = {
     todos: [
-      { done: false, text: "read the Olum docs" },
-      { done: false, text: "port an example" },
-      { done: false, text: "ship something real" },
+      { done: false, text: "skim the Olum docs" },
+      { done: false, text: "convert one example" },
+      { done: false, text: "build something real" },
     ],
   };
 
-  const add = () => (state.todos = state.todos.concat({ done: false, text: "" }));
+  const add = () =>
+    (state.todos = state.todos.concat({ done: false, text: "" }));
   const clear = () => (state.todos = state.todos.filter((t) => !t.done));
   const remaining = () => state.todos.filter((t) => !t.done).length;
   const toggleDone = (index, e) => {
@@ -23,18 +24,27 @@
   };
 </script>
 
-<h1>Todos</h1>
+<h1>Task list</h1>
 
 <for each="(todo, index) of state.todos">
   <div>
-    <input type="checkbox" checked="{todo.done}" onchange="toggleDone(index, $event)" />
+    <input
+      type="checkbox"
+      checked="{todo.done}"
+      onchange="toggleDone(index, $event)"
+    />
 
-    <input placeholder="What's next?" value="{todo.text}" oninput="setText(index,$event)" disabled="{todo.done}" />
+    <input
+      placeholder="What's the next task?"
+      value="{todo.text}"
+      oninput="setText(index, $event)"
+      disabled="{todo.done}"
+    />
   </div>
 </for>
 
 <p>{remaining()} remaining</p>
 
-<button onclick="add()">Add new</button>
+<button onclick="add()">Add task</button>
 
-<button onclick="clear()">Clear completed</button>
+<button onclick="clear()">Clear done</button>

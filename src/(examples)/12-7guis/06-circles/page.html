@@ -1,10 +1,3 @@
-<!--
-https://eugenkiss.github.io/7guis/tasks#circle
-
-Click on the canvas to draw a circle. Click on a circle
-to select it. Right-click on the canvas to adjust the
-radius of the selected circle.
--->
 <script>
   const clone = (circles) => circles.map(({ cx, cy, r }) => ({ cx, cy, r }));
 
@@ -92,14 +85,19 @@ radius of the selected circle.
     border-radius: 4px;
   }
 
-  input[type='range'] {
+  input[type="range"] {
     width: 100%;
   }
 </style>
 
 <div class="controls">
   <button onclick="travel(-1)" disabled="{state.i === 0}">undo</button>
-  <button onclick="travel(1)" disabled="{state.i === state.undoStack.length - 1}">redo</button>
+  <button
+    onclick="travel(1)"
+    disabled="{state.i === state.undoStack.length - 1}"
+  >
+    redo
+  </button>
 </div>
 
 <svg onclick="handleClick($event)">
@@ -117,7 +115,7 @@ radius of the selected circle.
 
 <if when="state.adjusting">
   <div class="adjuster">
-    <p>adjust diameter of circle at {state.selected.cx}, {state.selected.cy}</p>
+    <p>resize the circle at {state.selected.cx}, {state.selected.cy}</p>
     <input type="range" value="{state.selected.r}" oninput="adjust($event)" />
   </div>
 </if>

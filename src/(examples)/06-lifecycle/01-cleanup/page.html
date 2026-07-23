@@ -4,16 +4,22 @@
   const state = { show: true, log: [] };
 
   const toggle = () => (state.show = !state.show);
-  const record = (entry) => (state.log = [...state.log, `${new Date().toLocaleTimeString()} — ${entry}`]);
+  const record = (entry) =>
+    (state.log = [
+      ...state.log,
+      `${new Date().toLocaleTimeString()} — ${entry}`,
+    ]);
 </script>
 
-<button onclick="toggle()">{state.show ? 'Unmount' : 'Mount'} the stopwatch</button>
+<button onclick="toggle()">
+  {state.show ? 'Remove' : 'Add'} the stopwatch
+</button>
 
 <if when="state.show">
   <Stopwatch onLog="{record}" />
 </if>
 
-<h2>Lifecycle log</h2>
+<h2>Activity log</h2>
 <if when="state.log.length">
   <ul>
     <for each="entry of state.log">
@@ -22,7 +28,7 @@
   </ul>
 </if>
 <else>
-  <p>unmount the stopwatch and its cleanup will report here…</p>
+  <p>remove the stopwatch to see its cleanup logged here…</p>
 </else>
 
 <style>

@@ -1,0 +1,175 @@
+<script>
+  import { onMount } from "olum";
+  import Controls from "./Controls";
+  import { eases, types } from "./eases.js";
+  import { tween } from "./tween.js";
+  import { interpolateString } from "./interpolate.js";
+
+  const getCurrent = () => eases.get(state.current_ease)[state.current_type];
+
+  const state = {
+    current_ease: "sine",
+    current_type: "In",
+    duration: 2000,
+    playing: false,
+    width: typeof window !== "undefined" ? window.innerWidth : 800,
+    time: 0,
+    value: 1000,
+    ease_path: eases.get("sine").In.shape,
+  };
+
+  const ease_path = tween(
+    state.ease_path,
+    { interpolate: interpolateString },
+    (v) => (state.ease_path = v),
+  );
+  const time = tween(0, {}, (v) => (state.time = v));
+  const value = tween(1000, {}, (v) => (state.value = v));
+
+  async function runAnimations() {
+    const current = getCurrent();
+    state.playing = true;
+
+    value.set(1000, { duration: 0 });
+    time.set(0, { duration: 0 });
+
+    await ease_path.set(current.shape);
+    await Promise.all([
+      time.set(1000, { duration: state.duration, easing: (x) => x }),
+      value.set(0, { duration: state.duration, easing: current.fn }),
+    ]);
+
+    state.playing = false;
+  }
+
+  const setEase = (name) => {
+    state.current_ease = name;
+    runAnimations();
+  };
+  const setType = (type) => {
+    state.current_type = type;
+    runAnimations();
+  };
+  const setDuration = (n) => (state.duration = Math.max(0, n | 0));
+  const onPlay = () => runAnimations();
+
+  const onResize = () => (state.width = window.innerWidth);
+
+  onMount(() => {
+    window.addEventListener("resize", onResize);
+    runAnimations();
+    return () => window.removeEventListener("resize", onResize);
+  });
+</script>
+
+<div class="easing-vis">
+  <svg viewBox="0 0 1400 1802">
+    <g class="canvas">
+      <rect
+        x="0"
+        y="0"
+        width="1400"
+        height="1800"
+        stroke="#ccc"
+        style="opacity: 0.5"
+        fill="none"
+        stroke-width="2"
+      />
+
+      <for each="i of 8">
+        <if when="i <= 6">
+          <path d="M{i * 200} 0 L{i * 200} 1802" class="grid-line" />
+        </if>
+        <path d="M0 {i * 200} L1400 {i * 200} " class="grid-line" />
+      </for>
+
+      <path
+        style="transform: translateX({state.time + 200}px)"
+        d="M0 0 L0 1800"
+        class="grid-line-xy"
+      />
+      <path
+        style="transform: translateY({state.value}px)"
+        d="M0 400 L1400 400"
+        class="grid-line-xy"
+      />
+      <rect
+        x="200"
+        y="400"
+        width="1000"
+        height="1000"
+        stroke="#999"
+        fill="none"
+        stroke-width="2"
+      />
+
+      <g class="graph">
+        <path
+          d="{state.ease_path}"
+          stroke="#25c97e"
+          stroke-width="2"
+          fill="none"
+        />
+
+        <path
+          d="M20,37.217 L0,2.4346 L40,2.4346 Z"
+          fill="#25c97e"
+          style="transform: translate(1060px, {state.value - 17}px)"
+        />
+
+        <circle cx="{state.time}" cy="{state.value}" r="15" fill="#25c97e" />
+      </g>
+    </g>
+  </svg>
+
+  <Controls
+    playing="{state.playing}"
+    width="{state.width}"
+    duration="{state.duration}"
+    current_ease="{state.current_ease}"
+    current_type="{state.current_type}"
+    setEase="{setEase}"
+    setType="{setType}"
+    setDuration="{setDuration}"
+    onPlay="{onPlay}"
+  />
+</div>
+
+<style>
+  .easing-vis {
+    display: flex;
+    max-height: 95%;
+    max-width: 800px;
+    margin: auto;
+    border: 1px solid #333;
+    border-radius: 2px;
+    padding: 20px;
+  }
+
+  svg {
+    width: 100%;
+    margin: 0 20px 0 0;
+  }
+
+  .graph {
+    transform: translate(200px, 400px);
+  }
+
+  .grid-line {
+    stroke: #ccc;
+    opacity: 0.5;
+    stroke-width: 2;
+  }
+
+  .grid-line-xy {
+    stroke: #333;
+    stroke-width: 2;
+  }
+
+  @media (max-width: 600px) {
+    .easing-vis {
+      flex-direction: column;
+      max-height: calc(100% - 3rem);
+    }
+  }
+</style>

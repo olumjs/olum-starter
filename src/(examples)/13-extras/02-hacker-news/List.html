@@ -1,0 +1,160 @@
+<script>
+  import { props } from "olum";
+  import Summary from "./Summary";
+  const { items, page, offset, maxPage } = props();
+
+  const pageNumbers = () => {
+    const delta = 1;
+    const nums = [];
+    for (let p = 1; p <= maxPage; p++) {
+      if (
+        p === 1 ||
+        p === maxPage ||
+        (p >= page - delta && p <= page + delta)
+      ) {
+        nums.push(p);
+      } else if (nums[nums.length - 1] !== "…") {
+        nums.push("…");
+      }
+    }
+    return nums;
+  };
+</script>
+
+<if when="items">
+  <div class="stories">
+    <for each="(item, i, arr) of items" key="item.id">
+      <summary item="{item}" i="{i}" offset="{offset}" />
+    </for>
+  </div>
+
+  <nav class="pagination">
+    <if when="page > 1">
+      <a class="nav-link" href="?page={page - 1}">&lsaquo; Prev</a>
+    </if>
+    <else>
+      <span class="nav-link disabled">&lsaquo; Prev</span>
+    </else>
+
+    <div class="pages">
+      <for each="(p, i) of pageNumbers()" key="i">
+        <if when="p === '…'">
+          <span class="ellipsis">…</span>
+        </if>
+        <else-if when="p === page">
+          <span class="page current">{p}</span>
+        </else-if>
+        <else>
+          <a class="page" href="?page={p}">{p}</a>
+        </else>
+      </for>
+    </div>
+
+    <if when="page < maxPage">
+      <a class="nav-link" href="?page={page + 1}">Next &rsaquo;</a>
+    </if>
+    <else>
+      <span class="nav-link disabled">Next &rsaquo;</span>
+    </else>
+  </nav>
+</if>
+<else>
+  <p class="loading">fetching stories…</p>
+</else>
+
+<style>
+  .stories {
+    background: white;
+    border: 1px solid #eee;
+    border-radius: 8px;
+    padding: 0 1em;
+  }
+
+  .pagination {
+    position: fixed;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    z-index: 1;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-wrap: wrap;
+    gap: 0.4em;
+    padding: 0.75em 1em;
+    background: rgba(255, 255, 255, 0.92);
+    backdrop-filter: blur(6px);
+    border-top: 1px solid #eee;
+  }
+
+  .pages {
+    display: flex;
+    gap: 0.25em;
+  }
+
+  .ellipsis {
+    min-width: 2em;
+    box-sizing: border-box;
+    text-align: center;
+    padding: 0.4em 0.5em;
+    color: #bbb;
+  }
+
+  .page {
+    min-width: 2em;
+    box-sizing: border-box;
+    text-align: center;
+    padding: 0.4em 0.5em;
+    border-radius: 6px;
+    color: #555;
+    text-decoration: none;
+    font-size: 0.85em;
+    font-variant-numeric: tabular-nums;
+  }
+
+  .page:hover {
+    background-color: rgba(37, 201, 126, 0.12);
+    color: #178a56;
+  }
+
+  .page.current {
+    background-color: #25c97e;
+    color: white;
+    font-weight: 600;
+  }
+
+  .nav-link {
+    padding: 0.4em 0.8em;
+    border-radius: 6px;
+    color: #555;
+    text-decoration: none;
+    font-size: 0.85em;
+    white-space: nowrap;
+  }
+
+  .nav-link:hover {
+    background-color: rgba(37, 201, 126, 0.12);
+    color: #178a56;
+  }
+
+  .nav-link.disabled {
+    color: #ccc;
+  }
+
+  .loading {
+    text-align: center;
+    color: #999;
+    padding: 3em 0;
+    opacity: 0;
+    animation: 0.4s 0.8s forwards fade-in;
+  }
+
+  @keyframes fade-in {
+    from {
+      opacity: 0;
+    }
+    to {
+      opacity: 1;
+    }
+  }
+</style>

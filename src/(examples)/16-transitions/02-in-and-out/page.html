@@ -1,0 +1,15 @@
+<script>
+  const state = { visible: true };
+  const toggle = (e) => (state.visible = e.target.checked);
+</script>
+
+<label>
+  <input type="checkbox" checked="{state.visible}" onchange="toggle($event)" />
+  visible
+</label>
+
+<if when="state.visible">
+  <transition in="fly({ y: 200, duration: 2000 })" out="fade">
+    <p>Enters with a swoop, leaves with a fade</p>
+  </transition>
+</if>

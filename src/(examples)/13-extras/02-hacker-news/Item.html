@@ -1,0 +1,107 @@
+<script>
+  import { props } from "olum";
+  import Comment from "./Comment";
+  const { item, returnPage } = props();
+
+  const url = () =>
+    !item.domain ? `https://news.ycombinator.com/${item.url}` : item.url;
+</script>
+
+<a class="back" href="?page={returnPage}">&larr; all stories</a>
+
+<article>
+  <a class="title-link" href="{url()}">
+    <h1>{item.title}</h1>
+    <if when="item.domain">
+      <span class="domain">{item.domain}</span>
+    </if>
+  </a>
+
+  <p class="meta">
+    <span class="score">{item.points} points</span>
+    <span class="sep">·</span>
+    posted by {item.user} {item.time_ago}
+  </p>
+</article>
+
+<if when="item.comments_count">
+  <h3 class="comments-heading">
+    {item.comments_count} comment{item.comments_count === 1 ? '' : 's'}
+  </h3>
+</if>
+
+<div class="comments">
+  <for each="comment of (item.comments || [])" key="comment.id">
+    <Comment comment="{comment}" />
+  </for>
+</div>
+
+<style>
+  .back {
+    display: inline-block;
+    margin: 0 0 1.2em 0;
+    padding: 0.4em 0.9em;
+    border-radius: 999px;
+    background: #f0f0f0;
+    color: #555;
+    text-decoration: none;
+    font-size: 0.85em;
+  }
+
+  .back:hover {
+    background: #e5e5e5;
+  }
+
+  article {
+    background: white;
+    border: 1px solid #eee;
+    border-radius: 8px;
+    padding: 1.2em;
+    margin: 0 0 1.5em 0;
+  }
+
+  .title-link {
+    display: block;
+    color: inherit;
+    text-decoration: none;
+  }
+
+  .title-link:hover h1 {
+    color: #25c97e;
+  }
+
+  h1 {
+    font-size: 1.4em;
+    line-height: 1.35;
+    margin: 0 0 0.3em 0;
+  }
+
+  .domain {
+    color: #999;
+    font-weight: 400;
+    font-size: 0.75em;
+  }
+
+  .meta {
+    color: #888;
+    font-size: 0.85em;
+    margin: 0;
+  }
+
+  .score {
+    color: #25c97e;
+    font-weight: 600;
+  }
+
+  .sep {
+    margin: 0 0.25em;
+    color: #ccc;
+  }
+
+  .comments-heading {
+    font-size: 0.95em;
+    font-weight: 600;
+    color: #555;
+    margin: 0 0 0.5em 0;
+  }
+</style>

@@ -5,14 +5,13 @@
   const state = { seconds: 0 };
 
   onMount(() => {
-    console.log("stopwatch mounted — interval started");
+    console.log("stopwatch mounted — timer started");
     const interval = setInterval(() => state.seconds++, 1000);
 
-    // the returned cleanup runs when the <if> in page.html removes this component
     return () => {
       clearInterval(interval);
-      onLog("🧹 cleanup ran — interval cleared, stopwatch unmounted");
-      console.log("stopwatch unmounted — interval cleared");
+      onLog("🧹 cleanup ran — timer cleared, stopwatch unmounted");
+      console.log("stopwatch unmounted — timer cleared");
     };
   });
 </script>
@@ -27,4 +26,4 @@
   }
 </style>
 
-<p>⏱ running for {state.seconds} {state.seconds === 1 ? "second" : "seconds"}</p>
+<p>⏱ elapsed: {state.seconds} {state.seconds === 1 ? "second" : "seconds"}</p>

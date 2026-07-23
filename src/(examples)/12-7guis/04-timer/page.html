@@ -1,4 +1,3 @@
-<!-- https://eugenkiss.github.io/7guis/tasks#timer -->
 <script>
   import { onMount } from "olum";
 
@@ -9,7 +8,10 @@
 
     let frame = requestAnimationFrame(function update(time) {
       frame = requestAnimationFrame(update);
-      state.elapsed += Math.min(time - lastTime, state.duration - state.elapsed);
+      state.elapsed += Math.min(
+        time - lastTime,
+        state.duration - state.elapsed,
+      );
       lastTime = time;
     });
 
@@ -19,9 +21,6 @@
   });
 </script>
 
-<!-- note: this mutates state.elapsed every animation frame, so per OlumJS
-     limitation #1 the whole component (including these inputs) re-renders
-     on every frame — fine for a demo, but heavy for real apps. -->
 <label>
   elapsed time:
   <progress value="{state.elapsed / state.duration}"></progress>
@@ -31,7 +30,13 @@
 
 <label>
   duration:
-  <input type="range" value="{state.duration}" min="1" max="20000" oninput="(e) => state.duration = +e.target.value" />
+  <input
+    type="range"
+    value="{state.duration}"
+    min="1"
+    max="20000"
+    oninput="(e) => (state.duration = +e.target.value)"
+  />
 </label>
 
-<button onclick="() => state.elapsed = 0">reset</button>
+<button onclick="() => (state.elapsed = 0)">reset</button>

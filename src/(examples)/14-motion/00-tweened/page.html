@@ -1,0 +1,31 @@
+<script>
+  import { onMount } from "olum";
+  import { tween, cubicOut } from "./tween.js";
+
+  const state = { progress: 0 };
+  const progress = tween(
+    0,
+    { duration: 400, easing: cubicOut },
+    (v) => (state.progress = v),
+  );
+
+  const set = (v) => progress.set(v);
+
+  onMount(() => () => progress.cancel());
+</script>
+
+<progress value="{state.progress}"></progress>
+
+<button onclick="() => set(0)">0%</button>
+<button onclick="() => set(0.25)">25%</button>
+<button onclick="() => set(0.5)">50%</button>
+<button onclick="() => set(0.75)">75%</button>
+<button onclick="() => set(1)">100%</button>
+
+<style>
+  progress {
+    display: block;
+    width: 100%;
+    margin-bottom: 1em;
+  }
+</style>

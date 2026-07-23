@@ -1,18 +1,22 @@
 <script>
-  const wonders = [
-    { slug: "Great_Pyramid_of_Giza", name: "The Great Pyramid of Giza" },
-    { slug: "Karnak", name: "Karnak Temple" },
-    { slug: "Abu_Simbel", name: "Abu Simbel" },
+  const waterfalls = [
+    { slug: "Niagara_Falls", name: "Niagara Falls" },
+    { slug: "Angel_Falls", name: "Angel Falls" },
+    { slug: "Victoria_Falls", name: "Victoria Falls" },
   ];
 </script>
 
-<h1>Wonders of Ancient Egypt</h1>
+<h1>Famous Waterfalls</h1>
 
 <ul>
-  <for each="(wonder, index) of wonders">
+  <for each="(waterfall, index) of waterfalls">
     <li>
-      <a target="_blank" rel="noreferrer" href="https://en.wikipedia.org/wiki/{wonder.slug}">
-        {index + 1}: {wonder.name}
+      <a
+        target="_blank"
+        rel="noreferrer"
+        href="https://en.wikipedia.org/wiki/{waterfall.slug}"
+      >
+        {index + 1}: {waterfall.name}
       </a>
     </li>
   </for>

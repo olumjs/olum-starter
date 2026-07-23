@@ -4,10 +4,6 @@
   const watcher = {
     files(old, files) {
       if (files) {
-        // Note that `files` is of type `FileList`, not an Array:
-        // https://developer.mozilla.org/en-US/docs/Web/API/FileList
-        console.log(files);
-
         for (const file of files) {
           console.log(`${file.name}: ${file.size} bytes`);
         }
@@ -18,14 +14,20 @@
   const setFiles = (e) => (state.files = e.target.files);
 </script>
 
-<label for="shot">Attach a screenshot:</label>
-<input accept="image/png, image/jpeg" onchange="setFiles($event)" id="shot" name="shot" type="file" />
+<label for="shot">Upload a screenshot:</label>
+<input
+  accept="image/png, image/jpeg"
+  onchange="setFiles($event)"
+  id="shot"
+  name="shot"
+  type="file"
+/>
 
-<label for="many">Attach any number of files:</label>
+<label for="many">Upload any number of files:</label>
 <input onchange="setFiles($event)" id="many" multiple type="file" />
 
 <if when="state.files">
-  <h2>Attached:</h2>
+  <h2>Uploaded:</h2>
   <for each="file of Array.from(state.files)">
     <p>{file.name} ({file.size} bytes)</p>
   </for>

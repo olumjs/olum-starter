@@ -1,8 +1,8 @@
 <script>
   const state = {
     slices: 1,
-    toppings: ["Roasted garlic"],
-    menu: ["Mushrooms", "Roasted garlic", "Hot peppers"],
+    toppings: ["Caramelized onions"],
+    menu: ["Olives", "Caramelized onions", "Jalapeños"],
   };
 
   const setSlices = (n) => () => (state.slices = n);
@@ -21,17 +21,29 @@
 <h2>Slices</h2>
 
 <label>
-  <input type="radio" checked="{state.slices === 1}" onchange="setSlices(1)()" />
+  <input
+    type="radio"
+    checked="{state.slices === 1}"
+    onchange="setSlices(1)()"
+  />
   One slice
 </label>
 
 <label>
-  <input type="radio" checked="{state.slices === 2}" onchange="setSlices(2)()" />
+  <input
+    type="radio"
+    checked="{state.slices === 2}"
+    onchange="setSlices(2)()"
+  />
   Two slices
 </label>
 
 <label>
-  <input type="radio" checked="{state.slices === 3}" onchange="setSlices(3)()" />
+  <input
+    type="radio"
+    checked="{state.slices === 3}"
+    onchange="setSlices(3)()"
+  />
   Three slices
 </label>
 
@@ -39,7 +51,11 @@
 
 <for each="topping of state.menu">
   <label>
-    <input type="checkbox" checked="{state.toppings.includes(topping)}" onchange="toggleTopping(topping)($event)" />
+    <input
+      type="checkbox"
+      checked="{state.toppings.includes(topping)}"
+      onchange="toggleTopping(topping)($event)"
+    />
     {topping}
   </label>
 </for>
@@ -52,8 +68,7 @@
 </else-if>
 <else>
   <p>
-    You ordered {state.slices}
-    {state.slices === 1 ? "slice" : "slices"}
-    with {join(state.toppings)}
+    You ordered {state.slices} {state.slices === 1 ? "slice" : "slices"} with
+    {join(state.toppings)}
   </p>
 </else>

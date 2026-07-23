@@ -1,7 +1,9 @@
 <script>
   import { marked } from "marked";
 
-  const state = { text: `Olum templates are **plain HTML** with a little *JavaScript* sprinkled in` };
+  const state = {
+    text: `Olum components are **plain HTML** with a splash of *JavaScript* mixed in`,
+  };
 </script>
 
 <style>
@@ -11,6 +13,9 @@
   }
 </style>
 
-<textarea value="{state.text}" oninput="(e) => state.text = e.target.value"></textarea>
+<textarea
+  value="{state.text}"
+  oninput="(e) => (state.text = e.target.value)"
+></textarea>
 
 <div html="marked(state.text)"></div>

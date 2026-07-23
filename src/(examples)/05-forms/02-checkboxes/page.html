@@ -3,15 +3,19 @@
 </script>
 
 <label>
-  <input type="checkbox" checked="{state.optIn}" onchange="(e) => state.optIn = e.target.checked" />
-  Email me when a new Olum version ships
+  <input
+    type="checkbox"
+    checked="{state.optIn}"
+    onchange="(e) => (state.optIn = e.target.checked)"
+  />
+  Notify me about new Olum releases
 </label>
 
 <if when="state.optIn">
-  <p>You're on the list — see you at the next release.</p>
+  <p>You're subscribed — we'll ping you at the next release.</p>
 </if>
 <else>
-  <p>No emails then. The changelog will miss you.</p>
+  <p>No notifications then. You'll miss the changelog.</p>
 </else>
 
-<button disabled="{!state.optIn}"> Subscribe </button>
+<button disabled="{!state.optIn}">Sign up</button>

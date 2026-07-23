@@ -15,6 +15,6 @@
   }
 </style>
 
-<div onmousemove="(e) => state.pointer = { x: e.clientX, y: e.clientY }">
+<div onmousemove="(e) => (state.pointer = { x: e.clientX, y: e.clientY })">
   Pointer at {state.pointer.x} × {state.pointer.y}
 </div>

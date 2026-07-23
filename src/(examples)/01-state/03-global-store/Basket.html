@@ -4,7 +4,7 @@
 
 <p>
   <strong>{cart.items.length}</strong>
-  {cart.items.length === 1 ? "item" : "items"} in the basket
+  {cart.items.length === 1 ? "item" : "items"} in your basket
 </p>
 
 <if when="cart.items.length">
@@ -13,6 +13,5 @@
       <li>{name}</li>
     </for>
   </ul>
-  <!-- <button onclick="cart.clear()">Empty basket</button> -->
-  <button onclick="() => cart.items = []">Empty basket</button>
+  <button onclick="() => (cart.items = [])">Empty basket</button>
 </if>

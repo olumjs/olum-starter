@@ -1,0 +1,80 @@
+<script>
+  import { inner, outer } from "./shape";
+
+  const state = { visible: true };
+  const chars = "OLUM".split("");
+  const toggle = (e) => (state.visible = e.target.checked);
+
+  const quintOut = (t) => 1 - Math.pow(1 - t, 5);
+  const expand = (node, { delay = 0, duration = 400 } = {}) => {
+    const w = parseFloat(getComputedStyle(node).strokeWidth);
+    return {
+      delay,
+      duration,
+      easing: quintOut,
+      css: (t) => `opacity: ${t}; stroke-width: ${t * w}`,
+    };
+  };
+</script>
+
+<if when="state.visible">
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 103 124">
+    <transition out="fade({ duration: 200 })">
+      <g opacity="0.2">
+        <transition in="expand({ duration: 400, delay: 1000 })">
+          <path
+            style="stroke: #25c97e; fill: #25c97e; stroke-width: 50"
+            d="{outer}"
+          />
+        </transition>
+        <transition in="draw({ duration: 1000 })">
+          <path style="stroke: #25c97e; stroke-width: 1.5" d="{inner}" />
+        </transition>
+      </g>
+    </transition>
+  </svg>
+
+  <transition out="fly({ y: -20, duration: 800 })">
+    <div class="centered">
+      <for each="(char, i, arr) of chars">
+        <transition in="fade({ delay: 1000 + i * 150, duration: 800 })">
+          <span>{char}</span>
+        </transition>
+      </for>
+    </div>
+  </transition>
+</if>
+
+<label>
+  <input type="checkbox" checked="{state.visible}" onchange="toggle($event)" />
+  tap to toggle
+</label>
+
+<style>
+  svg {
+    width: 100%;
+    height: 100%;
+  }
+
+  path {
+    fill: white;
+    opacity: 1;
+  }
+
+  label {
+    position: absolute;
+    top: 1em;
+    left: 1em;
+  }
+
+  .centered {
+    font-size: 20vw;
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%, -50%);
+    letter-spacing: 0.12em;
+    color: #676778;
+    font-weight: 400;
+  }
+</style>

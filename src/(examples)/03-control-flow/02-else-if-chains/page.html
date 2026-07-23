@@ -3,11 +3,11 @@
 </script>
 
 <if when="state.temp > 80">
-  <p>{state.temp}°F — too hot to code</p>
+  <p>{state.temp}°F — time for the fan</p>
 </if>
 <else-if when="60 > state.temp">
-  <p>{state.temp}°F — grab a sweater</p>
+  <p>{state.temp}°F — grab a jacket</p>
 </else-if>
 <else>
-  <p>{state.temp}°F — just right</p>
+  <p>{state.temp}°F — perfectly comfortable</p>
 </else>

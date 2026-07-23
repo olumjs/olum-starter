@@ -1,10 +1,9 @@
-<!-- https://eugenkiss.github.io/7guis/tasks#crud -->
 <script>
   const state = {
     people: [
-      { first: "Hans", last: "Emil" },
-      { first: "Max", last: "Mustermann" },
-      { first: "Roman", last: "Tisch" },
+      { first: "Amara", last: "Okafor" },
+      { first: "Kenji", last: "Watanabe" },
+      { first: "Ines", last: "Larsson" },
     ],
     prefix: "",
     first: "",
@@ -38,7 +37,10 @@
   };
 
   const create = () => {
-    state.people = state.people.concat({ first: state.first, last: state.last });
+    state.people = state.people.concat({
+      first: state.first,
+      last: state.last,
+    });
     state.i = state.people.length - 1;
     state.first = state.last = "";
   };
@@ -53,7 +55,10 @@
   const remove = () => {
     const person = selectedPerson();
     const index = state.people.indexOf(person);
-    state.people = [...state.people.slice(0, index), ...state.people.slice(index + 1)];
+    state.people = [
+      ...state.people.slice(0, index),
+      ...state.people.slice(index + 1),
+    ];
     state.first = state.last = "";
     state.i = Math.min(state.i, filteredPeople().length - 1);
   };
@@ -81,19 +86,42 @@
   }
 </style>
 
-<input placeholder="filter prefix" value="{state.prefix}" oninput="(e) => state.prefix = e.target.value" />
+<input
+  placeholder="filter prefix"
+  value="{state.prefix}"
+  oninput="(e) => (state.prefix = e.target.value)"
+/>
 
-<select size="5" onchange="(e) => state.i = +e.target.value">
+<select size="5" onchange="(e) => (state.i = +e.target.value)">
   <for each="(person, index) of filteredPeople()">
-    <option value="{index}" selected="{index === state.i}">{person.last}, {person.first}</option>
+    <option value="{index}" selected="{index === state.i}">
+      {person.last}, {person.first}
+    </option>
   </for>
 </select>
 
-<label><input value="{state.first}" placeholder="first" oninput="(e) => state.first = e.target.value" /></label>
-<label><input value="{state.last}" placeholder="last" oninput="(e) => state.last = e.target.value" /></label>
+<label
+  ><input
+    value="{state.first}"
+    placeholder="first"
+    oninput="(e) => (state.first = e.target.value)"
+/></label>
+<label
+  ><input
+    value="{state.last}"
+    placeholder="last"
+    oninput="(e) => (state.last = e.target.value)"
+/></label>
 
 <div class="buttons">
-  <button onclick="create()" disabled="{!state.first || !state.last}">create</button>
-  <button onclick="update()" disabled="{!state.first || !state.last || !selectedPerson()}">update</button>
+  <button onclick="create()" disabled="{!state.first || !state.last}">
+    create
+  </button>
+  <button
+    onclick="update()"
+    disabled="{!state.first || !state.last || !selectedPerson()}"
+  >
+    update
+  </button>
   <button onclick="remove()" disabled="{!selectedPerson()}">delete</button>
 </div>

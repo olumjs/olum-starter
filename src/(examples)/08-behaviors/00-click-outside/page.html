@@ -5,7 +5,7 @@
   const hide = () => (state.showModal = false);
 </script>
 
-<button onclick="show()">Show Modal</button>
+<button onclick="show()">Open panel</button>
 <if when="state.showModal">
   <OutsideBox onOutsideClick="{hide}" />
 </if>

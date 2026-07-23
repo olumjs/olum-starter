@@ -3,8 +3,8 @@
 
   const { onPing } = props();
   const ping = () => {
-    onPing({ text: "pong! 🏓 (relayed through Outer)" });
+    onPing({ text: "ping received! 📡 (relayed through Outer)" });
   };
 </script>
 
-<button onclick="ping()"> Ping the grandparent </button>
+<button onclick="ping()">Notify the grandparent</button>

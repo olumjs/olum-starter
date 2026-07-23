@@ -3,9 +3,9 @@
 
   const watcher = {
     volume(old, next) {
-      if (next > 11) {
-        alert(`these amps only go to 11!`);
-        state.volume = 11;
+      if (next > 10) {
+        alert(`the dial doesn't go past 10`);
+        state.volume = 10;
       }
     },
   };
@@ -13,6 +13,4 @@
   const louder = () => state.volume++;
 </script>
 
-<button onclick="louder()">
-  Volume: {state.volume}
-</button>
+<button onclick="louder()">Volume: {state.volume}</button>

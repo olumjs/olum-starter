@@ -1,0 +1,28 @@
+<script>
+  const state = { visible: true, status: "waiting..." };
+  const toggle = (e) => (state.visible = e.target.checked);
+
+  const introStart = () => (state.status = "intro started");
+  const outroStart = () => (state.status = "outro started");
+  const introEnd = () => (state.status = "intro ended");
+  const outroEnd = () => (state.status = "outro ended");
+</script>
+
+<p>status: {state.status}</p>
+
+<label>
+  <input type="checkbox" checked="{state.visible}" onchange="toggle($event)" />
+  visible
+</label>
+
+<if when="state.visible">
+  <transition
+    transition="fly({ y: 200, duration: 2000 })"
+    onintrostart="introStart"
+    onoutrostart="outroStart"
+    onintroend="introEnd"
+    onoutroend="outroEnd"
+  >
+    <p>Watch the status line above</p>
+  </transition>
+</if>

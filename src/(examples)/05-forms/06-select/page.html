@@ -1,9 +1,9 @@
 <script>
   const state = {
     questions: [
-      { id: 1, text: `How did you first hear about Olum?` },
-      { id: 2, text: `What are you building with it?` },
-      { id: 3, text: `Which part of the docs helped you the most?` },
+      { id: 1, text: `Where did you first discover Olum?` },
+      { id: 2, text: `What are you building with Olum?` },
+      { id: 3, text: `Which doc page helped you the most?` },
     ],
     selected: null,
     answer: "",
@@ -16,7 +16,9 @@
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    alert(`answered question ${state.selected.id} (${state.selected.text}) with "${state.answer}"`);
+    alert(
+      `answered question ${state.selected.id} (${state.selected.text}) with "${state.answer}"`,
+    );
   };
 </script>
 
@@ -28,20 +30,26 @@
   }
 </style>
 
-<h2>Quick survey</h2>
+<h2>Quick poll</h2>
 
 <form onsubmit="handleSubmit()">
   <select onchange="selectQuestion()">
     <for each="question of state.questions">
-      <option value="{question.id}" selected="{state.selected && state.selected.id === question.id}">
+      <option
+        value="{question.id}"
+        selected="{state.selected && state.selected.id === question.id}"
+      >
         {question.text}
       </option>
     </for>
   </select>
 
-  <input value="{state.answer}" oninput="(e) => state.answer = e.target.value" />
+  <input
+    value="{state.answer}"
+    oninput="(e) => (state.answer = e.target.value)"
+  />
 
-  <button disabled="{!state.answer}" type="submit"> Submit </button>
+  <button disabled="{!state.answer}" type="submit">Send</button>
 </form>
 
-<p>selected question {state.selected ? state.selected.id : "[waiting...]"}</p>
+<p>active question {state.selected ? state.selected.id : "[pick one]"}</p>

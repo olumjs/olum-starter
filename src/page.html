@@ -33,8 +33,30 @@
     { path: "/forms/loop-inputs", name: "FormsLoopInputs" },
     { path: "/forms/host-element", name: "FormsHostElement" },
     { path: "/forms/callback-props", name: "FormsCallbackProps" },
+    { path: "/forms/dimensions", name: "FormsDimensions" },
+    { path: "/forms/media-elements", name: "FormsMediaElements" },
     { path: "/lifecycle/mount-hook", name: "LifecycleMountHook" },
     { path: "/lifecycle/cleanup", name: "LifecycleCleanup" },
+    { path: "/lifecycle/tick", name: "LifecycleTick" },
+    { path: "/motion/tweened", name: "MotionTweened" },
+    { path: "/motion/spring", name: "MotionSpring" },
+    { path: "/debugging/debug", name: "DebuggingDebug" },
+    { path: "/transitions/transition", name: "TransitionsTransition" },
+    {
+      path: "/transitions/adding-parameters",
+      name: "TransitionsAddingParameters",
+    },
+    { path: "/transitions/in-and-out", name: "TransitionsInAndOut" },
+    { path: "/transitions/custom-css", name: "TransitionsCustomCss" },
+    { path: "/transitions/custom-js", name: "TransitionsCustomJs" },
+    {
+      path: "/transitions/transition-events",
+      name: "TransitionsTransitionEvents",
+    },
+    { path: "/transitions/svg-transitions", name: "TransitionsSvgTransitions" },
+    { path: "/transitions/deferred", name: "TransitionsDeferred" },
+    { path: "/animations/flip", name: "AnimationsFlip" },
+    { path: "/easing/ease-visualiser", name: "EasingEaseVisualiser" },
     { path: "/graphics/analog-clock", name: "GraphicsAnalogClock" },
     { path: "/graphics/bar-chart", name: "GraphicsBarChart" },
     { path: "/graphics/area-chart", name: "GraphicsAreaChart" },
@@ -44,7 +66,10 @@
     { path: "/classes/toggling", name: "ClassesToggling" },
     { path: "/classes/ternary", name: "ClassesTernary" },
     { path: "/composition/children", name: "CompositionChildren" },
-    { path: "/composition/fallback-content", name: "CompositionFallbackContent" },
+    {
+      path: "/composition/fallback-content",
+      name: "CompositionFallbackContent",
+    },
     { path: "/globals/window-events", name: "GlobalsWindowEvents" },
     { path: "/globals/document-events", name: "GlobalsDocumentEvents" },
     { path: "/7guis/counter", name: "SevenGuisCounter" },
@@ -55,10 +80,10 @@
     { path: "/7guis/circles", name: "SevenGuisCircles" },
     { path: "/extras/tree-view", name: "ExtrasTreeView" },
     { path: "/extras/component-switching", name: "ExtrasComponentSwitching" },
+    { path: "/extras/hacker-news", name: "ExtrasHackerNews" },
     { path: "/todo-app", name: "TodoApp" },
   ];
 
-  // group by the first path segment: "/basics/first-component" → "basics"
   const grouped = routes.reduce((map, route) => {
     const section = route.path.split("/")[1];
     if (!map[section]) map[section] = [];
@@ -67,14 +92,19 @@
   }, {});
 
   const sectionTitle = (section) =>
-    section === "7guis" ? "7GUIs" : section.charAt(0).toUpperCase() + section.slice(1).replace(/-/g, " ");
+    section === "7guis"
+      ? "7GUIs"
+      : section.charAt(0).toUpperCase() + section.slice(1).replace(/-/g, " ");
 
   const linkLabel = (path) => path.split("/").pop().replace(/-/g, " ");
 
-  // tree state: every folder is collapsed by default; toggling flips one section
   const state = { expanded: {} };
   const isOpen = (section) => !!state.expanded[section];
-  const toggle = (section) => (state.expanded = { ...state.expanded, [section]: !state.expanded[section] });
+  const toggle = (section) =>
+    (state.expanded = {
+      ...state.expanded,
+      [section]: !state.expanded[section],
+    });
 </script>
 
 <h1>Olum by example</h1>
@@ -82,7 +112,12 @@
 <div class="tree">
   <for each="(section, i, links) in grouped">
     <div>
-      <button class="{isOpen(section) ? 'expanded' : ''}" onclick="toggle(section)">{sectionTitle(section)}</button>
+      <button
+        class="{isOpen(section) ? 'expanded' : ''}"
+        onclick="toggle(section)"
+      >
+        {sectionTitle(section)}
+      </button>
       <if when="isOpen(section)">
         <ul>
           <for each="route of links">

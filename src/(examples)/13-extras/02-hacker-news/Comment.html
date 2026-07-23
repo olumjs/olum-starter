@@ -1,0 +1,59 @@
+<script>
+  import { props } from "olum";
+  import Comment from "./Comment";
+  const { comment } = props();
+</script>
+
+<article>
+  <p class="meta">
+    <span class="user">{comment.user}</span>
+    <span class="time">{comment.time_ago}</span>
+  </p>
+
+  <div class="content" html="comment.content"></div>
+
+  <if when="comment.comments && comment.comments.length">
+    <div class="replies">
+      <for each="child of comment.comments" key="child.id">
+        <Comment comment="{child}" />
+      </for>
+    </div>
+  </if>
+</article>
+
+<style>
+  article {
+    border-top: 1px solid #eee;
+    margin: 1em 0 0 0;
+    padding: 1em 0 0 0;
+    font-size: 14px;
+  }
+
+  .meta {
+    display: flex;
+    gap: 0.6em;
+    align-items: baseline;
+    margin: 0 0 0.4em 0;
+  }
+
+  .user {
+    font-weight: 600;
+    color: #1a1a1a;
+  }
+
+  .time {
+    color: #999;
+    font-size: 0.85em;
+  }
+
+  .content {
+    color: #333;
+    line-height: 1.5;
+  }
+
+  .replies {
+    margin-top: 0.5em;
+    padding: 0 0 0 1em;
+    border-left: 2px solid #f0f0f0;
+  }
+</style>

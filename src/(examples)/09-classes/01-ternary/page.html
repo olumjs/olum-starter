@@ -5,10 +5,12 @@
 
 <label>
   <input type="checkbox" checked="{state.zoom}" onchange="setZoom($event)" />
-  zoom
+  magnify
 </label>
 
-<div class="{state.zoom ? 'zoom' : ''}">read me at {state.zoom ? '4em' : 'normal size'}</div>
+<div class="{state.zoom ? 'zoom' : ''}">
+  this text is {state.zoom ? 'huge' : 'regular-sized'}
+</div>
 
 <style>
   .zoom {

@@ -2,5 +2,9 @@
   const state = { name: "" };
 </script>
 
-<input value="{state.name}" oninput="(e) => state.name = e.target.value" placeholder="your name" />
-<p>Ahlan, {state.name || "friend"}!</p>
+<input
+  value="{state.name}"
+  oninput="(e) => (state.name = e.target.value)"
+  placeholder="your first name"
+/>
+<p>Ahlan, {state.name || "stranger"}!</p>

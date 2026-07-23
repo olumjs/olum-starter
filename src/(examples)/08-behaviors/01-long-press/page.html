@@ -1,21 +1,17 @@
-<!--
-  Olum has no `use:action` directive: the longpress behavior is wired up by
-  hand in onMount against the button, found via host.querySelector. Its
-  `update(newDuration)` hook isn't needed here — any state change (e.g. moving
-  the range slider) rebuilds this whole component (see docs/limitations.md),
-  which naturally re-runs onMount and re-attaches the behavior with the current
-  state.duration, so it always sees the latest value on next mount.
--->
 <script>
   import { onMount } from "olum";
   import { longpress } from "./longpress.js";
 
   const state = { pressed: false, duration: 2000 };
-  const setDuration = (e) => (state.duration = +e.target.value);
+  let action;
+  const setDuration = (e) => {
+    state.duration = +e.target.value;
+    action?.update(state.duration);
+  };
 
   onMount(() => {
     const button = host.querySelector("button");
-    const action = longpress(button, state.duration);
+    action = longpress(button, state.duration);
     const onLongpress = () => (state.pressed = true);
     const onMouseenter = () => (state.pressed = false);
 
@@ -31,12 +27,18 @@
 </script>
 
 <label>
-  <input type="range" value="{state.duration}" oninput="setDuration($event)" max="2000" step="100" />
+  <input
+    type="range"
+    value="{state.duration}"
+    oninput="setDuration($event)"
+    max="2000"
+    step="100"
+  />
   {state.duration}ms
 </label>
 
-<button>press and hold</button>
+<button>hold me down</button>
 
 <if when="state.pressed">
-  <p>long press detected — you held for {state.duration}ms</p>
+  <p>held long enough — {state.duration}ms threshold reached</p>
 </if>

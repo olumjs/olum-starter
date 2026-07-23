@@ -1,7 +1,7 @@
 <script>
-  const state = { slices: 1, toppings: ["Roasted garlic"] };
+  const state = { slices: 1, toppings: ["Caramelized onions"] };
 
-  const menu = ["Mushrooms", "Roasted garlic", "Hot peppers"];
+  const menu = ["Olives", "Caramelized onions", "Jalapeños"];
 
   const setSlices = (n) => (state.slices = n);
 
@@ -20,17 +20,32 @@
 <h2>Slices</h2>
 
 <label>
-  <input type="radio" name="slices" checked="{state.slices === 1}" onchange="setSlices(1)" />
+  <input
+    type="radio"
+    name="slices"
+    checked="{state.slices === 1}"
+    onchange="setSlices(1)"
+  />
   One slice
 </label>
 
 <label>
-  <input type="radio" name="slices" checked="{state.slices === 2}" onchange="setSlices(2)" />
+  <input
+    type="radio"
+    name="slices"
+    checked="{state.slices === 2}"
+    onchange="setSlices(2)"
+  />
   Two slices
 </label>
 
 <label>
-  <input type="radio" name="slices" checked="{state.slices === 3}" onchange="setSlices(3)" />
+  <input
+    type="radio"
+    name="slices"
+    checked="{state.slices === 3}"
+    onchange="setSlices(3)"
+  />
   Three slices
 </label>
 
@@ -38,7 +53,9 @@
 
 <select multiple onchange="onSelectToppings($event)">
   <for each="topping of menu">
-    <option value="{topping}" selected="{state.toppings.includes(topping)}">{topping}</option>
+    <option value="{topping}" selected="{state.toppings.includes(topping)}">
+      {topping}
+    </option>
   </for>
 </select>
 
@@ -50,8 +67,7 @@
 </else-if>
 <else>
   <p>
-    You ordered {state.slices}
-    {state.slices === 1 ? 'slice' : 'slices'}
-    with {join(state.toppings)}
+    You ordered {state.slices} {state.slices === 1 ? 'slice' : 'slices'} with
+    {join(state.toppings)}
   </p>
 </else>

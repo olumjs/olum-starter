@@ -1,11 +1,11 @@
 <script>
   import { cart } from "./store";
 
-  const products = ["Compass", "Canteen", "Rope"];
+  const products = ["Lantern", "Tent", "Hatchet"];
 </script>
 
 <for each="product of products">
-  <button onclick="cart.add(product)">Add {product}</button>
+  <button onclick="cart.items.push(product)">Add {product}</button>
 </for>
 
 <style>

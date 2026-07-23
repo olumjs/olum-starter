@@ -1,0 +1,22 @@
+<script>
+  const state = { user: { firstname: "Grace", lastname: "Hopper" } };
+
+  const setFirst = (e) =>
+    (state.user = { ...state.user, firstname: e.target.value });
+  const setLast = (e) =>
+    (state.user = { ...state.user, lastname: e.target.value });
+</script>
+
+<input value="{state.user.firstname}" oninput="setFirst($event)" />
+<input value="{state.user.lastname}" oninput="setLast($event)" />
+
+<log>{state.user}</log>
+
+<h1>Hello {state.user.firstname}!</h1>
+
+<style>
+  input {
+    display: block;
+    margin-bottom: 0.5em;
+  }
+</style>

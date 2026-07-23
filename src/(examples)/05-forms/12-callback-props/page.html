@@ -3,11 +3,12 @@
 
   const state = { code: "" };
 
-  const view = () => (state.code ? state.code.replace(/\d(?!$)/g, "•") : "enter your passcode");
+  const view = () =>
+    state.code ? state.code.replace(/\d(?!$)/g, "•") : "enter your PIN";
 
-  const setCode = (code) => (state.code = code); // callback prop — the child requests changes, this owner applies them
+  const setCode = (code) => (state.code = code);
 
-  const handleSubmit = () => alert(`unlocking with ${state.code}`);
+  const handleSubmit = () => alert(`confirming code ${state.code}`);
 </script>
 
 <style>

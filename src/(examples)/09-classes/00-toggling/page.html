@@ -1,12 +1,27 @@
 <script>
-  const state = { tab: "home" };
+  const state = { tab: "overview" };
 </script>
 
-<button class="{state.tab === 'home' ? 'active' : ''}" onclick="state.tab = 'home'">home</button>
+<button
+  class="{state.tab === 'overview' ? 'active' : ''}"
+  onclick="state.tab = 'overview'"
+>
+  overview
+</button>
 
-<button class="{state.tab === 'docs' ? 'active' : ''}" onclick="state.tab = 'docs'">docs</button>
+<button
+  class="{state.tab === 'guide' ? 'active' : ''}"
+  onclick="state.tab = 'guide'"
+>
+  guide
+</button>
 
-<button class="{state.tab === 'blog' ? 'active' : ''}" onclick="state.tab = 'blog'">blog</button>
+<button
+  class="{state.tab === 'news' ? 'active' : ''}"
+  onclick="state.tab = 'news'"
+>
+  news
+</button>
 
 <style>
   button {

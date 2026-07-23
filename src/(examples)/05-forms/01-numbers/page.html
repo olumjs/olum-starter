@@ -3,15 +3,39 @@
 </script>
 
 <label>
-  width
-  <input type="number" value="{state.w}" oninput="(e) => state.w = +e.target.value" min="0" max="10" />
-  <input type="range" value="{state.w}" oninput="(e) => state.w = +e.target.value" min="0" max="10" />
+  columns
+  <input
+    type="number"
+    value="{state.w}"
+    oninput="(e) => (state.w = +e.target.value)"
+    min="0"
+    max="10"
+  />
+  <input
+    type="range"
+    value="{state.w}"
+    oninput="(e) => (state.w = +e.target.value)"
+    min="0"
+    max="10"
+  />
 </label>
 
 <label>
-  height
-  <input type="number" value="{state.h}" oninput="(e) => state.h = +e.target.value" min="0" max="10" />
-  <input type="range" value="{state.h}" oninput="(e) => state.h = +e.target.value" min="0" max="10" />
+  rows
+  <input
+    type="number"
+    value="{state.h}"
+    oninput="(e) => (state.h = +e.target.value)"
+    min="0"
+    max="10"
+  />
+  <input
+    type="range"
+    value="{state.h}"
+    oninput="(e) => (state.h = +e.target.value)"
+    min="0"
+    max="10"
+  />
 </label>
 
 <p>area: {state.w} × {state.h} = {state.w * state.h}</p>

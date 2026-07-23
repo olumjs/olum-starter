@@ -1,0 +1,153 @@
+<script>
+  import { onMount } from "olum";
+
+  const state = { time: 0, duration: 0, paused: true, showControls: true };
+  let showControlsTimeout;
+  let lastMouseDown;
+
+  const format = (seconds) => {
+    if (isNaN(seconds)) return "...";
+    const minutes = Math.floor(seconds / 60);
+    seconds = Math.floor(seconds % 60);
+    if (seconds < 10) seconds = "0" + seconds;
+    return `${minutes}:${seconds}`;
+  };
+
+  const handleMove = (e) => {
+    clearTimeout(showControlsTimeout);
+    showControlsTimeout = setTimeout(() => (state.showControls = false), 2500);
+    state.showControls = true;
+
+    if (!state.duration) return;
+    if (e.type !== "touchmove" && !(e.buttons & 1)) return;
+
+    const video = e.currentTarget;
+    const clientX = e.type === "touchmove" ? e.touches[0].clientX : e.clientX;
+    const { left, right } = video.getBoundingClientRect();
+    video.currentTime = (state.duration * (clientX - left)) / (right - left);
+  };
+
+  const handleTouchMove = (e) => {
+    e.preventDefault();
+    handleMove(e);
+  };
+
+  const handleMousedown = () => (lastMouseDown = new Date());
+
+  const handleMouseup = (e) => {
+    if (new Date() - lastMouseDown < 300) {
+      if (state.paused) e.target.play();
+      else e.target.pause();
+    }
+  };
+
+  onMount(() => {
+    const video = host.querySelector("video");
+    let raf;
+
+    const frame = () => {
+      if (video.currentTime !== state.time) state.time = video.currentTime;
+      raf = requestAnimationFrame(frame);
+    };
+    raf = requestAnimationFrame(frame);
+
+    const onDuration = () => (state.duration = video.duration);
+    const onPlay = () => (state.paused = false);
+    const onPause = () => (state.paused = true);
+
+    video.addEventListener("loadedmetadata", onDuration);
+    video.addEventListener("durationchange", onDuration);
+    video.addEventListener("play", onPlay);
+    video.addEventListener("pause", onPause);
+
+    return () => {
+      cancelAnimationFrame(raf);
+      clearTimeout(showControlsTimeout);
+      video.removeEventListener("loadedmetadata", onDuration);
+      video.removeEventListener("durationchange", onDuration);
+      video.removeEventListener("play", onPlay);
+      video.removeEventListener("pause", onPause);
+    };
+  });
+</script>
+
+<div class="player">
+  <video
+    poster="/assets/poster.png"
+    src="/assets/sample.webm"
+    onmousemove="handleMove($event)"
+    ontouchmove="handleTouchMove($event)"
+    onmousedown="handleMousedown()"
+    onmouseup="handleMouseup($event)"
+  >
+    <track kind="captions" />
+  </video>
+
+  <div
+    class="controls"
+    style="opacity: {state.duration && state.showControls ? 1 : 0}"
+  >
+    <progress value="{state.time / state.duration || 0}"></progress>
+
+    <div class="info">
+      <span class="time">{format(state.time)}</span>
+      <span>tap to {state.paused ? 'play' : 'pause'} · drag to scrub</span>
+      <span class="time">{format(state.duration)}</span>
+    </div>
+  </div>
+</div>
+
+<style>
+  .player {
+    position: relative;
+  }
+
+  .controls {
+    position: absolute;
+    top: 0;
+    width: 100%;
+    transition: opacity 1s;
+  }
+
+  .info {
+    display: flex;
+    width: 100%;
+    justify-content: space-between;
+  }
+
+  span {
+    padding: 0.2em 0.5em;
+    color: white;
+    text-shadow: 0 0 8px black;
+    font-size: 1.4em;
+    opacity: 0.7;
+  }
+
+  .time {
+    width: 3em;
+  }
+
+  .time:last-child {
+    text-align: right;
+  }
+
+  progress {
+    display: block;
+    width: 100%;
+    height: 10px;
+    -webkit-appearance: none;
+    appearance: none;
+  }
+
+  progress::-webkit-progress-bar {
+    background-color: rgba(0, 0, 0, 0.2);
+  }
+
+  progress::-webkit-progress-value {
+    background-color: rgba(255, 255, 255, 0.6);
+  }
+
+  video {
+    width: 100%;
+  }
+</style>

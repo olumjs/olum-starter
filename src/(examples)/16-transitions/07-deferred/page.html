@@ -1,0 +1,167 @@
+<script>
+  import { crossfade, transitions } from "olum";
+  import images from "./images.js";
+
+  const ASSETS = "https://picsum.photos/id";
+  const SIZE = 600;
+
+  const _cf = crossfade({ duration: 200, fallback: transitions.scale });
+  const send = (node, params) => _cf[0](node, params);
+  const receive = (node, params) => _cf[1](node, params);
+
+  const state = { selectedId: null, loadingId: null };
+  const selected = () => images.find((img) => img.id === state.selectedId);
+
+  const load = (image) => {
+    const timeout = setTimeout(() => (state.loadingId = image.id), 100);
+    const img = new Image();
+    img.onload = () => {
+      state.selectedId = image.id;
+      clearTimeout(timeout);
+      state.loadingId = null;
+    };
+    img.src = `${ASSETS}/${image.photoId}/${SIZE}/${SIZE}`;
+  };
+
+  const dismiss = () => (state.selectedId = null);
+</script>
+
+<div class="container">
+  <div class="phone">
+    <h1>Photo gallery</h1>
+
+    <div class="grid">
+      <for each="image of images" key="image.id">
+        <div class="square">
+          <if when="state.selectedId !== image.id">
+            <transition
+              in="receive({ key: image.id })"
+              out="send({ key: image.id })"
+            >
+              <button
+                style="background-color: {image.color};"
+                onclick="load(image)"
+              >
+                {state.loadingId === image.id ? '...' : image.id}
+              </button>
+            </transition>
+          </if>
+        </div>
+      </for>
+    </div>
+
+    <if when="state.selectedId">
+      <transition
+        in="receive({ key: state.selectedId })"
+        out="send({ key: state.selectedId })"
+      >
+        <div class="photo">
+          <img
+            alt="{selected().alt}"
+            src="{ASSETS}/{selected().photoId}/{SIZE}/{SIZE}"
+            onclick="dismiss()"
+          />
+          <p class="credit">
+            {selected().alt} &ndash;
+            <a target="_blank" rel="noreferrer" href="https://picsum.photos"
+              >Lorem Picsum</a
+            >
+          </p>
+        </div>
+      </transition>
+    </if>
+  </div>
+</div>
+
+<style>
+  .container {
+    position: absolute;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+    height: 100%;
+    top: 0;
+    left: 0;
+  }
+
+  .phone {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    width: 52vmin;
+    height: 76vmin;
+    border: 2vmin solid #ccc;
+    border-bottom-width: 10vmin;
+    padding: 3vmin;
+    border-radius: 2vmin;
+  }
+
+  h1 {
+    font-weight: 300;
+    text-transform: uppercase;
+    font-size: 5vmin;
+    margin: 0.2em 0 0.5em 0;
+  }
+
+  .grid {
+    display: grid;
+    flex: 1;
+    grid-template-columns: repeat(3, 1fr);
+    grid-template-rows: repeat(4, 1fr);
+    grid-gap: 2vmin;
+  }
+
+  .square {
+    position: relative;
+  }
+
+  button {
+    width: 100%;
+    height: 100%;
+    color: white;
+    font-size: 5vmin;
+    border: none;
+    margin: 0;
+    will-change: transform;
+  }
+
+  .photo,
+  img {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    overflow: hidden;
+  }
+
+  .photo {
+    display: flex;
+    align-items: stretch;
+    justify-content: flex-end;
+    flex-direction: column;
+    will-change: transform;
+  }
+
+  img {
+    object-fit: cover;
+    cursor: pointer;
+  }
+
+  .credit {
+    text-align: right;
+    font-size: 2.5vmin;
+    padding: 1em;
+    margin: 0;
+    color: white;
+    font-weight: bold;
+    opacity: 0.6;
+    background: rgba(0, 0, 0, 0.4);
+  }
+
+  .credit a,
+  .credit a:visited {
+    color: white;
+  }
+</style>

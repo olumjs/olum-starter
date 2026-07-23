@@ -1,7 +1,13 @@
 <script>
   import CustomButton from "./CustomButton";
 
-  const handleClick = () => alert("the parent heard that");
+  const handleClick = () => alert("the parent caught the click");
 </script>
 
-<CustomButton onclick="{handleClick}" />
+<CustomButton
+  onclick="
+    {
+      handleClick;
+    }
+  "
+/>

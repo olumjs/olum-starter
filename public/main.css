@@ -45,7 +45,15 @@ body {
 
 body {
   margin: 0;
-  font-family: ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+  font-family:
+    ui-sans-serif,
+    system-ui,
+    -apple-system,
+    "Segoe UI",
+    Roboto,
+    Helvetica,
+    Arial,
+    sans-serif;
   font-size: 15px;
   line-height: 1.6;
   color: var(--fg-secondary);
@@ -117,7 +125,9 @@ button:where(:not([class])) {
   background: var(--surface);
   color: var(--fg-secondary);
   cursor: pointer;
-  transition: border-color 0.15s, background 0.15s;
+  transition:
+    border-color 0.15s,
+    background 0.15s;
 }
 button:where(:not([class]):hover:not(:disabled)) {
   border-color: var(--card-hover-bd);
@@ -131,7 +141,9 @@ button:where(:disabled) {
   cursor: not-allowed;
 }
 
-input:where(:not([type="checkbox"], [type="radio"], [type="range"], [type="file"])),
+input:where(
+  :not([type="checkbox"], [type="radio"], [type="range"], [type="file"])
+),
 :where(select, textarea) {
   font: inherit;
   padding: 0.4rem 0.7rem;
@@ -140,15 +152,24 @@ input:where(:not([type="checkbox"], [type="radio"], [type="range"], [type="file"
   background: var(--bg);
   color: var(--fg-secondary);
   outline: none;
-  transition: border-color 0.15s, box-shadow 0.15s;
+  transition:
+    border-color 0.15s,
+    box-shadow 0.15s;
 }
-input:where(:not([type="checkbox"], [type="radio"], [type="range"], [type="file"]):focus),
+input:where(
+  :not([type="checkbox"], [type="radio"], [type="range"], [type="file"]):focus
+),
 :where(select, textarea):where(:focus) {
   border-color: var(--accent);
   box-shadow: 0 0 0 3px var(--glow-sm);
 }
 
-:where(input[type="checkbox"], input[type="radio"], input[type="range"], progress) {
+:where(
+  input[type="checkbox"],
+  input[type="radio"],
+  input[type="range"],
+  progress
+) {
   accent-color: var(--accent);
 }
 
@@ -172,7 +193,10 @@ figcaption {
   align-items: center;
   justify-content: center;
   padding: 40px 20px;
-  transition: color 0.2s, background-color 0.2s, border-color 0.2s;
+  transition:
+    color 0.2s,
+    background-color 0.2s,
+    border-color 0.2s;
 }
 
 /* Card */
@@ -276,7 +300,10 @@ figcaption {
   opacity: 0;
   font-size: 18px;
   line-height: 1;
-  transition: opacity 0.15s, color 0.15s, background 0.15s;
+  transition:
+    opacity 0.15s,
+    color 0.15s,
+    background 0.15s;
 }
 .todo-page li:hover button {
   opacity: 1;
@@ -303,4 +330,13 @@ figcaption {
 #app .todo-page {
   min-height: 100%;
   padding: 0;
+}
+
+@keyframes olum-slide {
+  from {
+    transform: translateX(0);
+  }
+  to {
+    transform: translateX(520px);
+  }
 }

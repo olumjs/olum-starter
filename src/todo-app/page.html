@@ -10,7 +10,10 @@
   const add = () => {
     const text = state.input.trim();
     if (!text) return;
-    state.todos = [...state.todos, { id: state.todos.length + 1, text, done: false }];
+    state.todos = [
+      ...state.todos,
+      { id: state.todos.length + 1, text, done: false },
+    ];
     state.input = "";
   };
   const toggle = (id) => {
@@ -26,11 +29,16 @@
 <main class="todo-page">
   <section>
     <header>
-      <input type="text" value="{state.input}" oninput="(e) => state.input = e.target.value" placeholder="Add todo.." />
+      <input
+        type="text"
+        value="{state.input}"
+        oninput="(e) => (state.input = e.target.value)"
+        placeholder="Add todo.."
+      />
       <button onclick="add()">Add</button>
     </header>
     <ul>
-      <for each="todo of state.todos">
+      <for each="todo of state.todos" key="todo.id">
         <li data-done="{todo.done}" onclick="toggle(todo.id)">
           <p>{todo.text}</p>
           <button onclick="remove(todo.id)">x</button>

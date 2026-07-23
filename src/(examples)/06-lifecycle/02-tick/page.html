@@ -1,0 +1,34 @@
+<script>
+  const state = {
+    text: "Highlight some text, then press Tab to flip its case",
+  };
+
+  const handleKeydown = (e) => {
+    if (e.key !== "Tab") return;
+    e.preventDefault();
+
+    const ta = e.target;
+    const { selectionStart, selectionEnd, value } = ta;
+    const selection = value.slice(selectionStart, selectionEnd);
+
+    const replacement = /[a-z]/.test(selection)
+      ? selection.toUpperCase()
+      : selection.toLowerCase();
+
+    state.text =
+      value.slice(0, selectionStart) + replacement + value.slice(selectionEnd);
+
+    window.olum.flushUpdates();
+    ta.selectionStart = selectionStart;
+    ta.selectionEnd = selectionEnd;
+  };
+</script>
+
+<textarea value="{state.text}" onkeydown="handleKeydown($event)"></textarea>
+
+<style>
+  textarea {
+    width: 100%;
+    height: 200px;
+  }
+</style>

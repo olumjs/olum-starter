@@ -1,0 +1,127 @@
+<script>
+  import { onMount } from "olum";
+  import List from "./List";
+  import Item from "./Item";
+
+  const API = "https://api.hnpwa.com/v0";
+  const FETCH_SIZE = 30;
+  const PAGE_SIZE = 10;
+  const PAGES_PER_FETCH = FETCH_SIZE / PAGE_SIZE;
+  const MAX_FETCH_PAGE = 10;
+  const MAX_PAGE = MAX_FETCH_PAGE * PAGES_PER_FETCH;
+
+  const state = { item: null, items: null, page: 1, offset: 0 };
+
+  let cachedFetchPage = null;
+  let cachedBatch = null;
+
+  const load = async () => {
+    const params = new URLSearchParams(window.location.search);
+    const itemId = params.get("item");
+
+    if (itemId) {
+      state.item = await fetch(`${API}/item/${itemId}.json`).then((r) =>
+        r.json(),
+      );
+      window.scrollTo(0, 0);
+      return;
+    }
+
+    const page = Math.min(MAX_PAGE, Math.max(1, +(params.get("page") || 1)));
+    state.page = page;
+    state.item = null;
+    state.offset = PAGE_SIZE * (page - 1);
+    state.items = null;
+
+    const fetchPage = Math.ceil(page / PAGES_PER_FETCH);
+    if (fetchPage !== cachedFetchPage) {
+      cachedBatch = await fetch(`${API}/news/${fetchPage}.json`).then((r) =>
+        r.json(),
+      );
+      cachedFetchPage = fetchPage;
+    }
+    const sliceStart = ((page - 1) % PAGES_PER_FETCH) * PAGE_SIZE;
+    state.items = cachedBatch.slice(sliceStart, sliceStart + PAGE_SIZE);
+    window.scrollTo(0, 0);
+  };
+
+  onMount(() => {
+    load();
+
+    const onClick = (e) => {
+      const link = e.target.closest("a[href^='?']");
+      if (!link) return;
+      e.preventDefault();
+      history.pushState({}, "", link.getAttribute("href"));
+      load();
+    };
+    host.addEventListener("click", onClick);
+    return () => host.removeEventListener("click", onClick);
+  });
+</script>
+
+<div class="app">
+  <header>
+    <a class="brand" href="?page=1">
+      <span class="mark"></span>
+      Hacker News
+    </a>
+  </header>
+
+  <main>
+    <if when="state.item">
+      <Item item="{state.item}" returnPage="{state.page}" />
+    </if>
+    <else-if when="state.page">
+      <List
+        items="{state.items}"
+        page="{state.page}"
+        offset="{state.offset}"
+        maxPage="{MAX_PAGE}"
+      />
+    </else-if>
+  </main>
+</div>
+
+<style>
+  .app {
+    min-height: 100vh;
+    background: #fafafa;
+  }
+
+  header {
+    position: sticky;
+    top: 0;
+    z-index: 1;
+    background: #1a1a1a;
+    border-bottom: 3px solid #25c97e;
+  }
+
+  .brand {
+    display: flex;
+    align-items: center;
+    gap: 0.5em;
+    max-width: 800px;
+    margin: 0 auto;
+    padding: 0.75em 1em;
+    color: white;
+    text-decoration: none;
+    font-weight: 700;
+    font-size: 1.1em;
+  }
+
+  .mark {
+    width: 0.9em;
+    height: 0.9em;
+    flex-shrink: 0;
+    background: #25c97e;
+    border-radius: 3px;
+  }
+
+  main {
+    position: relative;
+    max-width: 800px;
+    margin: 0 auto;
+    padding: 1.5em 1em 5em 1em;
+  }
+</style>
