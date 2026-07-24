@@ -258,8 +258,8 @@ button:hover {
 /* ========= Hero ========= */
 
 .mark {
-  width: 44px;
-  height: 44px;
+  width: 73px;
+  height: auto;
   margin-bottom: 20px;
   transition: filter 0.3s ease;
 }
