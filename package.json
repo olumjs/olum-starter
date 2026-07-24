@@ -5,7 +5,8 @@
   "private": true,
   "scripts": {
     "dev": "olum-compiler dev",
-    "build": "olum-compiler build"
+    "build": "olum-compiler build",
+    "start": "olum-compiler start"
   },
   "keywords": [
     "olum"
@@ -14,9 +15,11 @@
   "license": "ISC",
   "dependencies": {
     "olum": "latest",
-    "olum-router": "latest"
+    "olum-router": "latest",
+    "olum-store": "latest"
   },
   "devDependencies": {
-    "olum-compiler": "latest"
+    "olum-compiler": "latest",
+    "olum-devtool": "latest"
   }
 }
