@@ -5,7 +5,8 @@
   "private": true,
   "scripts": {
     "dev": "olum-compiler dev",
-    "build": "olum-compiler build"
+    "build": "olum-compiler build",
+    "start": "olum-compiler start"
   },
   "keywords": [
     "olum"
@@ -17,7 +18,8 @@
     "marked": "^18.0.6",
     "olum": "latest",
     "olum-router": "latest",
-    "olum-store": "latest"
+    "olum-store": "latest",
+    "olum-transition": "latest"
   },
   "devDependencies": {
     "olum-compiler": "latest"
