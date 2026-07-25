@@ -15,11 +15,9 @@
   "license": "ISC",
   "dependencies": {
     "olum": "latest",
-    "olum-router": "latest",
-    "olum-store": "latest"
+    "olum-router": "latest"
   },
   "devDependencies": {
-    "olum-compiler": "latest",
-    "olum-devtool": "latest"
+    "olum-compiler": "latest"
   }
 }
