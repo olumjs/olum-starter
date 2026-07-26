@@ -264,6 +264,10 @@ button:hover {
   transition: filter 0.3s ease;
 }
 
+.mark-link {
+  display: inline-block;
+}
+
 .mark-link:hover .mark {
   filter: drop-shadow(0 0 14px rgba(31, 174, 102, 0.55));
 }
