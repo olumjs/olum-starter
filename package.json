@@ -18,6 +18,7 @@
     "olum-router": "latest"
   },
   "devDependencies": {
-    "olum-compiler": "latest"
+    "olum-compiler": "latest",
+    "olum-devtool": "latest"
   }
 }
