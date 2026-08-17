@@ -1,0 +1,177 @@
+<script>
+  const state = {
+    text: "Eissa",
+    email: "you@olumjs.top",
+    password: "",
+    tel: "",
+    url: "https://olumjs.top",
+    search: "",
+    note: "",
+    reveal: false,
+    plan: "pro",
+  };
+
+  const set = (key, e) => (state[key] = e.target.value);
+
+  const toggleReveal = (e) => (state.reveal = e.target.checked);
+
+  const onSearch = (e) => (state.note = `searched for "${e.target.value}"`);
+
+  const dump = () => JSON.stringify(state, null, 2);
+</script>
+
+<h1>Text-like inputs</h1>
+
+<div class="grid">
+  <label>
+    text
+    <input
+      type="text"
+      name="text"
+      value="{state.text}"
+      oninput="set('text', $event)"
+      placeholder="plain text"
+      maxlength="40"
+      autocomplete="name"
+      spellcheck="false"
+    />
+  </label>
+
+  <label>
+    email
+    <input
+      type="email"
+      name="email"
+      value="{state.email}"
+      oninput="set('email', $event)"
+      placeholder="you@example.com"
+      autocomplete="email"
+      multiple
+    />
+  </label>
+
+  <label>
+    password
+    <input
+      type="{state.reveal ? 'text' : 'password'}"
+      name="password"
+      value="{state.password}"
+      oninput="set('password', $event)"
+      placeholder="at least 8 characters"
+      minlength="8"
+      autocomplete="new-password"
+    />
+  </label>
+
+  <label class="inline">
+    <input
+      type="checkbox"
+      checked="{state.reveal}"
+      onchange="toggleReveal($event)"
+    />
+    show the password
+  </label>
+
+  <label>
+    tel
+    <input
+      type="tel"
+      name="tel"
+      value="{state.tel}"
+      oninput="set('tel', $event)"
+      placeholder="+20 100 000 0000"
+      autocomplete="tel"
+    />
+  </label>
+
+  <label>
+    url
+    <input
+      type="url"
+      name="url"
+      value="{state.url}"
+      oninput="set('url', $event)"
+      placeholder="https://…"
+    />
+  </label>
+
+  <label>
+    search
+    <input
+      type="search"
+      name="search"
+      value="{state.search}"
+      oninput="set('search', $event)"
+      onsearch="onSearch($event)"
+      placeholder="type, then press Enter"
+    />
+  </label>
+
+  <label>
+    readonly
+    <input type="text" value="{state.text}" readonly />
+  </label>
+
+  <label>
+    disabled
+    <input type="text" value="not editable" disabled />
+  </label>
+</div>
+
+<input type="hidden" name="plan" value="{state.plan}" />
+
+<p class="note">
+  A hidden input is in the markup above — it never shows, but it still travels
+  with the form as plan={state.plan}
+</p>
+
+<if when="state.note">
+  <p class="note">{state.note}</p>
+</if>
+
+<h2>state</h2>
+<pre class="out">{dump()}</pre>
+
+<style>
+  .grid {
+    display: grid;
+    gap: 0.75em;
+    max-width: 420px;
+  }
+
+  label {
+    display: block;
+    font-size: 13px;
+    color: #52525b;
+  }
+
+  label.inline {
+    display: flex;
+    align-items: center;
+    gap: 0.4em;
+  }
+
+  input {
+    display: block;
+    width: 100%;
+    padding: 0.4em 0.6em;
+    font-size: 14px;
+  }
+
+  label.inline input {
+    width: auto;
+  }
+
+  .note {
+    font-size: 13px;
+    color: #71717a;
+  }
+
+  .out {
+    background: #f4f4f5;
+    padding: 0.75em;
+    border-radius: 6px;
+    font-size: 13px;
+    overflow-x: auto;
+  }
+</style>

@@ -31,10 +31,24 @@
     { path: "/forms/select", name: "FormsSelect" },
     { path: "/forms/multi-select", name: "FormsMultiSelect" },
     { path: "/forms/loop-inputs", name: "FormsLoopInputs" },
+    { path: "/forms/text-input-types", name: "FormsTextInputTypes" },
+    { path: "/forms/date-time", name: "FormsDateTime" },
     { path: "/forms/host-element", name: "FormsHostElement" },
     { path: "/forms/callback-props", name: "FormsCallbackProps" },
     { path: "/forms/dimensions", name: "FormsDimensions" },
     { path: "/forms/media-elements", name: "FormsMediaElements" },
+    { path: "/forms/color-input", name: "FormsColorInput" },
+    { path: "/forms/datalist-autocomplete", name: "FormsDatalistAutocomplete" },
+    { path: "/forms/output-progress-meter", name: "FormsOutputProgressMeter" },
+    { path: "/forms/fieldset-optgroup", name: "FormsFieldsetOptgroup" },
+    { path: "/forms/validation", name: "FormsValidation" },
+    { path: "/forms/form-events", name: "FormsFormEvents" },
+    { path: "/forms/keyboard-events", name: "FormsKeyboardEvents" },
+    { path: "/forms/focus-and-selection", name: "FormsFocusAndSelection" },
+    { path: "/forms/drag-and-drop", name: "FormsDragAndDrop" },
+    { path: "/forms/clipboard-events", name: "FormsClipboardEvents" },
+    { path: "/forms/contenteditable", name: "FormsContenteditable" },
+    { path: "/forms/kitchen-sink", name: "FormsKitchenSink" },
     { path: "/lifecycle/mount-hook", name: "LifecycleMountHook" },
     { path: "/lifecycle/cleanup", name: "LifecycleCleanup" },
     { path: "/lifecycle/tick", name: "LifecycleTick" },
@@ -55,7 +69,6 @@
     },
     { path: "/transitions/svg-transitions", name: "TransitionsSvgTransitions" },
     { path: "/transitions/deferred", name: "TransitionsDeferred" },
-    { path: "/transitions/crossfade", name: "TransitionsCrossfade" },
     { path: "/animations/flip", name: "AnimationsFlip" },
     { path: "/easing/ease-visualiser", name: "EasingEaseVisualiser" },
     { path: "/graphics/analog-clock", name: "GraphicsAnalogClock" },
@@ -96,7 +109,31 @@
 
   const linkLabel = (path) => path.split("/").pop().replace(/-/g, " ");
 
-  const state = { expanded: {} };
+  const state = {
+    expanded: {},
+    data: {
+      foo: undefined,
+      boo: null,
+      elm: document.body,
+      id: 9,
+      title: "Infinix INBOOK",
+      description: "Infinix Inbook X1 Ci3 10th 8GB...",
+      price: 1099,
+      discountPercentage: 11.83,
+      rating: 4.54,
+      stock: 96,
+      brand: "Infinix",
+      category: "laptops",
+      thumbnail: "https://dummyjson.com/image/i/products/9/thumbnail.jpg",
+      images: [
+        "https://dummyjson.com/image/i/products/9/1.jpg",
+        "https://dummyjson.com/image/i/products/9/2.png",
+        "https://dummyjson.com/image/i/products/9/3.png",
+        "https://dummyjson.com/image/i/products/9/4.jpg",
+        "https://dummyjson.com/image/i/products/9/thumbnail.jpg",
+      ],
+    },
+  };
   const isOpen = (section) => !!state.expanded[section];
   const toggle = (section) =>
     (state.expanded = { ...state.expanded, [section]: !state.expanded[section] });

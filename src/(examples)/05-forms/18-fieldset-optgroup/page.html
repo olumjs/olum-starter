@@ -1,0 +1,196 @@
+<script>
+  const state = {
+    ship: true,
+    method: "standard",
+    country: "EG",
+    street: "",
+    city: "",
+    groups: [
+      {
+        label: "Africa",
+        options: [
+          { code: "EG", name: "Egypt" },
+          { code: "MA", name: "Morocco" },
+        ],
+      },
+      {
+        label: "Europe",
+        options: [
+          { code: "DE", name: "Germany" },
+          { code: "FR", name: "France" },
+        ],
+      },
+      {
+        label: "Asia",
+        options: [
+          { code: "JP", name: "Japan" },
+          { code: "IN", name: "India" },
+        ],
+      },
+    ],
+  };
+
+  const toggleShip = (e) => (state.ship = e.target.checked);
+
+  const setMethod = (method) => (state.method = method);
+
+  const set = (key, e) => (state[key] = e.target.value);
+
+  const countryName = () => {
+    for (const group of state.groups) {
+      const hit = group.options.find((o) => o.code === state.country);
+      if (hit) return `${hit.name} (${group.label})`;
+    }
+    return "—";
+  };
+</script>
+
+<h1>Fieldset, legend &amp; optgroup</h1>
+
+<label class="inline">
+  <input type="checkbox" checked="{state.ship}" onchange="toggleShip($event)" />
+  I need this shipped
+</label>
+
+<form>
+  <fieldset disabled="{!state.ship}">
+    <legend>Shipping address</legend>
+
+    <label>
+      street
+      <input
+        name="street"
+        value="{state.street}"
+        oninput="set('street', $event)"
+        placeholder="12 Nile St."
+      />
+    </label>
+
+    <label>
+      city
+      <input
+        name="city"
+        value="{state.city}"
+        oninput="set('city', $event)"
+        placeholder="Cairo"
+      />
+    </label>
+
+    <label>
+      country
+      <select name="country" onchange="set('country', $event)">
+        <for each="group of state.groups">
+          <optgroup label="{group.label}">
+            <for each="option of group.options">
+              <option
+                value="{option.code}"
+                selected="{state.country === option.code}"
+              >
+                {option.name}
+              </option>
+            </for>
+          </optgroup>
+        </for>
+        <optgroup label="Not available yet" disabled>
+          <option value="AQ">Antarctica</option>
+        </optgroup>
+      </select>
+    </label>
+  </fieldset>
+
+  <fieldset disabled="{!state.ship}">
+    <legend>Method</legend>
+
+    <label class="inline">
+      <input
+        type="radio"
+        name="method"
+        value="standard"
+        checked="{state.method === 'standard'}"
+        onchange="setMethod('standard')"
+      />
+      Standard — 5 days
+    </label>
+
+    <label class="inline">
+      <input
+        type="radio"
+        name="method"
+        value="express"
+        checked="{state.method === 'express'}"
+        onchange="setMethod('express')"
+      />
+      Express — 2 days
+    </label>
+  </fieldset>
+</form>
+
+<p class="note">
+  One disabled on the fieldset switches off every control inside it, and those
+  controls stop being sent with the form
+</p>
+
+<if when="state.ship">
+  <p>
+    Shipping {state.method} to {state.street || "…"}, {state.city || "…"} —
+    {countryName()}
+  </p>
+</if>
+<else>
+  <p>No shipping needed.</p>
+</else>
+
+<style>
+  form {
+    max-width: 420px;
+  }
+
+  fieldset {
+    margin: 1em 0;
+    padding: 0.8em 1em 1em;
+    border: 1px solid #d4d4d8;
+    border-radius: 6px;
+  }
+
+  fieldset:disabled {
+    opacity: 0.55;
+  }
+
+  legend {
+    padding: 0 0.4em;
+    font-size: 13px;
+    font-weight: bold;
+    color: #52525b;
+  }
+
+  label {
+    display: block;
+    margin-top: 0.6em;
+    font-size: 13px;
+    color: #52525b;
+  }
+
+  label.inline {
+    display: flex;
+    align-items: center;
+    gap: 0.4em;
+  }
+
+  input,
+  select {
+    display: block;
+    width: 100%;
+    padding: 0.4em 0.6em;
+    font-size: 14px;
+  }
+
+  label.inline input {
+    width: auto;
+  }
+
+  .note {
+    font-size: 13px;
+    color: #71717a;
+    max-width: 420px;
+  }
+</style>

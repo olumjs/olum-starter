@@ -1,0 +1,171 @@
+<script>
+  const state = {
+    draft: "",
+    tags: ["olum", "forms"],
+    last: null,
+    counts: { keydown: 0, keypress: 0, keyup: 0 },
+  };
+
+  const describe = (e) => ({
+    type: e.type,
+    key: e.key,
+    code: e.code,
+    ctrl: e.ctrlKey,
+    shift: e.shiftKey,
+    alt: e.altKey,
+    meta: e.metaKey,
+    repeat: e.repeat,
+  });
+
+  const addTag = () => {
+    const tag = state.draft.trim();
+    if (!tag || state.tags.includes(tag)) return;
+    state.tags = state.tags.concat(tag);
+    state.draft = "";
+  };
+
+  const removeTag = (tag) => (state.tags = state.tags.filter((t) => t !== tag));
+
+  const handleKeydown = (e) => {
+    state.last = describe(e);
+    state.counts.keydown++;
+
+    if (e.key === "Enter") {
+      e.preventDefault();
+      addTag();
+    }
+    if (e.key === "Escape") state.draft = "";
+    if (e.key === "Backspace" && !state.draft && state.tags.length) {
+      state.tags = state.tags.slice(0, -1);
+    }
+    if (e.key === "s" && (e.ctrlKey || e.metaKey)) {
+      e.preventDefault();
+      state.last = {
+        ...state.last,
+        note: "ctrl+s was caught here, not by the browser",
+      };
+    }
+  };
+
+  const handleKeypress = (e) => {
+    state.last = describe(e);
+    state.counts.keypress++;
+  };
+
+  const handleKeyup = (e) => {
+    state.last = describe(e);
+    state.counts.keyup++;
+  };
+
+  const setDraft = (e) => (state.draft = e.target.value);
+
+  const dump = () =>
+    state.last ? JSON.stringify(state.last, null, 2) : "press a key in the field";
+</script>
+
+<h1>Keyboard events</h1>
+
+<label>
+  a tag input — Enter adds, Escape clears, Backspace on an empty field removes
+  the last tag, ctrl+s is captured
+  <input
+    value="{state.draft}"
+    oninput="setDraft($event)"
+    onkeydown="handleKeydown($event)"
+    onkeypress="handleKeypress($event)"
+    onkeyup="handleKeyup($event)"
+    placeholder="type a tag…"
+  />
+</label>
+
+<ul class="tags">
+  <for each="tag of state.tags" key="tag">
+    <li>
+      {tag}
+      <button onclick="removeTag(tag)" title="remove">×</button>
+    </li>
+  </for>
+</ul>
+
+<if when="state.tags.length === 0">
+  <p class="note">No tags left.</p>
+</if>
+
+<h2>Last event</h2>
+<pre class="out">{dump()}</pre>
+
+<p class="note">
+  keydown fires first and is the only one you can preventDefault to stop the
+  character. keypress is legacy — it skips keys like Escape and Arrow. keyup
+  fires last.
+</p>
+
+<p>
+  keydown {state.counts.keydown} · keypress {state.counts.keypress} · keyup
+  {state.counts.keyup}
+</p>
+
+<style>
+  label {
+    display: block;
+    max-width: 460px;
+    font-size: 13px;
+    color: #52525b;
+  }
+
+  input {
+    display: block;
+    width: 100%;
+    margin-top: 0.3em;
+    padding: 0.4em 0.6em;
+    font-size: 14px;
+  }
+
+  .tags {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.4em;
+    max-width: 460px;
+    margin: 0.8em 0;
+    padding: 0;
+    list-style: none;
+  }
+
+  .tags li {
+    display: flex;
+    align-items: center;
+    gap: 0.3em;
+    padding: 0.2em 0.5em;
+    background: #f4f4f5;
+    border-radius: 999px;
+    font-size: 13px;
+  }
+
+  .tags button {
+    padding: 0;
+    border: none;
+    background: none;
+    color: #71717a;
+    cursor: pointer;
+    font-size: 14px;
+  }
+
+  .out {
+    max-width: 460px;
+    background: #f4f4f5;
+    padding: 0.75em;
+    border-radius: 6px;
+    font-size: 13px;
+    overflow-x: auto;
+  }
+
+  .note {
+    font-size: 13px;
+    color: #71717a;
+    max-width: 460px;
+  }
+
+  p {
+    font-size: 14px;
+  }
+</style>

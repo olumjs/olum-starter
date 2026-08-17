@@ -1,0 +1,166 @@
+<script>
+  const state = {
+    a: 40,
+    b: 25,
+    uploaded: 35,
+    score: 72,
+    indeterminate: false,
+  };
+
+  const setNum = (key, e) => (state[key] = +e.target.value);
+
+  const toggleIndeterminate = (e) => (state.indeterminate = e.target.checked);
+
+  const total = () => state.a + state.b;
+
+  const scoreLabel = () => {
+    if (state.score < 30) return "low";
+    if (state.score < 70) return "ok";
+    return "great";
+  };
+</script>
+
+<h1>Output, progress &amp; meter</h1>
+
+<h2>output</h2>
+
+<div class="row">
+  <input
+    type="range"
+    id="a"
+    name="a"
+    value="{state.a}"
+    oninput="setNum('a', $event)"
+    min="0"
+    max="100"
+  />
+  <span>+</span>
+  <input
+    type="range"
+    id="b"
+    name="b"
+    value="{state.b}"
+    oninput="setNum('b', $event)"
+    min="0"
+    max="100"
+  />
+  <span>=</span>
+  <output for="a b" name="total">{total()}</output>
+</div>
+
+<p class="note">
+  output is just a live result element — for tells assistive tech which inputs
+  it comes from
+</p>
+
+<h2>progress</h2>
+
+<label>
+  uploaded {state.uploaded}%
+  <input
+    type="range"
+    value="{state.uploaded}"
+    oninput="setNum('uploaded', $event)"
+    min="0"
+    max="100"
+  />
+</label>
+
+<if when="state.indeterminate">
+  <progress></progress>
+</if>
+<else>
+  <progress value="{state.uploaded}" max="100"></progress>
+</else>
+
+<label class="inline">
+  <input
+    type="checkbox"
+    checked="{state.indeterminate}"
+    onchange="toggleIndeterminate($event)"
+  />
+  drop the value attribute — a progress with no value spins forever
+</label>
+
+<h2>meter</h2>
+
+<label>
+  score {state.score} ({scoreLabel()})
+  <input
+    type="range"
+    value="{state.score}"
+    oninput="setNum('score', $event)"
+    min="0"
+    max="100"
+  />
+</label>
+
+<meter
+  value="{state.score}"
+  min="0"
+  max="100"
+  low="30"
+  high="70"
+  optimum="100"
+></meter>
+
+<p class="note">
+  meter colors itself from low / high / optimum — it is for a measurement, while
+  progress is for a task that finishes
+</p>
+
+<style>
+  .row {
+    display: flex;
+    align-items: center;
+    gap: 0.6em;
+    max-width: 520px;
+  }
+
+  .row input {
+    flex: 1;
+  }
+
+  output {
+    min-width: 3em;
+    padding: 0.2em 0.5em;
+    background: #f4f4f5;
+    border-radius: 4px;
+    font-family: monospace;
+    text-align: center;
+  }
+
+  label {
+    display: block;
+    margin-top: 1em;
+    font-size: 13px;
+    color: #52525b;
+  }
+
+  label.inline {
+    display: flex;
+    align-items: center;
+    gap: 0.4em;
+  }
+
+  label input[type="range"] {
+    display: block;
+    width: 100%;
+    max-width: 420px;
+  }
+
+  progress,
+  meter {
+    display: block;
+    width: 100%;
+    max-width: 420px;
+    height: 16px;
+    margin-top: 0.5em;
+  }
+
+  .note {
+    font-size: 13px;
+    color: #71717a;
+    max-width: 460px;
+  }
+</style>

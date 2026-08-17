@@ -1,0 +1,184 @@
+<script>
+  const state = {
+    submitted: null,
+    submitter: "",
+    log: [],
+  };
+
+  const push = (line) =>
+    (state.log = [`${new Date().toLocaleTimeString()} — ${line}`]
+      .concat(state.log)
+      .slice(0, 8));
+
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    state.submitter = e.submitter
+      ? e.submitter.value || e.submitter.textContent.trim()
+      : "(keyboard / none)";
+    const data = new FormData(e.target);
+    state.submitted = {
+      name: data.get("name"),
+      plan: data.get("plan"),
+      topics: data.getAll("topics"),
+      stamp: data.get("stamp"),
+    };
+    push("submit");
+  };
+
+  const handleReset = () => {
+    state.submitted = null;
+    state.submitter = "";
+    push("reset");
+  };
+
+  const handleFormData = (e) => {
+    e.formData.append("stamp", new Date().toISOString());
+    push("formdata — appended a stamp field");
+  };
+
+  const handleChange = (e) => push(`change on "${e.target.name}"`);
+
+  const handleInput = (e) => push(`input on "${e.target.name}"`);
+
+  const dump = () => JSON.stringify(state.submitted, null, 2);
+</script>
+
+<h1>Form events</h1>
+
+<form
+  onsubmit="handleSubmit($event)"
+  onreset="handleReset()"
+  onformdata="handleFormData($event)"
+  oninput="handleInput($event)"
+  onchange="handleChange($event)"
+>
+  <label>
+    name
+    <input name="name" value="Eissa" required />
+  </label>
+
+  <label>
+    plan
+    <select name="plan">
+      <option value="free">Free</option>
+      <option value="pro" selected>Pro</option>
+      <option value="team">Team</option>
+    </select>
+  </label>
+
+  <fieldset>
+    <legend>topics — same name, many values</legend>
+    <label class="inline">
+      <input type="checkbox" name="topics" value="compiler" checked />
+      compiler
+    </label>
+    <label class="inline">
+      <input type="checkbox" name="topics" value="runtime" />
+      runtime
+    </label>
+    <label class="inline">
+      <input type="checkbox" name="topics" value="router" />
+      router
+    </label>
+  </fieldset>
+
+  <div class="actions">
+    <button type="submit" value="save">Save</button>
+    <button type="submit" value="publish">Publish</button>
+    <button type="button" onclick="push('plain button — no submit')">
+      Just a button
+    </button>
+    <button type="reset">Reset</button>
+  </div>
+</form>
+
+<p class="note">
+  input and change bubble, so one listener on the form covers every field inside
+  it. formdata fires whenever new FormData(form) runs — the last chance to add
+  or rewrite fields.
+</p>
+
+<if when="state.submitted">
+  <h2>Submitted by "{state.submitter}"</h2>
+  <pre class="out">{dump()}</pre>
+</if>
+
+<h2>Event log</h2>
+<ul class="log">
+  <for each="line of state.log">
+    <li>{line}</li>
+  </for>
+</ul>
+
+<style>
+  form {
+    max-width: 440px;
+  }
+
+  label {
+    display: block;
+    margin-top: 0.8em;
+    font-size: 13px;
+    color: #52525b;
+  }
+
+  label.inline {
+    display: flex;
+    align-items: center;
+    gap: 0.4em;
+    margin-top: 0.3em;
+  }
+
+  input,
+  select {
+    display: block;
+    width: 100%;
+    padding: 0.4em 0.6em;
+    font-size: 14px;
+  }
+
+  label.inline input {
+    width: auto;
+  }
+
+  fieldset {
+    margin-top: 1em;
+    padding: 0.5em 1em 0.8em;
+    border: 1px solid #d4d4d8;
+    border-radius: 6px;
+  }
+
+  legend {
+    font-size: 13px;
+    color: #52525b;
+  }
+
+  .actions {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.5em;
+    margin-top: 1.2em;
+  }
+
+  .out {
+    background: #f4f4f5;
+    padding: 0.75em;
+    border-radius: 6px;
+    font-size: 13px;
+    overflow-x: auto;
+  }
+
+  .log {
+    max-width: 460px;
+    padding-left: 1.1em;
+    font-family: monospace;
+    font-size: 12px;
+    color: #52525b;
+  }
+
+  .note {
+    font-size: 13px;
+    color: #71717a;
+    max-width: 460px;
+  }
+</style>

@@ -1,0 +1,262 @@
+<script>
+  const state = {
+    user: "",
+    email: "",
+    age: "",
+    pass: "",
+    confirm: "",
+    errors: {},
+    accepted: false,
+    skipValidation: false,
+    sentAt: "",
+  };
+
+  const set = (key, e) => {
+    state[key] = e.target.value;
+    clearError(e.target.name);
+  };
+
+  const clearError = (name) => {
+    if (!name || !state.errors[name]) return;
+    const next = { ...state.errors };
+    delete next[name];
+    state.errors = next;
+  };
+
+  const onInvalid = (e) => {
+    e.preventDefault();
+    state.errors = {
+      ...state.errors,
+      [e.target.name]: e.target.validationMessage,
+    };
+  };
+
+  const setConfirm = (e) => {
+    const field = e.target;
+    field.setCustomValidity(
+      field.value === state.pass ? "" : "The two passwords do not match",
+    );
+    state.confirm = field.value;
+    clearError("confirm");
+  };
+
+  const setAccepted = (e) => {
+    state.accepted = e.target.checked;
+    clearError("accepted");
+  };
+
+  const toggleSkip = (e) => (state.skipValidation = e.target.checked);
+
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    const form = e.target;
+    if (!form.noValidate && !form.checkValidity()) return;
+    state.errors = {};
+    state.sentAt = new Date().toLocaleTimeString();
+  };
+
+  const handleReset = () => {
+    state.errors = {};
+    state.sentAt = "";
+    state.user = "";
+    state.email = "";
+    state.age = "";
+    state.pass = "";
+    state.confirm = "";
+    state.accepted = false;
+  };
+
+  const errorFor = (name) => state.errors[name] || "";
+
+  const hasErrors = () => Object.keys(state.errors).length > 0;
+</script>
+
+<h1>Constraint validation</h1>
+
+<label class="inline">
+  <input
+    type="checkbox"
+    checked="{state.skipValidation}"
+    onchange="toggleSkip($event)"
+  />
+  novalidate — let the form submit without any checks
+</label>
+
+<form
+  novalidate="{state.skipValidation}"
+  onsubmit="handleSubmit($event)"
+  onreset="handleReset()"
+>
+  <label>
+    username — required, lowercase letters and digits, 3 characters or more
+    <input
+      name="user"
+      value="{state.user}"
+      oninput="set('user', $event)"
+      oninvalid="onInvalid($event)"
+      pattern="[a-z][a-z0-9_]+"
+      minlength="3"
+      maxlength="20"
+      required
+    />
+  </label>
+  <if when="errorFor('user')">
+    <p class="err">{errorFor('user')}</p>
+  </if>
+
+  <label>
+    email — required
+    <input
+      type="email"
+      name="email"
+      value="{state.email}"
+      oninput="set('email', $event)"
+      oninvalid="onInvalid($event)"
+      required
+    />
+  </label>
+  <if when="errorFor('email')">
+    <p class="err">{errorFor('email')}</p>
+  </if>
+
+  <label>
+    age — 18 to 120
+    <input
+      type="number"
+      name="age"
+      value="{state.age}"
+      oninput="set('age', $event)"
+      oninvalid="onInvalid($event)"
+      min="18"
+      max="120"
+      step="1"
+      required
+    />
+  </label>
+  <if when="errorFor('age')">
+    <p class="err">{errorFor('age')}</p>
+  </if>
+
+  <label>
+    password — 8 characters or more
+    <input
+      type="password"
+      name="pass"
+      value="{state.pass}"
+      oninput="set('pass', $event)"
+      oninvalid="onInvalid($event)"
+      minlength="8"
+      required
+    />
+  </label>
+  <if when="errorFor('pass')">
+    <p class="err">{errorFor('pass')}</p>
+  </if>
+
+  <label>
+    repeat the password — checked by setCustomValidity, not by an attribute
+    <input
+      type="password"
+      name="confirm"
+      value="{state.confirm}"
+      oninput="setConfirm($event)"
+      oninvalid="onInvalid($event)"
+      required
+    />
+  </label>
+  <if when="errorFor('confirm')">
+    <p class="err">{errorFor('confirm')}</p>
+  </if>
+
+  <label class="inline">
+    <input
+      type="checkbox"
+      name="accepted"
+      checked="{state.accepted}"
+      onchange="setAccepted($event)"
+      oninvalid="onInvalid($event)"
+      required
+    />
+    I accept the terms
+  </label>
+  <if when="errorFor('accepted')">
+    <p class="err">{errorFor('accepted')}</p>
+  </if>
+
+  <div class="actions">
+    <button type="submit">Create account</button>
+    <button type="submit" formnovalidate>Save draft (no checks)</button>
+    <button type="reset">Reset</button>
+  </div>
+</form>
+
+<if when="hasErrors()">
+  <p class="err">Fix {Object.keys(state.errors).length} field(s) above.</p>
+</if>
+<else-if when="state.sentAt">
+  <p class="ok">Account created at {state.sentAt}</p>
+</else-if>
+
+<p class="note">
+  oninvalid fires per field when the browser rejects it. preventDefault stops
+  the native bubble so you can render validationMessage yourself. A rule the
+  attributes cannot express goes through setCustomValidity — an empty string
+  means valid.
+</p>
+
+<style>
+  form {
+    max-width: 460px;
+  }
+
+  label {
+    display: block;
+    margin-top: 0.9em;
+    font-size: 13px;
+    color: #52525b;
+  }
+
+  label.inline {
+    display: flex;
+    align-items: center;
+    gap: 0.4em;
+  }
+
+  input {
+    display: block;
+    width: 100%;
+    padding: 0.4em 0.6em;
+    font-size: 14px;
+  }
+
+  label.inline input {
+    width: auto;
+  }
+
+  input:invalid {
+    border-color: #dc2626;
+  }
+
+  .actions {
+    display: flex;
+    gap: 0.5em;
+    margin-top: 1.2em;
+  }
+
+  .err {
+    margin: 0.25em 0 0;
+    font-size: 13px;
+    color: #dc2626;
+  }
+
+  .ok {
+    font-size: 14px;
+    color: #15803d;
+  }
+
+  .note {
+    font-size: 13px;
+    color: #71717a;
+    max-width: 460px;
+  }
+</style>

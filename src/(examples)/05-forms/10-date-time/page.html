@@ -1,0 +1,140 @@
+<script>
+  const state = {
+    date: "2026-08-17",
+    time: "09:30",
+    datetime: "2026-08-17T09:30",
+    month: "2026-08",
+    week: "2026-W34",
+    duration: "00:30",
+  };
+
+  const set = (key, e) => (state[key] = e.target.value);
+
+  const daysFromToday = () => {
+    if (!state.date) return "—";
+    const today = new Date();
+    today.setHours(0, 0, 0, 0);
+    const picked = new Date(state.date + "T00:00:00");
+    const days = Math.round((picked - today) / 86400000);
+    if (days === 0) return "today";
+    if (days > 0) return `in ${days} day(s)`;
+    return `${-days} day(s) ago`;
+  };
+
+  const dump = () => JSON.stringify(state, null, 2);
+</script>
+
+<h1>Date &amp; time inputs</h1>
+
+<div class="grid">
+  <label>
+    date
+    <input
+      type="date"
+      name="date"
+      value="{state.date}"
+      oninput="set('date', $event)"
+      min="2026-01-01"
+      max="2026-12-31"
+    />
+  </label>
+
+  <label>
+    time
+    <input
+      type="time"
+      name="time"
+      value="{state.time}"
+      oninput="set('time', $event)"
+      min="08:00"
+      max="18:00"
+      step="900"
+    />
+  </label>
+
+  <label>
+    datetime-local
+    <input
+      type="datetime-local"
+      name="datetime"
+      value="{state.datetime}"
+      oninput="set('datetime', $event)"
+    />
+  </label>
+
+  <label>
+    month
+    <input
+      type="month"
+      name="month"
+      value="{state.month}"
+      oninput="set('month', $event)"
+    />
+  </label>
+
+  <label>
+    week
+    <input
+      type="week"
+      name="week"
+      value="{state.week}"
+      oninput="set('week', $event)"
+    />
+  </label>
+
+  <label>
+    time as a duration (step 1 second)
+    <input
+      type="time"
+      name="duration"
+      value="{state.duration}"
+      oninput="set('duration', $event)"
+      step="1"
+    />
+  </label>
+</div>
+
+<p>The date you picked is <strong>{daysFromToday()}</strong></p>
+
+<p class="note">
+  Every value here is a plain string — the browser never gives you a Date
+  object. Parse it yourself, like new Date(state.date + "T00:00:00")
+</p>
+
+<h2>state</h2>
+<pre class="out">{dump()}</pre>
+
+<style>
+  .grid {
+    display: grid;
+    gap: 0.75em;
+    max-width: 420px;
+  }
+
+  label {
+    display: block;
+    font-size: 13px;
+    color: #52525b;
+  }
+
+  input {
+    display: block;
+    width: 100%;
+    padding: 0.4em 0.6em;
+    font-size: 14px;
+  }
+
+  .note {
+    font-size: 13px;
+    color: #71717a;
+    max-width: 420px;
+  }
+
+  .out {
+    background: #f4f4f5;
+    padding: 0.75em;
+    border-radius: 6px;
+    font-size: 13px;
+    overflow-x: auto;
+  }
+</style>

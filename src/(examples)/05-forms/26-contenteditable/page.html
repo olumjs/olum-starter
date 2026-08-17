@@ -1,0 +1,112 @@
+<script>
+  const state = {
+    title: "An editable heading",
+    note: "A <b>rich</b> area — type, and the markup is mirrored into state.",
+  };
+
+  const setTitle = (e) => (state.title = e.target.textContent);
+
+  const blockEnter = (e) => {
+    if (e.key === "Enter") e.preventDefault();
+  };
+
+  const setNote = (e) => (state.note = e.target.innerHTML);
+
+  const clearTitle = () => (state.title = "");
+
+  const words = () =>
+    state.note
+      .replace(/<[^>]*>/g, " ")
+      .trim()
+      .split(/\s+/)
+      .filter(Boolean).length;
+</script>
+
+<h1>Contenteditable</h1>
+
+<h2>One line — mirrored through textContent</h2>
+
+<div
+  class="editor one-line"
+  contenteditable="true"
+  oninput="setTitle($event)"
+  onkeydown="blockEnter($event)"
+>
+  {state.title}
+</div>
+
+<p>{state.title.length} character(s)</p>
+
+<button onclick="clearTitle()">Clear</button>
+
+<h2>Many lines — mirrored through innerHTML</h2>
+
+<div
+  class="editor rich"
+  contenteditable="true"
+  html="state.note"
+  oninput="setNote($event)"
+></div>
+
+<p>{words()} word(s)</p>
+
+<h2>What state holds</h2>
+<pre class="out">{state.note}</pre>
+
+<p class="note">
+  The rule: whatever the user types must land back in state, because the
+  template is the source of truth on every re-render. When state and the live
+  content already agree the patcher writes nothing, so the caret never jumps.
+  Leave a contenteditable out of state and the next re-render will wipe it.
+</p>
+
+<p class="note">
+  Keep the interpolation tight against the opening and closing tag, on one line:
+  any newline you leave between them becomes real whitespace inside the editable
+  text.
+</p>
+
+<style>
+  .editor {
+    max-width: 460px;
+    padding: 0.5em 0.7em;
+    border: 1px solid #d4d4d8;
+    border-radius: 6px;
+    font-size: 15px;
+  }
+
+  .editor:focus {
+    outline: 2px solid #25c97e;
+  }
+
+  .one-line {
+    font-size: 20px;
+    font-weight: bold;
+    white-space: nowrap;
+    overflow-x: auto;
+  }
+
+  .rich {
+    min-height: 90px;
+  }
+
+  .out {
+    max-width: 460px;
+    background: #f4f4f5;
+    padding: 0.75em;
+    border-radius: 6px;
+    font-size: 13px;
+    overflow-x: auto;
+    white-space: pre-wrap;
+  }
+
+  .note {
+    font-size: 13px;
+    color: #71717a;
+    max-width: 460px;
+  }
+
+  p {
+    font-size: 14px;
+  }
+</style>

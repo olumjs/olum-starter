@@ -1,0 +1,173 @@
+<script>
+  const state = {
+    over: false,
+    files: [],
+    items: ["Write the component", "Compile it", "Ship it"],
+    dragging: null,
+  };
+
+  const takeFiles = (list) => {
+    state.files = Array.from(list).map((file) => ({
+      name: file.name,
+      size: file.size,
+      type: file.type || "unknown",
+    }));
+  };
+
+  const allowDrop = (e) => {
+    e.preventDefault();
+    state.over = true;
+  };
+
+  const onDragEnter = (e) => {
+    e.preventDefault();
+    state.over = true;
+  };
+
+  const onDragLeave = () => (state.over = false);
+
+  const onDrop = (e) => {
+    e.preventDefault();
+    state.over = false;
+    takeFiles(e.dataTransfer.files);
+  };
+
+  const onPick = (e) => takeFiles(e.target.files);
+
+  const openPicker = () => host.querySelector("#picker").click();
+
+  const clearFiles = () => (state.files = []);
+
+  const onItemDragStart = (index, e) => {
+    state.dragging = index;
+    e.dataTransfer.effectAllowed = "move";
+    e.dataTransfer.setData("text/plain", String(index));
+  };
+
+  const onItemDragOver = (e) => {
+    e.preventDefault();
+    e.dataTransfer.dropEffect = "move";
+  };
+
+  const onItemDrop = (index, e) => {
+    e.preventDefault();
+    const from = state.dragging;
+    if (from === null || from === index) return;
+    const next = Array.from(state.items);
+    const [moved] = next.splice(from, 1);
+    next.splice(index, 0, moved);
+    state.items = next;
+    state.dragging = null;
+  };
+
+  const onItemDragEnd = () => (state.dragging = null);
+</script>
+
+<h1>Drag &amp; drop</h1>
+
+<h2>Drop files</h2>
+
+<div
+  class="dropzone {state.over ? 'over' : ''}"
+  ondragenter="onDragEnter($event)"
+  ondragover="allowDrop($event)"
+  ondragleave="onDragLeave()"
+  ondrop="onDrop($event)"
+>
+  <p>Drop files here</p>
+  <button onclick="openPicker()">or browse…</button>
+</div>
+
+<input id="picker" type="file" multiple onchange="onPick($event)" hidden />
+
+<if when="state.files.length">
+  <ul class="files">
+    <for each="file of state.files" key="file.name">
+      <li>{file.name} — {file.size} bytes — {file.type}</li>
+    </for>
+  </ul>
+  <button onclick="clearFiles()">Clear</button>
+</if>
+
+<p class="note">
+  dragover must call preventDefault, otherwise the browser refuses the drop and
+  opens the file instead. The dropped files live on e.dataTransfer.files, the
+  same FileList an input gives you.
+</p>
+
+<h2>Reorder a list</h2>
+
+<ul class="sortable">
+  <for each="(item, index) of state.items" key="item">
+    <li
+      class="{state.dragging === index ? 'ghost' : ''}"
+      draggable="true"
+      ondragstart="onItemDragStart(index, $event)"
+      ondragover="onItemDragOver($event)"
+      ondrop="onItemDrop(index, $event)"
+      ondragend="onItemDragEnd()"
+    >
+      {item}
+    </li>
+  </for>
+</ul>
+
+<p class="note">
+  key on the loop keeps each row's own DOM while the array is reordered
+</p>
+
+<style>
+  .dropzone {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 0.5em;
+    max-width: 460px;
+    padding: 2em;
+    border: 2px dashed #d4d4d8;
+    border-radius: 8px;
+    color: #71717a;
+  }
+
+  .dropzone.over {
+    border-color: #25c97e;
+    background: #f0fdf4;
+    color: #15803d;
+  }
+
+  .dropzone p {
+    margin: 0;
+  }
+
+  .files {
+    max-width: 460px;
+    padding-left: 1.1em;
+    font-size: 13px;
+  }
+
+  .sortable {
+    max-width: 460px;
+    padding: 0;
+    list-style: none;
+  }
+
+  .sortable li {
+    margin-bottom: 0.4em;
+    padding: 0.6em 0.8em;
+    background: #f4f4f5;
+    border-radius: 6px;
+    cursor: grab;
+    font-size: 14px;
+  }
+
+  .sortable li.ghost {
+    opacity: 0.4;
+  }
+
+  .note {
+    font-size: 13px;
+    color: #71717a;
+    max-width: 460px;
+  }
+</style>

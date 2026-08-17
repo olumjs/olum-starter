@@ -1,0 +1,141 @@
+<script>
+  const state = {
+    nickname: "",
+    bio: "Olum components are plain HTML with a splash of JavaScript.",
+    focused: "",
+    touched: {},
+    selection: "",
+  };
+
+  const set = (key, e) => (state[key] = e.target.value);
+
+  const onFocus = (e) => (state.focused = e.target.name);
+
+  const onBlur = (e) => {
+    state.focused = "";
+    state.touched = { ...state.touched, [e.target.name]: true };
+  };
+
+  const onSelect = (e) => {
+    const field = e.target;
+    const picked = field.value.slice(field.selectionStart, field.selectionEnd);
+    state.selection = picked
+      ? `${picked} (${field.selectionStart}–${field.selectionEnd})`
+      : "";
+  };
+
+  const focusNickname = () => host.querySelector("[name=nickname]").focus();
+
+  const selectAllBio = () => {
+    const field = host.querySelector("[name=bio]");
+    field.focus();
+    field.select();
+  };
+
+  const isTouched = (name) => !!state.touched[name];
+
+  const showError = (name) =>
+    isTouched(name) && !state.nickname && name === "nickname";
+</script>
+
+<h1>Focus, blur &amp; selection</h1>
+
+<label class="{state.focused === 'nickname' ? 'on' : ''}">
+  nickname
+  <input
+    name="nickname"
+    value="{state.nickname}"
+    oninput="set('nickname', $event)"
+    onfocus="onFocus($event)"
+    onblur="onBlur($event)"
+    onselect="onSelect($event)"
+    placeholder="click in, then click out"
+    autofocus
+  />
+</label>
+
+<if when="showError('nickname')">
+  <p class="err">You left this empty — the error only shows after a blur</p>
+</if>
+
+<label class="{state.focused === 'bio' ? 'on' : ''}">
+  bio
+  <textarea
+    name="bio"
+    value="{state.bio}"
+    oninput="set('bio', $event)"
+    onfocus="onFocus($event)"
+    onblur="onBlur($event)"
+    onselect="onSelect($event)"
+  ></textarea>
+</label>
+
+<div class="actions">
+  <button onclick="focusNickname()">Focus the nickname</button>
+  <button onclick="selectAllBio()">Select the whole bio</button>
+</div>
+
+<p>focused field: <strong>{state.focused || "none"}</strong></p>
+<p>selected text: <strong>{state.selection || "none"}</strong></p>
+<p>
+  touched: <strong>{Object.keys(state.touched).join(", ") || "none"}</strong>
+</p>
+
+<p class="note">
+  focus and blur do not bubble — put them on the field itself. There is no ref
+  in Olum: reach a field with host.querySelector, the way both buttons above do.
+</p>
+
+<style>
+  label {
+    display: block;
+    max-width: 460px;
+    margin-top: 1em;
+    font-size: 13px;
+    color: #52525b;
+  }
+
+  label.on {
+    color: #15803d;
+    font-weight: bold;
+  }
+
+  input,
+  textarea {
+    display: block;
+    width: 100%;
+    margin-top: 0.3em;
+    padding: 0.4em 0.6em;
+    font-size: 14px;
+  }
+
+  textarea {
+    height: 90px;
+  }
+
+  input:focus,
+  textarea:focus {
+    outline: 2px solid #25c97e;
+  }
+
+  .actions {
+    display: flex;
+    gap: 0.5em;
+    margin-top: 1em;
+  }
+
+  p {
+    font-size: 14px;
+  }
+
+  .err {
+    color: #dc2626;
+    font-size: 13px;
+  }
+
+  .note {
+    font-size: 13px;
+    color: #71717a;
+    max-width: 460px;
+  }
+</style>

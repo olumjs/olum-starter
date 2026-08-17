@@ -1,0 +1,116 @@
+<script>
+  const state = {
+    fruit: "",
+    city: "",
+    volume: 40,
+    cities: ["Cairo", "Alexandria", "Aswan", "Luxor", "Port Said"],
+    fruits: [
+      { name: "Apple", note: "crunchy" },
+      { name: "Apricot", note: "soft" },
+      { name: "Banana", note: "sweet" },
+      { name: "Blueberry", note: "tiny" },
+      { name: "Cherry", note: "red" },
+    ],
+    ticks: [0, 25, 50, 75, 100],
+  };
+
+  const set = (key, e) => (state[key] = e.target.value);
+
+  const setVolume = (e) => (state.volume = +e.target.value);
+
+  const match = () => state.fruits.find((f) => f.name === state.fruit);
+</script>
+
+<h1>Datalist &amp; autocomplete</h1>
+
+<label>
+  fruit (typed text is free — the list is only a suggestion)
+  <input
+    list="fruit-options"
+    name="fruit"
+    value="{state.fruit}"
+    oninput="set('fruit', $event)"
+    placeholder="start typing…"
+  />
+</label>
+
+<datalist id="fruit-options">
+  <for each="fruit of state.fruits">
+    <option value="{fruit.name}">{fruit.note}</option>
+  </for>
+</datalist>
+
+<if when="match()">
+  <p class="hit">{state.fruit} — {match().note}</p>
+</if>
+<else-if when="state.fruit">
+  <p class="miss">"{state.fruit}" is not in the list, and that is allowed</p>
+</else-if>
+
+<label>
+  city
+  <input
+    list="city-options"
+    name="city"
+    value="{state.city}"
+    oninput="set('city', $event)"
+    placeholder="pick or type a city"
+  />
+</label>
+
+<datalist id="city-options">
+  <for each="city of state.cities">
+    <option value="{city}"></option>
+  </for>
+</datalist>
+
+<label>
+  volume — a range can snap to a datalist too
+  <input
+    type="range"
+    list="tick-options"
+    name="volume"
+    value="{state.volume}"
+    oninput="setVolume($event)"
+    min="0"
+    max="100"
+    step="5"
+  />
+</label>
+
+<datalist id="tick-options">
+  <for each="tick of state.ticks">
+    <option value="{tick}" label="{tick}"></option>
+  </for>
+</datalist>
+
+<p>volume: <strong>{state.volume}</strong></p>
+
+<style>
+  label {
+    display: block;
+    margin-top: 1em;
+    font-size: 13px;
+    color: #52525b;
+  }
+
+  input {
+    display: block;
+    width: 100%;
+    max-width: 420px;
+    padding: 0.4em 0.6em;
+    font-size: 14px;
+  }
+
+  .hit {
+    color: #15803d;
+  }
+
+  .miss {
+    color: #b45309;
+  }
+
+  p {
+    font-size: 14px;
+  }
+</style>

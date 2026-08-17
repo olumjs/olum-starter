@@ -1,0 +1,122 @@
+<script>
+  const state = {
+    color: "#25c97e",
+    committed: "#25c97e",
+    inputs: 0,
+    changes: 0,
+    swatches: ["#25c97e", "#3b82f6", "#f43f5e", "#f59e0b", "#8b5cf6"],
+  };
+
+  const onInput = (e) => {
+    state.color = e.target.value;
+    state.inputs++;
+  };
+
+  const onChange = (e) => {
+    state.committed = e.target.value;
+    state.changes++;
+  };
+
+  const pick = (color) => {
+    state.color = color;
+    state.committed = color;
+  };
+
+  const readable = () => {
+    const hex = state.color.slice(1);
+    const r = parseInt(hex.slice(0, 2), 16);
+    const g = parseInt(hex.slice(2, 4), 16);
+    const b = parseInt(hex.slice(4, 6), 16);
+    return r * 0.299 + g * 0.587 + b * 0.114 > 150 ? "#18181b" : "#ffffff";
+  };
+</script>
+
+<h1>Color input</h1>
+
+<label>
+  pick a color
+  <input
+    type="color"
+    name="color"
+    value="{state.color}"
+    oninput="onInput($event)"
+    onchange="onChange($event)"
+  />
+</label>
+
+<div class="preview" style="background: {state.color}; color: {readable()}">
+  {state.color}
+</div>
+
+<p>
+  oninput fired <strong>{state.inputs}</strong> time(s) — it runs while you drag
+  inside the picker
+</p>
+<p>
+  onchange fired <strong>{state.changes}</strong> time(s) — it runs once, when
+  the picker closes. Committed value: <strong>{state.committed}</strong>
+</p>
+
+<h2>Presets</h2>
+<div class="swatches">
+  <for each="swatch of state.swatches">
+    <button
+      class="{state.color === swatch ? 'on' : ''}"
+      style="background: {swatch}"
+      onclick="pick(swatch)"
+      title="{swatch}"
+    ></button>
+  </for>
+</div>
+
+<style>
+  label {
+    display: block;
+    font-size: 13px;
+    color: #52525b;
+  }
+
+  input[type="color"] {
+    display: block;
+    width: 80px;
+    height: 40px;
+    padding: 0;
+    border: 1px solid #d4d4d8;
+    background: none;
+    cursor: pointer;
+  }
+
+  .preview {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+    max-width: 420px;
+    height: 90px;
+    margin: 0.8em 0;
+    border-radius: 8px;
+    font-family: monospace;
+    font-size: 18px;
+  }
+
+  p {
+    font-size: 14px;
+  }
+
+  .swatches {
+    display: flex;
+    gap: 0.5em;
+  }
+
+  .swatches button {
+    width: 34px;
+    height: 34px;
+    border: 2px solid transparent;
+    border-radius: 50%;
+    cursor: pointer;
+  }
+
+  .swatches button.on {
+    border-color: #18181b;
+  }
+</style>

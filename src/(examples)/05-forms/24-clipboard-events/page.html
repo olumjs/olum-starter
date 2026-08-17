@@ -1,0 +1,135 @@
+<script>
+  import { onMount } from "olum";
+
+  const state = {
+    text: "Copy me, cut me, or paste something here.",
+    log: [],
+    pasted: "",
+    copied: "",
+  };
+
+  const push = (line) => (state.log = [line].concat(state.log).slice(0, 8));
+
+  const setText = (e) => (state.text = e.target.value);
+
+  const copyValue = () => {
+    if (!navigator.clipboard) {
+      push("this browser has no clipboard API");
+      return;
+    }
+    navigator.clipboard.writeText(state.text).then(
+      () => {
+        state.copied = state.text;
+        push("wrote the value with navigator.clipboard");
+      },
+      () => push("the browser refused the write"),
+    );
+  };
+
+  onMount(() => {
+    const field = host.querySelector("[name=note]");
+
+    const onCopy = () => push("copy");
+    const onCut = () => push("cut");
+
+    const onPaste = (e) => {
+      const text = e.clipboardData.getData("text/plain");
+      state.pasted = text;
+      push(`paste — ${text.length} character(s)`);
+    };
+
+    const onBeforeInput = (e) => push(`beforeinput — ${e.inputType}`);
+    const onFocusIn = () => push("focusin");
+    const onFocusOut = () => push("focusout");
+
+    field.addEventListener("copy", onCopy);
+    field.addEventListener("cut", onCut);
+    field.addEventListener("paste", onPaste);
+    field.addEventListener("beforeinput", onBeforeInput);
+    field.addEventListener("focusin", onFocusIn);
+    field.addEventListener("focusout", onFocusOut);
+
+    return () => {
+      field.removeEventListener("copy", onCopy);
+      field.removeEventListener("cut", onCut);
+      field.removeEventListener("paste", onPaste);
+      field.removeEventListener("beforeinput", onBeforeInput);
+      field.removeEventListener("focusin", onFocusIn);
+      field.removeEventListener("focusout", onFocusOut);
+    };
+  });
+</script>
+
+<h1>Clipboard &amp; other non-inline events</h1>
+
+<p class="note">
+  copy, cut, paste, beforeinput, focusin and focusout are not in the inline on*
+  list the compiler knows. Wire them by hand in onMount on the element you get
+  from host, and remove them in the returned cleanup.
+</p>
+
+<label>
+  note
+  <textarea
+    name="note"
+    value="{state.text}"
+    oninput="setText($event)"
+  ></textarea>
+</label>
+
+<button onclick="copyValue()">Copy the value to the clipboard</button>
+
+<if when="state.pasted">
+  <p>last paste: <strong>{state.pasted}</strong></p>
+</if>
+
+<if when="state.copied">
+  <p>last programmatic copy: <strong>{state.copied}</strong></p>
+</if>
+
+<h2>Event log</h2>
+<ul class="log">
+  <for each="line of state.log">
+    <li>{line}</li>
+  </for>
+</ul>
+
+<if when="state.log.length === 0">
+  <p class="note">Select some text in the field and copy or paste it.</p>
+</if>
+
+<style>
+  label {
+    display: block;
+    max-width: 460px;
+    font-size: 13px;
+    color: #52525b;
+  }
+
+  textarea {
+    display: block;
+    width: 100%;
+    height: 90px;
+    margin: 0.3em 0 0.8em;
+    padding: 0.4em 0.6em;
+    font-size: 14px;
+  }
+
+  .log {
+    max-width: 460px;
+    padding-left: 1.1em;
+    font-family: monospace;
+    font-size: 12px;
+    color: #52525b;
+  }
+
+  p {
+    font-size: 14px;
+  }
+
+  .note {
+    font-size: 13px;
+    color: #71717a;
+    max-width: 460px;
+  }
+</style>
