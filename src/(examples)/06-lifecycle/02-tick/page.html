@@ -1,4 +1,6 @@
 <script>
+  import { flushUpdates } from "olum";
+
   const state = { text: "Highlight some text, then press Tab to flip its case" };
 
   const handleKeydown = (e) => {
@@ -16,7 +18,7 @@
     state.text =
       value.slice(0, selectionStart) + replacement + value.slice(selectionEnd);
 
-    window.olum.flushUpdates();
+    flushUpdates();
     ta.selectionStart = selectionStart;
     ta.selectionEnd = selectionEnd;
   };

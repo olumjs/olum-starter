@@ -62,14 +62,16 @@ body {
   overflow-x: hidden;
 }
 
-/* The router mounts each page component into #app as a div[data-olum].
+/* The router mounts each page component into <olum-app> as a div[data-olum].
    This height chain is what lets examples use height:100% (analog clock,
-   canvas, key viewer, pointer trackers). */
-#app {
+   canvas, key viewer, pointer trackers). <olum-app> is an unknown element, so
+   it needs an explicit display -- it would be inline by default. */
+#olum-app {
+  display: block;
   height: 90dvh;
   /* overflow-y: auto; */
 }
-#app > [data-olum] {
+#olum-app > [data-olum] {
   display: block;
   height: 100%;
   padding: 1rem;
@@ -325,9 +327,9 @@ figcaption {
   margin: 0;
 }
 
-/* Inside the #app height chain the todo page fills its wrapper,
-   not the viewport — avoids a double scrollbar from #app's padding. */
-#app .todo-page {
+/* Inside the <olum-app> height chain the todo page fills its wrapper,
+   not the viewport — avoids a double scrollbar from <olum-app>'s padding. */
+#olum-app .todo-page {
   min-height: 100%;
   padding: 0;
 }
