@@ -8,6 +8,10 @@
     "build": "olum-compiler build",
     "start": "olum-compiler start"
   },
+  "olum": {
+    "SITE_URL": "https://www.olumjs.top",
+    "SSG_DELAY": 0
+  },
   "keywords": [
     "olum"
   ],
