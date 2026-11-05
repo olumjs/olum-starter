@@ -21,6 +21,7 @@
 
   const startDate = () => convertToDate(state.start);
   const endDate = () => convertToDate(state.end);
+  const invalid = () => state.isReturn && startDate() >= endDate();
 
   const bookFlight = () => {
     const type = state.isReturn ? "return" : "one-way";
@@ -61,7 +62,7 @@
 
 <button
   onclick="bookFlight()"
-  disabled="{state.isReturn && startDate() >= endDate()}"
+  disabled="{invalid()}"
 >
   book
 </button>
