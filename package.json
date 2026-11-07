@@ -16,12 +16,12 @@
   "dependencies": {
     "d3-scale": "^4.0.2",
     "marked": "^18.0.6",
-    "olum": "latest",
-    "olum-router": "latest",
-    "olum-store": "latest",
-    "olum-transition": "latest"
+    "olum": "0.13.0",
+    "olum-router": "0.6.1",
+    "olum-store": "0.1.0",
+    "olum-transition": "0.2.1"
   },
   "devDependencies": {
-    "olum-compiler": "latest"
+    "olum-compiler": "2.1.3"
   }
 }
